@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>QUICK CHAT</title>
+	<link rel="icon" type="image/png" href="LOGO.png">
+    <style>
+body {
+background-color: #eeffff;
+}
+        #message {
+            width: 200px;
+        }
+
+        .speech-bubble {
+            position: relative;
+	    float: left;
+            background: #00aabb;
+            border-radius: .4em;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center; /* Center the text */
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            border-top-color: #00aabb;
+            border-bottom: 0;
+            border-left: 0;
+            margin-left: -10px;
+            margin-bottom: -20px;
+        }
+
+        .speech-bubble2 {
+            position: relative;
+	    float: right;
+            background: #aabbcc;
+            border-radius: .4em;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center; /* Center the text */
+        }
+
+        .speech-bubble2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            border-top-color: #aabbcc;
+            border-bottom: 0;
+            border-left: 0;
+            margin-left: -10px;
+            margin-bottom: -20px;
+        }
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 25px;
+}
+
+.input-box {
+  flex-grow: 1;
+  padding: 12px 20px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+    <div id="displayArea"></div>
+    <div class="container">
+    <input type="text" id="message" class="input-box" placeholder="Enter message...">
+    <button onclick="sendMessage()" class="button">Send</button>
+    </div>
+    <script>
+        function displayText(text) {
+    var br = document.createElement("br");
+    //var hr = document.createElement("hr");
+    //var text = document.getElementById("inputText").value;
+    var displayArea = document.getElementById("displayArea");
+    var speechBubble = document.createElement("div");
+    speechBubble.className = "speech-bubble";
+    speechBubble.textContent = text;
+    speechBubble.style.width = (text.length * 0.42) + "em"; // Adjust multiplier as needed
+    displayArea.appendChild(speechBubble);
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    //displayArea.appendChild(hr);
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+function displayText2(text) {
+    var br = document.createElement("br");
+    //var hr = document.createElement("hr");
+    //var text = document.getElementById("inputText").value;
+    var displayArea = document.getElementById("displayArea");
+    var speechBubble = document.createElement("div");
+    speechBubble.className = "speech-bubble2";
+    speechBubble.textContent = text;
+    speechBubble.style.width = (text.length * 0.42) + "em"; // Adjust multiplier as needed
+    displayArea.appendChild(speechBubble);
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    var br = document.createElement("br");
+    displayArea.appendChild(br);
+    //displayArea.appendChild(hr);
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+	function getParameterByName(name) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+        var user = "J123"
+        var to = getParameterByName("two")
+        var ws = new WebSocket('wss://socketsbay.com/wss/v2/1/demo/');
+        //var ws = new WebSocket('wss://socketsbay.com/wss/v2/10/e0cdae07fea0e0f98c296b6e5d6cc5d2/');
+
+        ws.onopen = function () {
+            console.log('Connected');
+            ws.send("ABLECHAT-=[{CLEARCHAT}]");
+        };
+
+        ws.onmessage = function (event) {
+            if (event.data instanceof Blob) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var text = reader.result;
+                    var chat = document.getElementById('chat');
+                    if (text.indexOf("CHATABLE-=[{") > -1) {
+                        if (text.indexOf("to=" + user) > -1 && text.indexOf("from=" + to) > -1) {
+                            //chat.innerHTML = text.slice(36, -2) + '<br>';
+                            //chat.scrollTop = chat.scrollHeight;
+			    displayText(text.slice(36, -2))
+                        }
+                        if (text.indexOf("from=" + user && text.indexOf("to=" + to) > -1) > -1) {
+                            //chat.innerHTML = text.slice(36, -2) + ' FROM YOU<br>';
+                            //chat.scrollTop = chat.scrollHeight;
+			    displayText2(text.slice(36, -2))
+                        }
+                        if (text == "CHATABLE-=[{CLEARCHAT}]") {
+                            var chat = document.getElementById("displayArea");
+			    chat.innerHTML = "";
+                        }
+                    }
+                };
+                reader.readAsText(event.data);
+            } else {
+                var chat = document.getElementById('chat');
+                if (event.data.indexOf("CHATABLE-=[{") > -1) {
+                    if (event.data.indexOf("to=" + user) > -1 && event.data.indexOf("from=" + to) > -1) {
+                        //chat.innerHTML += event.data.slice(36, -2) + '<br>';
+                        //chat.scrollTop = chat.scrollHeight;
+			displayText(event.data.slice(36, -2))
+                    }
+                    if (event.data.indexOf("from=" + user) > -1 && event.data.indexOf("to=" + to) > -1) {
+                        //chat.innerHTML += event.data.slice(36, -2) + ' FROM YOU<br>';
+                        //chat.scrollTop = chat.scrollHeight;
+			displayText2(event.data.slice(36, -2))
+                    }
+                    if (event.data == "CHATABLE-=[{CLEARCHAT}]") {
+                        var chat = document.getElementById("displayArea");
+		        chat.innerHTML = "";
+                    }
+                }
+            }
+        };
+
+        ws.onclose = function () {
+            setTimeout(function () {
+                location.reload();
+            }, 500); 
+        }
+
+        function sendMessage() {
+            var message = document.getElementById('message').value;
+            ws.send("ABLECHAT-=[{to=" + to + ", from=" + user + ", msg=" + message + "}]");
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+</html>
