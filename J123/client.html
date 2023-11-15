@@ -101,121 +101,131 @@ background-color: #eeffff;
     <button onclick="sendMessage()" class="button">Send</button>
     </div>
     <script>
-        function displayText(text) {
-    var br = document.createElement("br");
-    //var hr = document.createElement("hr");
-    //var text = document.getElementById("inputText").value;
-    var displayArea = document.getElementById("displayArea");
-    var speechBubble = document.createElement("div");
-    speechBubble.className = "speech-bubble";
-    speechBubble.textContent = text;
-    speechBubble.style.width = (text.length * 0.42) + "em"; // Adjust multiplier as needed
-    displayArea.appendChild(speechBubble);
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    //displayArea.appendChild(hr);
-    window.scrollTo(0, document.body.scrollHeight);
-}
+        function LinkCheck(url) {
+            var http = new XMLHttpRequest();
+            http.open('HEAD', url, false);
+            http.send();
+            return http.status != 404;
+        }
+        if (LinkCheck("https://qc1159.github.io/Quick-Chat/Online")) {
+            function displayText(text) {
+                var br = document.createElement("br");
+                //var hr = document.createElement("hr");
+                //var text = document.getElementById("inputText").value;
+                var displayArea = document.getElementById("displayArea");
+                var speechBubble = document.createElement("div");
+                speechBubble.className = "speech-bubble";
+                speechBubble.textContent = text;
+                speechBubble.style.width = (text.length * 0.42) + "em"; // Adjust multiplier as needed
+                displayArea.appendChild(speechBubble);
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                //displayArea.appendChild(hr);
+                window.scrollTo(0, document.body.scrollHeight);
+            }
 
-function displayText2(text) {
-    var br = document.createElement("br");
-    //var hr = document.createElement("hr");
-    //var text = document.getElementById("inputText").value;
-    var displayArea = document.getElementById("displayArea");
-    var speechBubble = document.createElement("div");
-    speechBubble.className = "speech-bubble2";
-    speechBubble.textContent = text;
-    speechBubble.style.width = (text.length * 0.42) + "em"; // Adjust multiplier as needed
-    displayArea.appendChild(speechBubble);
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    var br = document.createElement("br");
-    displayArea.appendChild(br);
-    //displayArea.appendChild(hr);
-    window.scrollTo(0, document.body.scrollHeight);
-}
+            function displayText2(text) {
+                var br = document.createElement("br");
+                //var hr = document.createElement("hr");
+                //var text = document.getElementById("inputText").value;
+                var displayArea = document.getElementById("displayArea");
+                var speechBubble = document.createElement("div");
+                speechBubble.className = "speech-bubble2";
+                speechBubble.textContent = text;
+                speechBubble.style.width = (text.length * 0.42) + "em"; // Adjust multiplier as needed
+                displayArea.appendChild(speechBubble);
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                var br = document.createElement("br");
+                displayArea.appendChild(br);
+                //displayArea.appendChild(hr);
+                window.scrollTo(0, document.body.scrollHeight);
+            }
 
-	function getParameterByName(name) {
-    var urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-}
-        var user = "J123"
-        var to = getParameterByName("two")
-        var ws = new WebSocket('wss://socketsbay.com/wss/v2/1/demo/');
-        //var ws = new WebSocket('wss://socketsbay.com/wss/v2/10/e0cdae07fea0e0f98c296b6e5d6cc5d2/');
+            function getParameterByName(name) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+            var user = "J123"
+            var to = getParameterByName("two")
+            var ws = new WebSocket('wss://socketsbay.com/wss/v2/1/demo/');
+            //var ws = new WebSocket('wss://socketsbay.com/wss/v2/10/e0cdae07fea0e0f98c296b6e5d6cc5d2/');
 
-        ws.onopen = function () {
-            console.log('Connected');
-            ws.send("ABLECHAT-=[{CLEARCHAT}]");
-        };
+            ws.onopen = function () {
+                console.log('Connected');
+                ws.send("ABLECHAT-=[{CLEARCHAT}]");
+            };
 
-        ws.onmessage = function (event) {
-            if (event.data instanceof Blob) {
-                var reader = new FileReader();
-                reader.onload = function () {
-                    var text = reader.result;
+            ws.onmessage = function (event) {
+                if (event.data instanceof Blob) {
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var text = reader.result;
+                        var chat = document.getElementById('chat');
+                        if (text.indexOf("CHATABLE-=[{") > -1) {
+                            if (text.indexOf("to=" + user) > -1 && text.indexOf("from=" + to) > -1) {
+                                //chat.innerHTML = text.slice(36, -2) + '<br>';
+                                //chat.scrollTop = chat.scrollHeight;
+                                displayText(text.slice(36, -2))
+                            }
+                            if (text.indexOf("from=" + user && text.indexOf("to=" + to) > -1) > -1) {
+                                //chat.innerHTML = text.slice(36, -2) + ' FROM YOU<br>';
+                                //chat.scrollTop = chat.scrollHeight;
+                                displayText2(text.slice(36, -2))
+                            }
+                            if (text == "CHATABLE-=[{CLEARCHAT}]") {
+                                var chat = document.getElementById("displayArea");
+                                chat.innerHTML = "";
+                            }
+                        }
+                    };
+                    reader.readAsText(event.data);
+                } else {
                     var chat = document.getElementById('chat');
-                    if (text.indexOf("CHATABLE-=[{") > -1) {
-                        if (text.indexOf("to=" + user) > -1 && text.indexOf("from=" + to) > -1) {
-                            //chat.innerHTML = text.slice(36, -2) + '<br>';
+                    if (event.data.indexOf("CHATABLE-=[{") > -1) {
+                        if (event.data.indexOf("to=" + user) > -1 && event.data.indexOf("from=" + to) > -1) {
+                            //chat.innerHTML += event.data.slice(36, -2) + '<br>';
                             //chat.scrollTop = chat.scrollHeight;
-			    displayText(text.slice(36, -2))
+                            displayText(event.data.slice(36, -2))
                         }
-                        if (text.indexOf("from=" + user && text.indexOf("to=" + to) > -1) > -1) {
-                            //chat.innerHTML = text.slice(36, -2) + ' FROM YOU<br>';
+                        if (event.data.indexOf("from=" + user) > -1 && event.data.indexOf("to=" + to) > -1) {
+                            //chat.innerHTML += event.data.slice(36, -2) + ' FROM YOU<br>';
                             //chat.scrollTop = chat.scrollHeight;
-			    displayText2(text.slice(36, -2))
+                            displayText2(event.data.slice(36, -2))
                         }
-                        if (text == "CHATABLE-=[{CLEARCHAT}]") {
+                        if (event.data == "CHATABLE-=[{CLEARCHAT}]") {
                             var chat = document.getElementById("displayArea");
-			    chat.innerHTML = "";
+                            chat.innerHTML = "";
                         }
-                    }
-                };
-                reader.readAsText(event.data);
-            } else {
-                var chat = document.getElementById('chat');
-                if (event.data.indexOf("CHATABLE-=[{") > -1) {
-                    if (event.data.indexOf("to=" + user) > -1 && event.data.indexOf("from=" + to) > -1) {
-                        //chat.innerHTML += event.data.slice(36, -2) + '<br>';
-                        //chat.scrollTop = chat.scrollHeight;
-			displayText(event.data.slice(36, -2))
-                    }
-                    if (event.data.indexOf("from=" + user) > -1 && event.data.indexOf("to=" + to) > -1) {
-                        //chat.innerHTML += event.data.slice(36, -2) + ' FROM YOU<br>';
-                        //chat.scrollTop = chat.scrollHeight;
-			displayText2(event.data.slice(36, -2))
-                    }
-                    if (event.data == "CHATABLE-=[{CLEARCHAT}]") {
-                        var chat = document.getElementById("displayArea");
-		        chat.innerHTML = "";
                     }
                 }
+            };
+
+            ws.onclose = function () {
+                setTimeout(function () {
+                    location.reload();
+                }, 500);
             }
-        };
 
-        ws.onclose = function () {
-            setTimeout(function () {
-                location.reload();
-            }, 500); 
-        }
-
-        function sendMessage() {
-            var message = document.getElementById('message').value;
-            ws.send("ABLECHAT-=[{to=" + to + ", from=" + user + ", msg=" + message + "}]");
-            document.getElementById('message').value = '';
+            function sendMessage() {
+                var message = document.getElementById('message').value;
+                ws.send("ABLECHAT-=[{to=" + to + ", from=" + user + ", msg=" + message + "}]");
+                document.getElementById('message').value = '';
+            }
+        } else {
+            console.log("AHHH")
         }
     </script>
 </body>
