@@ -101,13 +101,6 @@ background-color: #eeffff;
     <button onclick="sendMessage()" class="button">Send</button>
     </div>
     <script>
-        function LinkCheck(url) {
-            var http = new XMLHttpRequest();
-            http.open('HEAD', url, false);
-            http.send();
-            return http.status != 404;
-        }
-        if (LinkCheck("https://qc1159.github.io/Quick-Chat/Online")) {
             function displayText(text) {
                 var br = document.createElement("br");
                 //var hr = document.createElement("hr");
@@ -224,9 +217,6 @@ background-color: #eeffff;
                 ws.send("ABLECHAT-=[{to=" + to + ", from=" + user + ", msg=" + message + "}]");
                 document.getElementById('message').value = '';
             }
-        } else {
-            console.log("AHHH")
-        }
     </script>
 </body>
 </html>

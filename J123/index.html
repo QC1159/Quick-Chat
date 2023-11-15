@@ -40,11 +40,24 @@ background-color: #99bbff
 </head>
 <body>
     <div class="container">
-	<h2>QUICK CHAT</h2>
+        <h2>QUICK CHAT</h2>
         <a href="client.html?two=J123">JACK</a>
         <a href="client.html?two=F123">FELIX</a>
         <a href="client.html?two=A123">ADAM</a>
-	<a href="client.html?two=M123">MICHAEL</a>
+        <a href="client.html?two=M123">MICHAEL</a>
     </div>
+    <script>
+        function LinkCheck(url) {
+            var http = new XMLHttpRequest();
+            http.open('HEAD', url, false);
+            http.send();
+            return http.status != 404;
+        }
+        if (LinkCheck("https://qc1159.github.io/Quick-Chat/Online")) {
+            console.log("Good")
+        } else {
+            console.log("AHHH")
+        }
+    </script>
 </body>
 </html>
