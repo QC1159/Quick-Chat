@@ -1,37 +1,28 @@
 <html>
 <head>
-<style>
-#rainbow {
-  font-size: 36px;
-  text-align: center;
-}
+    <style>
+        #rainbow {
+            font-size: 36px;
+            text-align: center;
+            animation: color-change 2s infinite;
+        }
 
-</style>
-<script>
-// This function generates a random color in hexadecimal format
-function randomColor() {
-  let hex = Math.floor (Math.random() * 16777215).toString (16);
-  return "#" + hex;
-}
+        @keyframes color-change {
+            0% {
+                color: red;
+            }
 
-// This function changes the color of each letter in the text
-function changeColor() {
-  let text = document.getElementById ("rainbow").innerText;
-  let result = "";
-  for (let i = 0; i < text.length; i++) {
-    let color = randomColor();
-    result += "<span style=\"color:" + color + "\">" + text [i] + "</span>";
-  }
-  document.getElementById ("rainbow").innerHTML = result;
-}
+            50% {
+                color: blue;
+            }
 
-// This function calls the changeColor function every 100 milliseconds
-function startAnimation() {
-  setInterval (changeColor, 100);
-}
-</script>
+            100% {
+                color: red;
+            }
+        }
+    </style>
 </head>
-<body onload="startAnimation()">
-<h1 id="rainbow">Quick Chat</h1>
+<body>
+    <h1 id="rainbow">Quick Chat</h1>
 </body>
 </html>
