@@ -54,9 +54,11 @@ background-color: #99bbff
             return http.status != 404;
         }
         if (LinkCheck("https://qc1159.github.io/Quick-Chat/Online")) {
-            console.log("Good")
+            console.log("Online")
         } else {
-            console.log("AHHH")
+            document.querySelector('html').innerHTML = `<div>
+            <h1>This Page is Down for Maintenance</h1>
+            </div >`;
         }
     </script>
 </body>
