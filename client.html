@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+    
+    <head>
+        <script type="text/javascript" src="socketfunctions.js">
+        </script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <title>
+            Quick Chat
+        </title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body id="body">
+        <div id="coverer">
+        <img src="./Quick Chat Logo.png">
+        </div>
+        <div id="displayArea">
+        </div>
+        <div id="displayArea2">
+        </div>
+        <br>
+        <br>
+        <div id="messageSend">
+        <input placeholder="Message..." id="messageInput">
+        <button id="send" onClick="send(document.getElementById('messageInput').value, from, to); document.getElementById('messageInput').value = ''">Send</button>
+        </div>
+        <script type="text/javascript" src="textdisplay.js"></script>
+        <script type="text/javascript">
+            from = "Test1"
+            to = "Test2"
+
+            startSocket()
+
+            ws.onopen = function() {
+                document.getElementById("coverer").style.display = "none"
+                document.getElementById("body").style.overflow = "auto"
+            }
+
+            ws.onmessage = function (message) {
+                if (message.data.startsWith("QUICKCHAT")) {
+                    displayText(message.data)
+                }
+            }
+
+            document.getElementById("messageInput").addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("send").click();
+                }
+            });
+        </script>
+    </body>
+
+</html>
