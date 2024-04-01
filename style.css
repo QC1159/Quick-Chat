@@ -6,13 +6,14 @@ body {
 .speech-bubble {
     position: relative;
     float: left;
-    background: #00aabb;
+    background: #5755FE;
     border-radius: .4em;
     color: white;
     padding: 10px;
     margin-top: 10px;
     text-align: center;
     margin-bottom: 20px;
+    z-index: 0;
 }
 
     .speech-bubble:after {
@@ -23,23 +24,25 @@ body {
         width: 0;
         height: 0;
         border: 20px solid transparent;
-        border-top-color: #00aabb;
+        border-top-color: #5755FE;
         border-bottom: 0;
         border-left: 0;
         margin-left: -10px;
         margin-bottom: -20px;
+        z-index: 0;
     }
 
 .speech-bubble2 {
     position: relative;
     float: right;
-    background: #aabbcc;
+    background: #8B93FF;
     border-radius: .4em;
     color: white;
     padding: 10px;
     margin-top: 10px;
     text-align: center;
     margin-bottom: 20px;
+    z-index: 0;
 }
 
     .speech-bubble2:after {
@@ -50,11 +53,13 @@ body {
         width: 0;
         height: 0;
         border: 20px solid transparent;
-        border-top-color: #aabbcc;
+        border-top-color: #8B93FF;
         border-bottom: 0;
         border-left: 0;
         margin-left: -10px;
         margin-bottom: -20px;
+        z-index: 0;
+        transform: scaleX(-1);
     }
 
 #messageSend {
@@ -62,15 +67,46 @@ body {
     bottom: 0px;
     width: 98%;
     text-align: center;
+    font-size: 0;
+    z-index: 10;
 }
 
 #messageInput {
-    width: 85%;
+    width: 70%; /* Adjust as needed */
+    padding: 10px;
+    padding-right: 0;
+    margin-right: 0;
+    border: none;
+    border-radius: 20px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    outline: none;
+    font-size: 16px;
+    background-color: #eee;
+    display: inline-block;
 }
 
 #send {
-    width: 14%;
+    width: 20%; /* Adjust as needed */
+    padding: 10px;
+    padding-left: 0;
+    margin-left: 0;
+    border: none;
+    border-radius: 20px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
 }
+
+    #send:hover {
+        background-color: #45a049; /* Darker Green */
+    }
+
 
 #coverer {
     width: 100vw;

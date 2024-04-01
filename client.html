@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-    
     <head>
         <script type="text/javascript" src="socketfunctions.js">
         </script>
@@ -11,10 +10,9 @@
         </title>
         <link rel="stylesheet" href="style.css">
     </head>
-    
     <body id="body">
         <div id="coverer">
-        <img src="./Quick Chat Logo.png" id="coverimg">
+        <img alt="LOGO" src="./Quick Chat Logo.png" id="coverimg">
         </div>
         <div id="displayArea">
         </div>
@@ -28,19 +26,37 @@
         </div>
         <script type="text/javascript" src="textdisplay.js"></script>
         <script type="text/javascript">
-            from = "Test1"
-            to = "Test2"
+            document.getElementById("body").style.background = "#5CB9FF"
+
+            function getParameterByName(name) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }  
+
+            //from = "Test1"
+            //to = "Test2"
+
+            from = getParameterByName("from")
+            to = getParameterByName("to")
+            password = getParameterByName("pass")
 
             startSocket()
 
             ws.onopen = function() {
                 document.getElementById("coverer").style.display = "none"
                 document.getElementById("body").style.overflow = "auto"
+                document.getElementById("body").style.background = "white"
+                ws.send("QCRV " + from + "[:PASSWORD:]" + password)
             }
 
             ws.onmessage = function (message) {
-                if (message.data.startsWith("QUICKCHAT")) {
-                    displayText(message.data)
+                if (message.data.startsWith(from + "QUICKCHAT")) {
+                    if (message.data.includes(",$from=" + from + ",$to=")) {
+                        displayText2(message.data.substring(16 + from.length).slice(0, -15-to.length-from.length))
+                    } 
+                    if (message.data.includes(",$to=" + from + "}]")) {
+                        displayText(message.data.substring(16 + from.length).slice(0, -15-to.length-from.length))
+                    } 
                 }
             }
 
@@ -52,5 +68,4 @@
             });
         </script>
     </body>
-
 </html>
