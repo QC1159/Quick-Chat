@@ -51,10 +51,10 @@
 
             ws.onmessage = function (message) {
                 if (message.data.startsWith(from + "QUICKCHAT")) {
-                    if (message.data.includes(",$from=" + from + ",$to=")) {
+                    if (message.data.includes(",$from=" + from + ",$to=") && message.data.includes(",$to=" + to + "}]")) {
                         displayText2(message.data.substring(16 + from.length).slice(0, -15-to.length-from.length))
                     } 
-                    if (message.data.includes(",$to=" + from + "}]")) {
+                    if (message.data.includes(",$to=" + from + "}]") && message.data.includes(",$from=" + to + ",$to=")) {
                         displayText(message.data.substring(16 + from.length).slice(0, -15-to.length-from.length))
                     } 
                 }

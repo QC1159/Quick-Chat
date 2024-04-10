@@ -36,18 +36,46 @@
         }
 
             .slb:hover {
+                background-color: #0054B9;
+            }
+
+            .slb:active {
                 background-color: #00A4F9;
             }
+
+        p {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <input type="text" class="NamePass" placeholder="Username">
-        <input type="password" class="NamePass" placeholder="Password">
-        <button class="slb">LOG IN</button>
+        <input type="text" class="NamePass" placeholder="Username" id="Username">
+        <input type="password" class="NamePass" placeholder="Password" id="Password">
+        <button class="slb" onclick="signIn()">LOG IN</button>
     </div>
+    <script src="./socketfunctions.js"></script>
     <script>
-        //window.location.replace("client.html?from=Test1&to=Test2&pass=P@$$W0RD")
+        startSocket()
+
+        function signIn() {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send("QCC " + document.getElementById("Username").value + "[:PASSWORD:]" + document.getElementById("Password").value)
+                ws.onmessage = function (message) {
+                    if (message.data == "GTG " + document.getElementById("Username").value + "[:PASSWORD:]" + document.getElementById("Password").value) {
+                        window.location.replace('select.html?from=' + document.getElementById("Username").value + '&pass=' + document.getElementById("Password").value)
+                    } else if (message.data == "ADNE " + document.getElementById("Username").value + "[:PASSWORD:]" + document.getElementById("Password").value) {
+                        const container = document.querySelector('.container');
+                        const elem = document.createElement("p");
+                        const text = document.createTextNode("Wrong Password or Username! Please try again!");
+                        elem.appendChild(text);
+                        container.appendChild(elem);
+                    }
+                }
+            } else {
+                document.write("Oops! Something went wrong. Please reload the page and try again. If the issue persists, try again later.")
+            }
+        }
     </script>
 </body>
 </html>
