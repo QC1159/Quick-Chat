@@ -1041,9 +1041,9 @@
         });
 
         //const socket = new WebSocket('ws://localhost:12345');
-        const socket = new WebSocket('ws://192.168.1.66:12345');
-        var WSLTURL = "tasty-animals-relate.loca.lt"
-        //const socket = new WebSocket('ws://' + WSLTURL);
+        //const socket = new WebSocket('ws://192.168.1.66:12345');
+        var WSLTURL = "social-trains-brush.loca.lt"
+        const socket = new WebSocket('ws://' + WSLTURL);
         let currentUsername = getCookie("quickChatUser");
         let currentPassword = getCookie("quickChatPass");
         const themeSelect = document.getElementById("theme-select")
