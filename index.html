@@ -1043,7 +1043,7 @@
         //const socket = new WebSocket('ws://localhost:12345');
         //const socket = new WebSocket('ws://192.168.1.66:12347');
         var WSLTURL = "463ca48571c1522b09e2659fbfc1951d.serveo.net"
-        const socket = new WebSocket('ws://' + WSLTURL);
+        const socket = new WebSocket('wss://' + WSLTURL);
         let currentUsername = getCookie("quickChatUser");
         let currentPassword = getCookie("quickChatPass");
         const themeSelect = document.getElementById("theme-select")
