@@ -1041,9 +1041,9 @@
         });
 
         //const socket = new WebSocket('ws://localhost:12345');
-        //const socket = new WebSocket('ws://192.168.1.66:12345');
-        var WSLTURL = "hip-geese-raise.loca.lt"
-        const socket = new WebSocket('wss://' + WSLTURL);
+        //const socket = new WebSocket('ws://192.168.1.66:12347');
+        var WSLTURL = "463ca48571c1522b09e2659fbfc1951d.serveo.net"
+        const socket = new WebSocket('ws://' + WSLTURL);
         let currentUsername = getCookie("quickChatUser");
         let currentPassword = getCookie("quickChatPass");
         const themeSelect = document.getElementById("theme-select")
@@ -1061,8 +1061,8 @@
 
         socket.onmessage = function (event) {
             // Handle server response
-            const message = event.data;
-
+            let message = event.data;
+            //message = atob(message)
             console.log(message)
 
             if (message.substring(0, 4) === "1001") {
