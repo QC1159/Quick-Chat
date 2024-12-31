@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Chat</title>
-    <link rel="icon" type="image/x-icon" href="./Logo.png">
+    <link rel="icon" type="image/x-icon" href="/Logo.png">
     <style id="root-style">
         /*:root {
                     --sent-message-bg: #4caf50;
@@ -1042,7 +1042,7 @@
 
         //const socket = new WebSocket('ws://localhost:12345');
         //const socket = new WebSocket('ws://192.168.1.66:12347');
-        var WSLTURL = "204f8c70d448910827bd00f45576147f.serveo.net"
+        var WSLTURL = "quickchat.serveo.net"
         const socket = new WebSocket('wss://' + WSLTURL);
         let currentUsername = getCookie("quickChatUser");
         let currentPassword = getCookie("quickChatPass");
