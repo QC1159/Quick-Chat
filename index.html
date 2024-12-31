@@ -1032,6 +1032,7 @@ box-shadow: 2px 0 5px var(--box-shadow);
 		font-family: "Parkinsans", serif;
 		top: calc(50% - 168.5px - 27%) !important;
 		color: yellow;
+		z-index: -5;
 	}
     </style>
 
@@ -1365,7 +1366,9 @@ box-shadow: 2px 0 5px var(--box-shadow);
 		function confirmAccountDeletion() {
 			const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
 			if (confirmation) {
-				deleteAccount();
+				if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
+					deleteAccount();
+				}
 			}
 		}
 
