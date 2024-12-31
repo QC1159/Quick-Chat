@@ -269,57 +269,72 @@
             --icons-bg: #7b1fa2;
         }
 
-        /* White & Gray theme */
-        .white {
-            --sent-message-bg: #e0e0e0;
-            --sent-message-text: #000;
-            --sent-message-border: #bdbdbd;
-            --received-message-bg: #ffffff;
-            --received-message-text: #000;
-            --received-message-border: #bdbdbd;
-            --background-color: #f3f4f6;
-            --container-bg: #ffffff;
-            --box-shadow: rgba(0, 0, 0, 0.1);
-            --primary-text: #333333;
-            --button-bg: #e0e0e0;
-            --button-hover-bg: #d6d6d6;
-            --button-disabled-bg: #f0f0f0;
-            --link-color: #757575;
-            --chat-setup-bg: #f7f7f7;
-            --logout-bg: #f7f7f7;
-            --logout-border: #bdbdbd;
-            --logout-hover-bg: #e0e0e0;
-            --settings-bg: #ffffff;
-            --fade-bg: black;
-            --fade-opacity: 0.5;
-            --icons-bg: #bdbdbd;
-        }
+/* White & Gray theme with softer gray tones replacing dark blues */
+.white {
+  --sent-message-bg: #e6f7ff; /* Light blue for sent messages */
+  --sent-message-text: #1a1a1a; /* Darker text for better readability */
+  --sent-message-border: #99d6f5; /* Subtle blue border for sent messages */
+  
+  --received-message-bg: #ffffff; /* Clean white background for received messages */
+  --received-message-text: #1a1a1a; /* Darker text for received messages */
+  --received-message-border: #cccccc; /* Slightly darker gray border for received messages */
+  
+  --background-color: #f5f5f5; /* Light gray background for the overall page */
+  --container-bg: #ffffff; /* Pure white for containers */
+  --box-shadow: rgba(0, 0, 0, 0.15); /* Slightly darker shadow for better separation */
+  
+  --primary-text: #1a1a1a; /* Very dark gray text for high contrast */
+  --button-bg: #5a5a5a; /* Neutral medium gray for buttons */
+  --button-hover-bg: #4d4d4d; /* Darker gray for hover effect */
+  --button-disabled-bg: #cccccc; /* Neutral light gray for disabled buttons */
+  
+  --link-color: #6c757d; /* Muted grayish-blue for links */
+  --link-hover-color: #495057; /* Darker gray for link hover states */
+  
+  --chat-setup-bg: #f0f8ff; /* Very light blue background for chat setup */
+  --logout-bg: #f9f9f9; /* Soft light gray background for logout */
+  --logout-border: #dcdcdc; /* Subtle border for logout button */
+  --logout-hover-bg: #e6e6e6; /* Slightly darker gray on hover */
+  
+  --settings-bg: #ffffff; /* Clean white background for settings */
+  --fade-bg: rgba(0, 0, 0, 0.25); /* Slightly darker black fade */
+  --fade-opacity: 0.6; /* Slightly stronger opacity for background fades */
+  
+  --icons-bg: #cccccc; /* Neutral gray for icons */
+  --icons-hover-bg: #999999; /* Darker gray for icons on hover */
+}
+
+
+
+
 
         /* Dark theme */
-        .dark {
-            --sent-message-bg: #3e3e3e;
-            --sent-message-text: #f5f5f5;
-            --sent-message-border: #5a5a5a;
-            --received-message-bg: #292929;
-            --received-message-text: #f5f5f5;
-            --received-message-border: #464646;
-            --background-color: #181818;
-            --container-bg: #202020;
-            --box-shadow: rgba(0, 0, 0, 0.7);
-            --primary-text: #fff;
-            --button-bg: #3a3a3a;
-            --button-hover-bg: #4f4f4f;
-            --button-disabled-bg: #555555;
-            --link-color: #64b5f6;
-            --chat-setup-bg: #202020;
-            --logout-bg: #202020;
-            --logout-border: #4a4a4a;
-            --logout-hover-bg: #383838;
-            --settings-bg: #252525;
-            --fade-bg: black;
-            --fade-opacity: 0.85;
-            --icons-bg: #4a4a4a;
-        }
+.dark {
+  --sent-message-bg: #2c3e50;
+  --sent-message-text: #ecf0f1;
+  --sent-message-border: #3498db;
+  --received-message-bg: #292929;
+  --received-message-text: #f5f5f5;
+  --received-message-border: #464646;
+  --background-color: #121212;
+  --container-bg: #1d1d1d;
+  --box-shadow: rgba(0, 0, 0, 0.9);
+  --primary-text: #d1d1d1;
+  --button-bg: #1e3a8a;
+  --button-hover-bg: #ff6347;
+  --button-disabled-bg: #374151;
+  --link-color: #16a085;
+  --chat-setup-bg: #252525;
+  --logout-bg: #252525;
+  --logout-border: #1e3a8a;
+  --logout-hover-bg: #666666;
+  --settings-bg: #292929;
+  --fade-bg: black;
+  --fade-opacity: 0.9;
+  --icons-bg: #1e3a8a;
+}
+
+
     </style>
     <style>
 .collapse-button {
