@@ -322,6 +322,54 @@
         }
     </style>
     <style>
+.collapse-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: var(--primary-text);
+    position: fixed;
+    top: 11%;  /* Adjust this for the distance from the top of the sidebar */
+    left: 30px;
+    transform: translateX(-50%); /* Centers the button horizontally */
+    z-index: 3;
+    transition: left 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Add left transition */
+}
+
+.collapse-button:hover {
+    color: var(--button-bg);
+}
+
+.collapse-icon {
+    display: inline-block;
+    font-size: 30px;
+    transition: transform 0.3s ease;
+}
+
+/* Sidebar full width */
+.contacts-sidebar {
+    width: 250px; /* Sidebar width when expanded */
+    transition: width 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+/* Collapse Sidebar: Disappear completely */
+.contacts-sidebar.collapsed {
+    width: 0;
+    opacity: 0; /* Fades out when collapsed */
+}
+
+/* When sidebar is collapsed, change the icon to ">" */
+.contacts-sidebar.collapsed ~ .collapse-button {
+background-color: var(--container-bg);
+box-shadow: 2px 0 5px var(--box-shadow);
+    left: 0;  /* Smooth transition for left */
+    transform: translateX(0); /* Adjust if needed */
+}
+
+
+
+
         .NewMsgButton {
             width: 100%;
             max-width: 400px;
@@ -774,7 +822,7 @@
 
         .contacts-sidebar {
             position: absolute;
-            bottom: 10%;
+            top: 10%;
             left: 10px;
             width: 200px;
             height: 80%;
@@ -930,6 +978,7 @@
 
     <div id="chat-setup-page" style="display: none;">
         <div class="contacts-sidebar" id="contacts-sidebar">
+
             <h3>Contacts</h3>
             <!--
             <div class="contact-item" onclick="startChatFromButton('jack')">
@@ -946,6 +995,9 @@
             </div>
             -->
         </div>
+		<button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
+    <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
+</button>
 
         <div onclick="settings()" class="icon-div" style="transform: none">
         </div>
@@ -1036,6 +1088,22 @@
 
 
     <script>
+	function toggleSidebar() {
+    const sidebar = document.getElementById('contacts-sidebar');
+    const collapseIcon = document.getElementById('collapse-icon');
+    
+    // Toggle the collapsed state
+    sidebar.classList.toggle('collapsed');
+    
+    // Change the icon between < and >
+    if (sidebar.classList.contains('collapsed')) {
+        collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
+    } else {
+        collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
+    }
+}
+
+
         let connectedUsr = ""
         let alert = false
 
