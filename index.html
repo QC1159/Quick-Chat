@@ -891,6 +891,14 @@
             font-weight: bold;
             font-size: 16px;
         }
+		
+		#delete-account-button {
+  background-color: #f44336; /* Red for warning */
+  border-color: #d32f2f;
+}
+#delete-account-button:hover {
+  background-color: #d32f2f;
+}
 
     </style>
 
@@ -984,6 +992,7 @@
                     <option value="dark">Dark</option>
                 </select>
             </div>
+			<button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
         </div>
     </div>
     <div id="NewMsgs" style="display:none;">
@@ -1189,7 +1198,20 @@
                 console.log(message.substring(4))
             }
         };
+		
+		function confirmAccountDeletion() {
+			const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+			if (confirmation) {
+				deleteAccount();
+			}
+		}
 
+		function deleteAccount() {
+			socket.send("0701")
+			closeSettings()
+			logout()
+		}
+		
         function setCookie(name, value, days) {
             if (getCookie("CookiesAllowed") || name == "CookiesAllowed") {
                 const date = new Date();
@@ -1349,6 +1371,7 @@
             themeSelect.value = "blue"
             document.getElementById("contacts-sidebar").innerHTML = "<h3>Contacts</h3>"
             document.getElementById("newMsgs-area").innerHTML = ""
+			location.reload()
         }
 
         function startChat() {
