@@ -3,47 +3,1705 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found</title>
+    <title>Quick Chat</title>
+    <link rel="icon" type="image/x-icon" href="./Logo.png">
+    <style id="root-style">
+        /*:root {
+                    --sent-message-bg: #4caf50;
+                    --sent-message-text: #fff;
+                    --sent-message-border: #388e3c;
+                    --received-message-bg: #e0e0e0;
+                    --received-message-text: #000;
+                    --received-message-border: #bdbdbd;
+                    --background-color: #f3f4f6; /* Background color (body & chat page) *
+                    --container-bg: #ffffff; /* Container background *
+                    --box-shadow: rgba(0, 0, 0, 0.1); /* General shadow *
+
+                    --primary-text: #333333; /* Text color *
+                    --button-bg: #1E3A8A; /* Primary button color *
+                    --button-hover-bg: #1A237E; /* Button hover color *
+                    --button-disabled-bg: #5C6BC0; /* Button disabled color *
+                    --link-color: #1E3A8A; /* Link color *
+
+                    --chat-setup-bg: #E8EAF6; /* Chat setup background *
+                    --logout-bg: #E8EAF6; /* Logout button background *
+                    --logout-border: #1A237E; /* Logout button border *
+                    --logout-hover-bg: #C5CAE9; /* Logout hover background *
+
+                    --settings-bg: #ffffff; /* Settings pane background *
+                    --fade-bg: black; /* Fade background for overlays *
+                    --fade-opacity: 0.5; /* Fade opacity *
+
+                    --icons-bg: #1A237E;
+                }*/
+
+        /*:root {
+          --sent-message-bg: #4caf50;
+          --sent-message-text: #fff;
+          --sent-message-border: #388e3c;
+          --received-message-bg: #e0e0e0;
+          --received-message-text: #000;
+          --received-message-border: #bdbdbd;
+          --background-color: #f3f4f6;
+          --container-bg: #ffffff;
+          --box-shadow: rgba(0, 0, 0, 0.1);
+          --primary-text: #333333;
+          --button-bg: #4caf50;
+          --button-hover-bg: #388e3c;
+          --button-disabled-bg: #81c784;
+          --link-color: #4caf50;
+          --chat-setup-bg: #E8F5E9;
+          --logout-bg: #E8F5E9;
+          --logout-border: #388e3c;
+          --logout-hover-bg: #C8E6C9;
+          --settings-bg: #ffffff;
+          --fade-bg: black;
+          --fade-opacity: 0.5;
+          --icons-bg: #388e3c;
+        }
+        */
+
+        /*:root {
+          --sent-message-bg: #ffeb3b;
+          --sent-message-text: #000;
+          --sent-message-border: #fbc02d;
+          --received-message-bg: #f0f0f0;
+          --received-message-text: #000;
+          --received-message-border: #bdbdbd;
+          --background-color: #fffde7;
+          --container-bg: #ffffff;
+          --box-shadow: rgba(0, 0, 0, 0.1);
+          --primary-text: #333333;
+          --button-bg: #ffeb3b;
+          --button-hover-bg: #fbc02d;
+          --button-disabled-bg: #fff59d;
+          --link-color: #ffeb3b;
+          --chat-setup-bg: #fff9c4;
+          --logout-bg: #fff9c4;
+          --logout-border: #fbc02d;
+          --logout-hover-bg: #fff59d;
+          --settings-bg: #ffffff;
+          --fade-bg: black;
+          --fade-opacity: 0.5;
+          --icons-bg: #fbc02d;
+        }
+        */
+
+        /* Default theme variables (Green) */
+        :root {
+            --sent-message-bg: #4caf50;
+            --sent-message-text: #fff;
+            --sent-message-border: #388e3c;
+            --received-message-bg: #e0e0e0;
+            --received-message-text: #000;
+            --received-message-border: #bdbdbd;
+            --background-color: #f3f4f6; /* Background color (body & chat page) */
+            --container-bg: #ffffff; /* Container background */
+            --box-shadow: rgba(0, 0, 0, 0.1); /* General shadow */
+            --primary-text: #333333; /* Text color */
+            --button-bg: #1E3A8A; /* Primary button color */
+            --button-hover-bg: #1A237E; /* Button hover color */
+            --button-disabled-bg: #5C6BC0; /* Button disabled color */
+            --link-color: #1E3A8A; /* Link color */
+            --chat-setup-bg: #E8EAF6; /* Chat setup background */
+            --logout-bg: #E8EAF6; /* Logout button background */
+            --logout-border: #1A237E; /* Logout button border */
+            --logout-hover-bg: #C5CAE9; /* Logout hover background */
+            --settings-bg: #ffffff; /* Settings pane background */
+            --fade-bg: black; /* Fade background for overlays */
+            --fade-opacity: 0.5; /* Fade opacity */
+            --icons-bg: #1A237E;
+        }
+
+        /* Red theme */
+        .red {
+            --sent-message-bg: #f44336;
+            --sent-message-text: #fff;
+            --sent-message-border: #d32f2f;
+            --received-message-bg: #ffebee;
+            --received-message-text: #000;
+            --received-message-border: #ef9a9a;
+            --background-color: #f3f4f6;
+            --container-bg: #ffffff;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --primary-text: #333333;
+            --button-bg: #f44336;
+            --button-hover-bg: #d32f2f;
+            --button-disabled-bg: #ff7961;
+            --link-color: #f44336;
+            --chat-setup-bg: #ffebee;
+            --logout-bg: #ffebee;
+            --logout-border: #d32f2f;
+            --logout-hover-bg: #ef9a9a;
+            --settings-bg: #ffffff;
+            --fade-bg: black;
+            --fade-opacity: 0.5;
+            --icons-bg: #d32f2f;
+        }
+
+        /* Orange theme */
+        .orange {
+            --sent-message-bg: #ff9800;
+            --sent-message-text: #fff;
+            --sent-message-border: #f57c00;
+            --received-message-bg: #fff3e0;
+            --received-message-text: #000;
+            --received-message-border: #ffcc80;
+            --background-color: #f3f4f6;
+            --container-bg: #ffffff;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --primary-text: #333333;
+            --button-bg: #ff9800;
+            --button-hover-bg: #f57c00;
+            --button-disabled-bg: #ffb74d;
+            --link-color: #ff9800;
+            --chat-setup-bg: #fff3e0;
+            --logout-bg: #fff3e0;
+            --logout-border: #f57c00;
+            --logout-hover-bg: #ffcc80;
+            --settings-bg: #ffffff;
+            --fade-bg: black;
+            --fade-opacity: 0.5;
+            --icons-bg: #f57c00;
+        }
+
+        /* Yellow theme */
+        .yellow {
+            --sent-message-bg: #ffeb3b;
+            --sent-message-text: #000;
+            --sent-message-border: #fbc02d;
+            --received-message-bg: #fffde7;
+            --received-message-text: #000;
+            --received-message-border: #fff59d;
+            --background-color: #f3f4f6;
+            --container-bg: #ffffff;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --primary-text: #333333;
+            --button-bg: #ffeb3b;
+            --button-hover-bg: #fbc02d;
+            --button-disabled-bg: #fff176;
+            --link-color: #ffeb3b;
+            --chat-setup-bg: #fffde7;
+            --logout-bg: #fffde7;
+            --logout-border: #fbc02d;
+            --logout-hover-bg: #fff59d;
+            --settings-bg: #ffffff;
+            --fade-bg: black;
+            --fade-opacity: 0.5;
+            --icons-bg: #fbc02d;
+        }
+
+        /* Green theme (already defined in :root) */
+        .green {
+            --sent-message-bg: #4caf50;
+            --sent-message-text: #fff;
+            --sent-message-border: #388e3c;
+            --received-message-bg: #e0e0e0;
+            --received-message-text: #000;
+            --received-message-border: #bdbdbd;
+            --background-color: #f3f4f6;
+            --container-bg: #ffffff;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --primary-text: #333333;
+            --button-bg: #4caf50;
+            --button-hover-bg: #388e3c;
+            --button-disabled-bg: #81c784;
+            --link-color: #4caf50;
+            --chat-setup-bg: #E8F5E9;
+            --logout-bg: #E8F5E9;
+            --logout-border: #388e3c;
+            --logout-hover-bg: #C8E6C9;
+            --settings-bg: #ffffff;
+            --fade-bg: black;
+            --fade-opacity: 0.5;
+            --icons-bg: #388e3c;
+        }
+
+        /* Blue theme */
+        .blue {
+            --sent-message-bg: #4caf50;
+            --sent-message-text: #fff;
+            --sent-message-border: #388e3c;
+            --received-message-bg: #e0e0e0;
+            --received-message-text: #000;
+            --received-message-border: #bdbdbd;
+            --background-color: #f3f4f6; /* Background color (body & chat page) */
+            --container-bg: #ffffff; /* Container background */
+            --box-shadow: rgba(0, 0, 0, 0.1); /* General shadow */
+            --primary-text: #333333; /* Text color */
+            --button-bg: #1E3A8A; /* Primary button color */
+            --button-hover-bg: #1A237E; /* Button hover color */
+            --button-disabled-bg: #5C6BC0; /* Button disabled color */
+            --link-color: #1E3A8A; /* Link color */
+            --chat-setup-bg: #E8EAF6; /* Chat setup background */
+            --logout-bg: #E8EAF6; /* Logout button background */
+            --logout-border: #1A237E; /* Logout button border */
+            --logout-hover-bg: #C5CAE9; /* Logout hover background */
+            --settings-bg: #ffffff; /* Settings pane background */
+            --fade-bg: black; /* Fade background for overlays */
+            --fade-opacity: 0.5; /* Fade opacity */
+            --icons-bg: #1A237E;
+        }
+
+        /* Purple theme */
+        .purple {
+            --sent-message-bg: #9c27b0;
+            --sent-message-text: #fff;
+            --sent-message-border: #7b1fa2;
+            --received-message-bg: #f3e5f5;
+            --received-message-text: #000;
+            --received-message-border: #ba68c8;
+            --background-color: #f3f4f6;
+            --container-bg: #ffffff;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --primary-text: #333333;
+            --button-bg: #9c27b0;
+            --button-hover-bg: #7b1fa2;
+            --button-disabled-bg: #ba68c8;
+            --link-color: #9c27b0;
+            --chat-setup-bg: #f3e5f5;
+            --logout-bg: #f3e5f5;
+            --logout-border: #7b1fa2;
+            --logout-hover-bg: #ba68c8;
+            --settings-bg: #ffffff;
+            --fade-bg: black;
+            --fade-opacity: 0.5;
+            --icons-bg: #7b1fa2;
+        }
+
+/* White & Gray theme with softer gray tones replacing dark blues */
+.white {
+  --sent-message-bg: #e6f7ff; /* Light blue for sent messages */
+  --sent-message-text: #1a1a1a; /* Darker text for better readability */
+  --sent-message-border: #99d6f5; /* Subtle blue border for sent messages */
+  
+  --received-message-bg: #ffffff; /* Clean white background for received messages */
+  --received-message-text: #1a1a1a; /* Darker text for received messages */
+  --received-message-border: #cccccc; /* Slightly darker gray border for received messages */
+  
+  --background-color: #f5f5f5; /* Light gray background for the overall page */
+  --container-bg: #ffffff; /* Pure white for containers */
+  --box-shadow: rgba(0, 0, 0, 0.15); /* Slightly darker shadow for better separation */
+  
+  --primary-text: #1a1a1a; /* Very dark gray text for high contrast */
+  --button-bg: #5a5a5a; /* Neutral medium gray for buttons */
+  --button-hover-bg: #4d4d4d; /* Darker gray for hover effect */
+  --button-disabled-bg: #cccccc; /* Neutral light gray for disabled buttons */
+  
+  --link-color: #6c757d; /* Muted grayish-blue for links */
+  --link-hover-color: #495057; /* Darker gray for link hover states */
+  
+  --chat-setup-bg: #f0f8ff; /* Very light blue background for chat setup */
+  --logout-bg: #f9f9f9; /* Soft light gray background for logout */
+  --logout-border: #dcdcdc; /* Subtle border for logout button */
+  --logout-hover-bg: #e6e6e6; /* Slightly darker gray on hover */
+  
+  --settings-bg: #ffffff; /* Clean white background for settings */
+  --fade-bg: rgba(0, 0, 0, 0.25); /* Slightly darker black fade */
+  --fade-opacity: 0.6; /* Slightly stronger opacity for background fades */
+  
+  --icons-bg: #cccccc; /* Neutral gray for icons */
+  --icons-hover-bg: #999999; /* Darker gray for icons on hover */
+}
+
+
+
+
+
+        /* Dark theme */
+.dark {
+  --sent-message-bg: #2c3e50;
+  --sent-message-text: #ecf0f1;
+  --sent-message-border: #3498db;
+  --received-message-bg: #292929;
+  --received-message-text: #f5f5f5;
+  --received-message-border: #464646;
+  --background-color: #121212;
+  --container-bg: #1d1d1d;
+  --box-shadow: rgba(0, 0, 0, 0.9);
+  --primary-text: #d1d1d1;
+  --button-bg: #1e3a8a;
+  --button-hover-bg: #ff6347;
+  --button-disabled-bg: #374151;
+  --link-color: #16a085;
+  --chat-setup-bg: #252525;
+  --logout-bg: #252525;
+  --logout-border: #1e3a8a;
+  --logout-hover-bg: #666666;
+  --settings-bg: #292929;
+  --fade-bg: black;
+  --fade-opacity: 0.9;
+  --icons-bg: #1e3a8a;
+}
+
+
+    </style>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+.collapse-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: var(--primary-text);
+    position: fixed;
+    top: 11%;  /* Adjust this for the distance from the top of the sidebar */
+    left: 30px;
+    transform: translateX(-50%); /* Centers the button horizontally */
+    z-index: 3;
+    transition: left 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Add left transition */
+}
+
+.collapse-button:hover {
+    color: var(--button-bg);
+}
+
+.collapse-icon {
+    display: inline-block;
+    font-size: 30px;
+    transition: transform 0.3s ease;
+}
+
+/* Sidebar full width */
+.contacts-sidebar {
+    width: 250px; /* Sidebar width when expanded */
+    transition: width 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+/* Collapse Sidebar: Disappear completely */
+.contacts-sidebar.collapsed {
+    width: 0;
+    opacity: 0; /* Fades out when collapsed */
+}
+
+/* When sidebar is collapsed, change the icon to ">" */
+.contacts-sidebar.collapsed ~ .collapse-button {
+background-color: var(--container-bg);
+box-shadow: 2px 0 5px var(--box-shadow);
+    left: 0;  /* Smooth transition for left */
+    transform: translateX(0); /* Adjust if needed */
+}
+
+
+
+
+        .NewMsgButton {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
             text-align: center;
-            padding: 50px;
+            transition: background-color 0.3s ease-in-out, transform 0.2s;
+            box-shadow: 0 4px 6px var(--box-shadow);
         }
 
-        h1 {
-            font-size: 2em;
-            color: #333;
-        }
-
-        p {
-            color: #666;
-        }
-
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-            a:hover {
-                text-decoration: underline;
+            /* Hover effect */
+            .NewMsgButton:hover {
+                background-color: var(--button-hover-bg);
+                transform: scale(1.05);
             }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            /* Disabled state */
+            .NewMsgButton:disabled {
+                background-color: var(--button-disabled-bg);
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+        html, body {
+            overflow: hidden;
         }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            /*background-color: var(--background-color);*/
+			background: linear-gradient(135deg, #6a11cb, #2575fc) !important;
+        }
+
+        .container {
+            width: 300px;
+            padding: 20px;
+            background-color: var(--container-bg);
+            box-shadow: 0px 4px 8px var(--box-shadow);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h2, p {
+            color: var(--primary-text);
+        }
+
+        .dark h2 {
+            color: var(--primary-text) !important;
+        }
+
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+            .button:hover {
+                background-color: var(--button-hover-bg);
+            }
+
+            .button:disabled {
+                background-color: var(--button-disabled-bg);
+            }
+
+        .link {
+            color: var(--link-color);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        #chat-setup-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--chat-setup-bg);
+            text-align: center;
+        }
+
+            #chat-setup-page h2 {
+                color: var(--button-bg);
+            }
+
+            #chat-setup-page input[type="text"] {
+                width: 80%;
+                max-width: 400px;
+                margin: 10px 0;
+            }
+
+            #chat-setup-page .button {
+                width: 80%;
+                max-width: 400px;
+                background-color: var(--button-bg);
+            }
+
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--logout-bg);
+            border: 2px solid var(--logout-border);
+            color: var(--logout-border);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 2;
+        }
+
+            .logout-button:hover {
+                background-color: var(--logout-hover-bg);
+            }
+
+        .new-icon, .settings-icon, .back-icon, .icon-div, .new-icon-div {
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            z-index: 2;
+            filter: drop-shadow(0px 1000px 0 var(--icons-bg));
+            transform: translateY(-1000px);
+        }
+
+        .new-icon, .new-icon-div {
+            left: 50px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 10px; /* Adjust this value for vertical positioning */
+            left: 50px; /* Adjust this value for horizontal positioning */
+
+            color: red;
+            font-size: 200%;
+            font-weight: bold;
+            height: 30px;
+            width: 30px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Makes it circular */
+            z-index: 3; /* Ensure it appears above other elements */
+        }
+
+
+        #chat-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: var(--chat-setup-bg);
+            text-align: center;
+            padding-bottom: 70px;
+        }
+
+        #chat-input-area {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #chat-input {
+            float: left;
+            height: 50px;
+            width: 90%;
+            padding: 0;
+            margin: 0;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right-width: 0;
+        }
+
+        #send-button {
+            float: left;
+            height: 50px;
+            width: 10%;
+            padding: 0;
+            margin: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-left-width: 0;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            position: relative;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            display: block;
+            word-wrap: break-word;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px var(--box-shadow);
+            word-break: break-word;
+        }
+
+        .received {
+            align-self: flex-start;
+            background-color: var(--received-message-bg);
+            color: var(--received-message-text);
+            border: 1px solid var(--received-message-border);
+            margin-left: 10px;
+        }
+
+            .received::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 20%;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 10px 10px 0 10px;
+                border-color: var(--received-message-bg) transparent transparent transparent;
+            }
+
+        .sent {
+            align-self: flex-end;
+            background-color: var(--sent-message-bg);
+            color: var(--sent-message-text);
+            border: 1px solid var(--sent-message-border);
+            margin-right: 10px;
+        }
+
+            .sent::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                right: 20%;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 10px 10px 0 10px;
+                border-color: var(--sent-message-bg) transparent transparent transparent;
+            }
+
+        #chat-messages {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow-y: auto;
+            scrollbar-width: none;
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 15px;
+            text-align: left;
+            margin: 0;
+            margin-top: 25px;
+        }
+
+        /*#settings-pane {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 75%;
+                    height: 75%;
+                    z-index: 6;
+                    padding: 20px;
+                    background-color: var(--settings-bg);
+                    box-shadow: 0px 4px 8px var(--box-shadow);
+                    border-radius: 8px;
+                    text-align: center;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }*/
+
+        #settings {
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+
+        #NewMsgs {
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+
+        /*#fade {
+                    width: 100%;
+                    height: 100%;
+                    z-index: 4;
+                    background-color: var(--fade-bg);
+                    opacity: var(--fade-opacity);
+                }*/
+
+        /* Updated Settings Pane Styling */
+        #settings-pane {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 60%; /* Adjusted for a better fit */
+            max-width: 500px; /* Added max-width */
+            padding: 30px;
+            background-color: var(--settings-bg);
+            box-shadow: 0px 4px 8px var(--box-shadow);
+            border-radius: 8px;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+        }
+
+        #NewMsgs-pane {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 60%; /* Adjusted for a better fit */
+            max-width: 500px; /* Added max-width */
+            padding: 30px;
+            background-color: var(--settings-bg);
+            box-shadow: 0px 4px 8px var(--box-shadow);
+            border-radius: 8px;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+        }
+
+        /* Fade background behind settings */
+        #fade {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--fade-bg);
+            opacity: var(--fade-opacity);
+            z-index: 4;
+        }
+
+        /* Close button for settings pane */
+        .close-settings-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--logout-bg);
+            border: 2px solid var(--logout-border);
+            color: var(--logout-border);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+            .close-settings-button:hover {
+                background-color: var(--logout-hover-bg);
+            }
+
+        /* Close button for NewMsgs pane */
+        .close-NewMsgs-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--logout-bg);
+            border: 2px solid var(--logout-border);
+            color: var(--logout-border);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+            .close-NewMsgs-button:hover {
+                background-color: var(--logout-hover-bg);
+            }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+            .theme-switcher label {
+                font-size: 16px;
+                margin-bottom: 10px;
+                color: var(--primary-text);
+            }
+
+            .theme-switcher select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: var(--container-bg);
+            }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #newMsgs-area {
+            width: 100%;
+        }
+
+        .contacts-sidebar {
+            position: absolute;
+            top: 10%;
+            left: 10px;
+            width: 200px;
+            height: 80%;
+            background-color: var(--container-bg);
+            box-shadow: 2px 0 5px var(--box-shadow);
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+
+        .contacts-sidebar h3 {
+            color: var(--primary-text);
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+            .contact-item:hover {
+                background-color: var(--chat-setup-bg);
+            }
+
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 10px;
+        }
+
+        .contact-name {
+            color: var(--primary-text);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .favorite-button {
+            position: absolute;
+            top: -7px;
+            right: 90px; /* Adjust to be to the right of the logout button */
+            font-size: 40px;
+            color: var(--logout-border);
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.3s ease-in-out;
+        }
+
+            .favorite-button.filled {
+                
+            }
+
+        #Error {
+            display: flex;
+            justify-content: center; /* Centers horizontally */
+            align-items: center; /* Centers vertically */
+            background: linear-gradient(to bottom, #ff4d4d, #ff0000);
+            position: fixed;
+            z-index: 50;
+            width: 500px;
+            height: 60px;
+            bottom: -60px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: bottom 0.5s ease-in-out, background 0.3s ease-in-out;
+        }
+
+            #Error.show {
+                bottom: 20px;
+            }
+
+        #Error-Text {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        #success {
+            display: flex;
+            justify-content: center; /* Centers horizontally */
+            align-items: center; /* Centers vertically */
+            background: linear-gradient(to bottom, #90ee90, #32cd32);
+            position: fixed;
+            z-index: 50;
+            width: 500px;
+            height: 60px;
+            bottom: -60px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: bottom 0.5s ease-in-out, background 0.3s ease-in-out;
+        }
+
+            #success.show {
+                bottom: 20px;
+            }
+
+        #success-Text {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+		
+		#delete-account-button {
+  background-color: #f44336; /* Red for warning */
+  border-color: #d32f2f;
+}
+#delete-account-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Scoped styles for Sign In and Sign Up sections */
+    #signin-page, #signup-page {
+        font-family: Arial, sans-serif !important;
+        background: rgba(200, 200, 255, 0.95) !important;
+        padding: 20px !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+        width: 100% !important;
+        max-width: 400px !important;
+        text-align: center !important;
+        position: relative !important;
+        z-index: 2 !important;
+    }
+
+    #signin-page h2, #signup-page h2 {
+        margin-bottom: 20px !important;
+        font-size: 1.8rem !important;
+        color: rgba(100, 0, 255, 1) !important;
+    }
+
+    #signin-page input, #signup-page input {
+        width: calc(100% - 20px) !important;
+        padding: 12px !important;
+        margin: 10px 0 !important;
+        border: 1px solid #ddd !important;
+        border-radius: 5px !important;
+        box-sizing: border-box !important;
+        font-size: 1rem !important;
+    }
+
+    #signin-page .button, #signup-page .button {
+        width: calc(100% - 20px) !important;
+        padding: 12px !important;
+        background: linear-gradient(135deg, #6a11cb, #2575fc) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 5px !important;
+        cursor: pointer !important;
+        font-size: 1rem !important;
+        transition: background 0s ease !important;
+    }
+
+    #signin-page .button:hover, #signup-page .button:hover {
+        background: #1a5ec8 !important;
+    }
+
+    #signin-page .button:disabled, #signup-page .button:disabled {
+        background: #a5c6fc !important;
+        cursor: not-allowed !important;
+    }
+
+    #signin-page .link, #signup-page .link {
+        color: #2575fc !important;
+        cursor: pointer !important;
+        text-decoration: underline !important;
+    }
+
+    #signin-page .link:hover, #signup-page .link:hover {
+        color: #1a5ec8 !important;
+    }
+	
+	
+	#QUICKCHATh1 {
+		position: fixed !important;
+		font-size: 100px;
+		font-family: "Parkinsans", serif;
+		top: calc(50% - 168.5px - 27%) !important;
+		color: yellow;
+		z-index: -5;
+	}
     </style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <div class="container">
-        <h1>404 - Page Not Found</h1>
-        <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
-        <p><a href="https://qc1159.github.io/Quick-Chat/">Go to Homepage</a></p>
+
+	<h1 id="QUICKCHATh1">QUICK CHAT</h1>
+	
+    <div id="loading-page">
+	<div style="width: 100%; height: 100%; background-color: white; position: fixed; top: 0; left: 0; z-index: -4;"></div>
+        <img src="./Logo.png" style="height: 100px;" /><!-- animation-name: spin; animation-duration: 1000ms; animation-iteration-count: infinite; animation-timing-function: linear; "/>-->
+        <h2>Loading...</h2>
     </div>
+
+<!-- Sign In Page -->
+<div class="container" id="signin-page" style="display: none;">
+    <h2>Sign In</h2>
+    <input type="text" id="signin-username" placeholder="Username">
+    <input type="password" id="signin-password" placeholder="Password">
+    <button id="SIB" class="button" onclick="signIn()">Sign In</button>
+    <p>Don't have an account? <span class="link" onclick="showSignupPage()">Sign up</span></p>
+</div>
+
+<!-- Sign Up Page -->
+<div class="container" id="signup-page" style="display: none;">
+    <h2>Sign Up</h2>
+    <input type="text" id="signup-username" placeholder="Username">
+    <input type="password" id="signup-password" placeholder="Password">
+    <input type="password" id="signup-password-confirm" placeholder="Confirm Password">
+    <button id="SUB" class="button" onclick="signUp()">Sign Up</button>
+    <p>Already have an account? <span class="link" onclick="showSigninPage()">Sign in</span></p>
+</div>
+
+
+
+
+    <div id="chat-setup-page" style="display: none;">
+        <div class="contacts-sidebar" id="contacts-sidebar">
+
+            <h3>Contacts</h3>
+            <!--
+            <div class="contact-item" onclick="startChatFromButton('jack')">
+                <div class="contact-avatar"></div>
+                <div class="contact-name">jack</div>
+            </div>
+            <div class="contact-item" onclick="startChatFromButton('Bob')">
+                <div class="contact-avatar"></div>
+                <div class="contact-name">Bob</div>
+            </div>
+            <div class="contact-item" onclick="startChatFromButton('Charlie')">
+                <div class="contact-avatar"></div>
+                <div class="contact-name">Charlie</div>
+            </div>
+            -->
+        </div>
+		<button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
+    <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
+</button>
+
+        <div onclick="settings()" class="icon-div" style="transform: none">
+        </div>
+        <img class="settings-icon" onclick="settings()" src="./gear-icon.png" alt="Settings" />
+
+        <div onclick="NewMsgs()" class="new-icon-div" style="transform: none">
+        </div>
+        <img class="new-icon" onclick="NewMsgs()" src="./No-New-Messages.png" alt="New Messages" />
+        <div onclick="NewMsgs()" class="notification-badge" id="NewMsg-notification-badge">!</div>
+
+
+        <button class="logout-button" onclick="logout()">Log out</button>
+        <h2>Start a Chat</h2>
+        <input type="text" id="chat-username" placeholder="Enter a username to chat with">
+        <button class="button" onclick="startChat()">Start Chat</button>
+    </div>
+
+    <div id="chat-page" style="display: none;">
+        <div onclick="goToChatSetup()" class="icon-div" style="transform: none">
+        </div>
+        <img class="back-icon" onclick="goToChatSetup()" src="./back-icon.png" alt="Back" />
+        <button class="favorite-button" onclick="toggleFavorite()">&#9734;</button>
+        <button class="logout-button" onclick="logout()">Log out</button>
+        <div id="chat-messages"></div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="send-button" class="button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <div id="settings" style="display:none;">
+        <div id="fade" onclick="closeSettings()"></div>
+        <div id="settings-pane">
+            <button class="close-settings-button" onclick="closeSettings()">X</button>
+            <div class="theme-switcher">
+                <label for="theme-select">Select Theme:</label>
+                <select id="theme-select">
+                    <option value="red">Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                    <option value="white">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+			<button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
+        </div>
+    </div>
+    <div id="NewMsgs" style="display:none;">
+        <div id="fade" onclick="closeNewMsgs()"></div>
+        <div id="NewMsgs-pane">
+            <button class="close-NewMsgs-button" onclick="closeNewMsgs()">X</button>
+            <div id="newMsgs-area">
+            </div>
+            <br />
+            <br />
+            <a href="#" onclick="location.reload()" style="text-decoration:none; color:var(--link-color)">Refresh</a>
+        </div>
+    </div>
+
+    <div id="Error">
+        <p id="Error-Text">Hello</p>
+    </div>
+
+    <div id="success">
+        <p id="success-Text">Hello</p>
+    </div>
+
+    <div id="cookie-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
+        <h1 style="font-size: 1.5em; color: #333;">We Value Your Privacy</h1>
+        <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
+            To improve your experience, we use cookies to save your login details and preferences. Please let us know if this is okay with you.
+        </p>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rC()">Allow</button>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('cookie-request').style.display = 'None'">Deny</button>
+    </div>
+
+    <div id="notification-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
+        <h1 style="font-size: 1.5em; color: #333;">Would You Like to Get Notifications?</h1>
+        <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
+            Would you like to get notifications when a message arrives?
+        </p>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rN()">Allow</button>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('notification-request').style.display = 'None'; setCookie('notifications', false, 365)">Deny</button>
+    </div>
+
+
+
+    <script>
+	function toggleSidebar() {
+    const sidebar = document.getElementById('contacts-sidebar');
+    const collapseIcon = document.getElementById('collapse-icon');
+    
+    // Toggle the collapsed state
+    sidebar.classList.toggle('collapsed');
+    
+    // Change the icon between < and >
+    if (sidebar.classList.contains('collapsed')) {
+        collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
+    } else {
+        collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
+    }
+}
+
+
+        let connectedUsr = ""
+        let alert = false
+
+        document.getElementById("chat-input").addEventListener("keypress", function (event) {
+            // If the user presses the "Enter" key on the keyboard
+            if (event.key === "Enter" && (document.getElementById("chat-page").style.display == "flex" || document.getElementById("chat-page").style.display == "block")) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.getElementById("send-button").click();
+            }
+        });
+
+        //const socket = new WebSocket('ws://localhost:12345');
+        //const socket = new WebSocket('ws://192.168.1.66:12347');
+        var WSLTURL = "quickchat.serveo.net"
+        const socket = new WebSocket('wss://' + WSLTURL);
+        let currentUsername = getCookie("quickChatUser");
+        let currentPassword = getCookie("quickChatPass");
+        const themeSelect = document.getElementById("theme-select")
+
+        document.documentElement.className = "blue";
+        themeSelect.value = "blue"
+
+        socket.onopen = function (event) {
+            checkUserStatus()
+        }
+
+        socket.onclose = function () {
+            window.location.reload();
+        }
+
+        socket.onmessage = function (event) {
+            // Handle server response
+            let message = event.data;
+            //message = atob(message)
+            console.log(message)
+
+            if (message.substring(0, 4) === "1001") {
+                setCookie("quickChatUser", currentUsername, 14);
+                setCookie("quickChatPass", currentPassword, 14);
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+                goToChatSetup();
+            } else if (message.substring(0, 4) === "1101") {
+                setCookie("quickChatUser", currentUsername, 14);
+                setCookie("quickChatPass", currentPassword, 14);
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+                goToChatSetup();
+                successAlert("Account Created!")
+            } else if (message.substring(0, 4) === "2101") {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "block";
+                deleteCookie("quickChatUser")
+                deleteCookie("quickChatPass")
+                errorAlert("Signup failed. Account already exists.");
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+            } else if (message.substring(0, 4) === "2102") {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "block";
+                deleteCookie("quickChatUser")
+                deleteCookie("quickChatPass")
+                errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+            } else if (message.substring(0, 4) === "2103") {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "block";
+                deleteCookie("quickChatUser")
+                deleteCookie("quickChatPass")
+                errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+            } else if (message.substring(0, 4) === "2104") {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "block";
+                deleteCookie("quickChatUser")
+                deleteCookie("quickChatPass")
+                errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+            } else if (message.substring(0, 4) === "2105") {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "block";
+                deleteCookie("quickChatUser")
+                deleteCookie("quickChatPass")
+                errorAlert("Signup failed. Password must be longer than or equal to 8 characters.");
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+            } else if (message.substring(0, 4) === "2001") {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signin-page").style.display = "block";
+                deleteCookie("quickChatUser")
+                deleteCookie("quickChatPass")
+                errorAlert("Login failed. Please check your username/password.");
+                document.getElementById("SIB").disabled = false;
+                document.getElementById("SUB").disabled = false;
+            } else if (message.substring(0, 4) === "1201") {
+                try {
+                    if (document.getElementById("contact-item-" + connectedUsr)) {
+                        const button = document.querySelector(".favorite-button");
+                        button.textContent = "★"; // Filled star
+                        button.classList.add("filled");
+                    } else {
+                        const button = document.querySelector(".favorite-button");
+                        button.textContent = "☆"; // Outlined star
+                        button.classList.remove("filled");
+                    }
+                } catch {
+                    const button = document.querySelector(".favorite-button");
+                    button.textContent = "☆"; // Outlined star
+                    button.classList.remove("filled");
+                }
+                document.getElementById("chat-setup-page").style.display = "none";
+                document.getElementById("chat-page").style.display = "flex";
+            } else if (message.substring(0, 4) === "2201") {
+                errorAlert("Account not found.")
+            } else if (message.substring(0, 4) === "1301") {
+                if (!document.hasFocus()) {
+                    showNotification("New Message From " + connectedUsr)
+                }
+                addMessageToChat(message.substring(4), false)
+            } else if (message.substring(0, 4) === "1302") {
+                addMessageToChat(message.substring(4), true)
+            } else if (message.substring(0, 4) === "1401") {
+                document.getElementById("NewMsg-notification-badge").style.display = "flex"
+                let newMessage = document.createElement('div');
+                newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}NewMsgUserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton">${message.substring(4)}</button>`;
+                try {
+                    document.getElementById("NNM").remove()
+                } catch {
+
+                }
+                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+            } else if (message.substring(0, 4) === "1402") {
+                let newMessage = document.createElement('div');
+                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+            } else if (message.substring(0, 4) === "1501") {
+                let contact = document.createElement('div');
+                contact.innerHTML = `<div class="contact-item" id="contact-item-${message.substring(4)}" onclick="startChatFromButton('${message.substring(4)}')">
+                    <!--<div class="contact-avatar"></div>-->
+                    <div class="contact-name">${message.substring(4)}</div>
+</div>`;
+                document.getElementById("contacts-sidebar").appendChild(contact.firstChild);
+                //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+            } else if (message.substring(0, 4) === "1502") {
+                try {
+                    document.getElementById("contact-item-" + message.substring(4)).remove()
+                } catch {
+
+                }
+            } else if (message.substring(0, 4) === "1601") {
+                document.documentElement.className = message.substring(4);
+                themeSelect.value = message.substring(4).trim()
+                console.log(message.substring(4))
+            }
+        };
+		
+		function confirmAccountDeletion() {
+			const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+			if (confirmation) {
+				if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
+					deleteAccount();
+				}
+			}
+		}
+
+		function deleteAccount() {
+			socket.send("0701")
+			closeSettings()
+			logout()
+		}
+		
+        function setCookie(name, value, days) {
+            if (getCookie("CookiesAllowed") || name == "CookiesAllowed") {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                const cookieString = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
+                document.cookie = cookieString;
+                console.log("Cookie set:", cookieString);
+            }
+        }
+
+        function toggleFavorite() {
+            const button = document.querySelector(".favorite-button");
+            if (button.textContent === "★") { // Filled star
+                button.textContent = "☆"; // Outlined star
+                button.classList.remove("filled");
+                socket.send("0502" + connectedUsr)
+            } else {
+                button.textContent = "★"; // Filled star
+                button.classList.add("filled");
+                socket.send("0501" + connectedUsr)
+            }
+        }
+
+        function errorAlert(text) {
+            if (!alert) {
+                document.getElementById("Error-Text").innerText = text
+                document.getElementById("Error").classList.add("show");
+                alert = true
+                setTimeout(function () {
+                    document.getElementById("Error").classList.remove("show");
+                    alert = false
+                }, 5000);
+            }
+        }
+
+        function successAlert(text) {
+            if (!alert) {
+                document.getElementById("success-Text").innerText = text
+                document.getElementById("success").classList.add("show");
+                alert = true
+                setTimeout(function () {
+                    document.getElementById("success").classList.remove("show");
+                    alert = false
+                }, 5000);
+            }
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                let [key, value] = cookie.trim().split('=');
+                if (key === name) return decodeURIComponent(value);
+            }
+            return null;
+        }
+
+
+        function deleteCookie(name) {
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+        }
+
+        function settings() {
+            document.getElementById("settings").style.display = "block";
+            document.getElementById("settings-pane").classList.add("show");
+        }
+
+        function NewMsgs() {
+            document.getElementById("NewMsgs").style.display = "block";
+            document.getElementById("NewMsgs-pane").classList.add("show");
+        }
+
+        function closeSettings() {
+            document.getElementById("settings-pane").classList.remove("show");
+            setTimeout(function () {
+                document.getElementById("settings").style.display = "none";
+            }, 0); // Wait for the transition to finish
+        }
+
+        function closeNewMsgs() {
+            document.getElementById("NewMsgs-pane").classList.remove("show");
+            setTimeout(function () {
+                document.getElementById("NewMsgs").style.display = "none";
+            }, 0); // Wait for the transition to finish
+        }
+
+        function showSignupPage() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "block";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function showSigninPage() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "block";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function goToChatSetup() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("chat-setup-page").style.display = "flex";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function signIn() {
+            const username = document.getElementById("signin-username").value;
+            const password = document.getElementById("signin-password").value;
+            if (username && password) {
+                currentUsername = username
+                currentPassword = password
+                document.getElementById("SIB").disabled = true;
+                document.getElementById("SUB").disabled = true;
+                socket.send('0001' + username + "[:pwd:]" + password);
+            } else {
+                errorAlert("Please enter a valid username and password.");
+            }
+        }
+
+        function signUp() {
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+            const passwordConfirm = document.getElementById("signup-password-confirm").value;
+            if (password === passwordConfirm) {
+                if (username && password) {
+                    currentUsername = username
+                    currentPassword = password
+                    document.getElementById("SIB").disabled = true;
+                    document.getElementById("SUB").disabled = true;
+                    socket.send('0101' + username + "[:pwd:]" + password);
+                } else {
+                    errorAlert("Please enter a valid username and password.");
+                }
+            } else {
+                errorAlert("Passwords do not match!")
+            }
+        }
+
+        function checkUserStatus() {
+            const user = getCookie("quickChatUser");
+            const pass = getCookie("quickChatPass");
+            if (user) {
+                socket.send('0001' + user + "[:pwd:]" + pass);
+            } else {
+                showSigninPage();
+            }
+        }
+
+        function logout() {
+            deleteCookie("quickChatUser");
+            showSigninPage();
+            document.documentElement.className = "blue";
+            themeSelect.value = "blue"
+            document.getElementById("contacts-sidebar").innerHTML = "<h3>Contacts</h3>"
+            document.getElementById("newMsgs-area").innerHTML = ""
+			location.reload()
+        }
+
+        function startChat() {
+            const chatUsername = document.getElementById("chat-username").value;
+            if (chatUsername) {
+                document.getElementById("chat-messages").innerHTML = "";
+                socket.send('0201' + chatUsername);
+                socket.send('0401' + chatUsername);
+                connectedUsr = chatUsername;
+                try {
+                    document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").innerHTML = ""
+                } catch {
+
+                }
+            } else {
+                errorAlert("Please enter a username to start chatting.");
+            }
+
+            div = document.getElementById("NewMsgs-pane")
+
+            // Check if the div contains any buttons
+            const buttons = div.querySelectorAll('button');
+
+            if (buttons.length == 1) {
+                let newMessage = document.createElement('div');
+                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                document.getElementById("NewMsg-notification-badge").style.display = "none"
+            }
+        }
+
+        function startChatFromButton(chatUsername) {
+            //const chatUsername = document.getElementById("chat-username").value;
+            if (chatUsername) {
+                document.getElementById("chat-messages").innerHTML = "";
+                socket.send('0201' + chatUsername);
+                socket.send('0401' + chatUsername);
+                connectedUsr = chatUsername;
+                try {
+                    document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").remove()
+                } catch {
+
+                }
+            } else {
+                errorAlert("Please enter a username to start chatting.");
+            }
+
+            div = document.getElementById("NewMsgs-pane")
+
+            // Check if the div contains any buttons
+            const buttons = div.querySelectorAll('button');
+
+            if (buttons.length == 1) {
+                let newMessage = document.createElement('div');
+                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                document.getElementById("NewMsg-notification-badge").style.display = "none"
+            }
+        }
+
+        // Mock function to add messages to chat
+        function addMessageToChat(content, isSentByUser) {
+            const chatMessages = document.getElementById("chat-messages");
+            const messageElement = document.createElement("div");
+            messageElement.className = `message ${isSentByUser ? "sent" : "received"}`;
+            messageElement.textContent = content;
+            chatMessages.prepend(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        }
+
+        // Sending a message
+        function sendMessage() {
+            const chatInput = document.getElementById("chat-input");
+            const message = chatInput.value.trim();
+            if (message) {
+                //addMessageToChat(message, true);
+                socket.send("0301" + message); // Send to server
+                chatInput.value = ""; // Clear input
+            }
+        }
+
+        /*function updateRoot(color) {
+            // The new :root string
+            var newRoot = `
+            :root {
+--sent-message-bg: #424242;
+--sent-message-text: #ffffff;
+--sent-message-border: #616161;
+--received-message-bg: #303030;
+--received-message-text: #ffffff;
+--received-message-border: #505050;
+--background-color: #212121;
+--container-bg: #2c2c2c;
+--box-shadow: rgba(0, 0, 0, 0.5);
+--primary-text: #e0e0e0;
+--button-bg: #424242;
+--button-hover-bg: #616161;
+--button-disabled-bg: #757575;
+--link-color: #90caf9;
+--chat-setup-bg: #2e2e2e;
+--logout-bg: #2e2e2e;
+--logout-border: #616161;
+--logout-hover-bg: #505050;
+--settings-bg: #2c2c2c;
+--fade-bg: black;
+--fade-opacity: 0.8;
+--icons-bg: #616161;
+}
+
+            `;
+            // Find the existing <style> element and replace its contents
+            var rootStyleElement = document.getElementById('root-style');
+            rootStyleElement.innerHTML = newRoot;
+        }*/
+
+        document.getElementById('theme-select').addEventListener('change', (event) => {
+            document.documentElement.className = event.target.value;
+            socket.send("0601" + event.target.value)
+        });
+
+        function closeSettings() {
+            document.getElementById('settings').style.display = 'none';
+        }
+
+        function rC() {
+            setCookie("CookiesAllowed", true, 365)
+            document.getElementById("cookie-request").style.display = "none"
+            document.getElementById("notification-request").style.display = "block"
+        }
+
+        function rN() {
+            document.getElementById("notification-request").style.display = "none"
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        setCookie("notifications", true, 365)
+                    } else {
+                        setCookie("notifications", false, 365)
+                    }
+                });
+            }
+        }
+
+        function showNotification(notificationText) {
+            const notification = new Notification('Quick Chat - New Message', {
+                body: notificationText,
+                icon: './logo.png' // Optional: URL to an icon image
+            });
+
+            //notification.onclick = () => {
+            //    window.open('https://yourwebsite.com'); // Optional: Open a URL when the notification is clicked
+            //};
+        }
+
+        // Check if notifications are supported and permission is granted
+        //if ('Notification' in window && Notification.permission === 'granted') {
+        //    showNotification();
+        //}
+        if (getCookie("CookiesAllowed") == null) {
+            document.getElementById("cookie-request").style.display = "Block"
+        } else if (getCookie("notifications") == null && Notification.permission === "default") {
+            document.getElementById("notification-request").style.display = "block"
+        }
+    </script>
 </body>
 </html>
