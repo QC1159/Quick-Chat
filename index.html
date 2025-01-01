@@ -902,59 +902,73 @@ box-shadow: 2px 0 5px var(--box-shadow);
                 
             }
 
-        #Error {
-            display: flex;
-            justify-content: center; /* Centers horizontally */
-            align-items: center; /* Centers vertically */
-            background: linear-gradient(to bottom, #ff4d4d, #ff0000);
-            position: fixed;
-            z-index: 50;
-            width: 500px;
-            height: 60px;
-            bottom: -60px;
-            border-radius: 10px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: bottom 0.5s ease-in-out, background 0.3s ease-in-out;
-        }
+#alerts-container {
+    display: flex;
+    flex-direction: column; /* Stack the messages vertically */
+    justify-content: flex-end; /* Align them to the bottom */
+    align-items: center; /* Center them horizontally */
+    position: fixed;
+    bottom: 20px; /* Add some space from the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Center the container */
+    z-index: 50;
+}
 
-            #Error.show {
-                bottom: 20px;
-            }
+.alert {
+    width: 500px;
+    height: 60px;
+    margin-bottom: 10px; /* Space between stacked messages */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Start as invisible */
+    transform: translateY(20px); /* Start below the screen */
+    animation: slideUp 0.5s forwards; /* Animation to slide up */
+}
 
-        #Error-Text {
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-        }
+/* Slide up animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        #success {
-            display: flex;
-            justify-content: center; /* Centers horizontally */
-            align-items: center; /* Centers vertically */
-            background: linear-gradient(to bottom, #90ee90, #32cd32);
-            position: fixed;
-            z-index: 50;
-            width: 500px;
-            height: 60px;
-            bottom: -60px;
-            border-radius: 10px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: bottom 0.5s ease-in-out, background 0.3s ease-in-out;
-        }
+@keyframes slideDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
 
-            #success.show {
-                bottom: 20px;
-            }
+/* Success message styles */
+.success {
+    background: linear-gradient(to bottom, #90ee90, #32cd32);
+}
 
-        #success-Text {
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-        }
+/* Error message styles */
+.error {
+    background: linear-gradient(to bottom, #ff4d4d, #ff0000);
+}
+
+/* Hide animation for fade-out and slide down */
+.alert.hide {
+    opacity: 0;
+    animation: slideDown 0.5s forwards;
+}
+
 		
 		#delete-account-button {
   background-color: #f44336; /* Red for warning */
@@ -1176,14 +1190,8 @@ box-shadow: 2px 0 5px var(--box-shadow);
             <a href="#" onclick="location.reload()" style="text-decoration:none; color:var(--link-color)">Refresh</a>
         </div>
     </div>
+    <div id="alerts-container"></div>
 
-    <div id="Error">
-        <p id="Error-Text">Hello</p>
-    </div>
-
-    <div id="success">
-        <p id="success-Text">Hello</p>
-    </div>
 
     <div id="cookie-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
         <h1 style="font-size: 1.5em; color: #333;">We Value Your Privacy</h1>
@@ -1423,29 +1431,48 @@ box-shadow: 2px 0 5px var(--box-shadow);
             }
         }
 
-        function errorAlert(text) {
-            if (!alert) {
-                document.getElementById("Error-Text").innerText = text
-                document.getElementById("Error").classList.add("show");
-                alert = true
-                setTimeout(function () {
-                    document.getElementById("Error").classList.remove("show");
-                    alert = false
-                }, 5000);
-            }
-        }
+let alerts = [];
 
-        function successAlert(text) {
-            if (!alert) {
-                document.getElementById("success-Text").innerText = text
-                document.getElementById("success").classList.add("show");
-                alert = true
-                setTimeout(function () {
-                    document.getElementById("success").classList.remove("show");
-                    alert = false
-                }, 5000);
-            }
-        }
+function successAlert(text) {
+    createAlert(text, 'success');
+}
+
+function errorAlert(text) {
+    createAlert(text, 'error');
+}
+
+function createAlert(text, type) {
+    // Create a new alert message element
+    const alertMessage = document.createElement("div");
+    alertMessage.classList.add("alert");
+
+    // Apply the appropriate class based on the type
+    if (type === 'success') {
+        alertMessage.classList.add('success');
+    } else if (type === 'error') {
+        alertMessage.classList.add('error');
+    }
+
+    alertMessage.innerText = text;
+
+    // Append the new alert to the container
+    const alertContainer = document.getElementById("alerts-container");
+    alertContainer.appendChild(alertMessage);
+
+    // Add the alert to the stack
+    alerts.push(alertMessage);
+
+    // After 5 seconds, start the fade-out and slide-down animation
+    setTimeout(() => {
+        alertMessage.classList.add("hide"); // Apply the hide animation
+        // Remove the alert from the container after the animation
+        setTimeout(() => {
+            alertMessage.remove();
+            alerts.shift(); // Remove the first alert from the stack
+        }, 500); // Wait for the hide animation to finish (same duration as the transition)
+    }, 5000); // Show the alert for 5 seconds before fading it out
+}
+
 
         function getCookie(name) {
             const cookies = document.cookie.split(';');
