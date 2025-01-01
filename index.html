@@ -994,26 +994,47 @@ box-shadow: 2px 0 5px var(--box-shadow);
         font-size: 1rem !important;
     }
 
-    #signin-page .button, #signup-page .button {
-        width: calc(100% - 20px) !important;
-        padding: 12px !important;
-        background: linear-gradient(135deg, #6a11cb, #2575fc) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 5px !important;
-        cursor: pointer !important;
-        font-size: 1rem !important;
-        transition: background 0s ease !important;
-    }
+#signin-page .button, #signup-page .button {
+    position: relative; /* Needed for positioning the pseudo-element */
+    width: calc(100% - 20px) !important;
+    padding: 12px !important;
+    background-color: #1a5ec8; /* Solid background color */
+    color: white !important;
+    text-align: center; /* Center the text */
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-size: 1rem !important;
+    overflow: hidden; /* Ensures the pseudo-element doesn't overflow */
+    z-index: 0; /* Base layer */
+}
 
-    #signin-page .button:hover, #signup-page .button:hover {
-        background: #1a5ec8 !important;
-    }
+#signin-page .button::before, #signup-page .button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* The gradient */
+    opacity: 1; /* Fully visible by default */
+    transition: opacity 0.3s ease; /* Smooth fade-out transition */
+    z-index: -1; /* Place the gradient behind the text */
+}
 
-    #signin-page .button:disabled, #signup-page .button:disabled {
-        background: #a5c6fc !important;
-        cursor: not-allowed !important;
-    }
+#signin-page .button:hover::before, #signup-page .button:hover::before {
+    opacity: 0; /* Fade out the gradient */
+}
+
+#signin-page .button, #signup-page .button {
+    z-index: 1; /* Ensure the text and button content stay above the pseudo-element */
+}
+
+
+
+
+
+
 
     #signin-page .link, #signup-page .link {
         color: #2575fc !important;
