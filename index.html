@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Chat</title>
-    <link rel="icon" type="image/x-icon" href="./Logo.png">
+    <link rel="icon" type="image/x-icon" href="./Favicon.png">
     <style id="root-style">
         /*:root {
                     --sent-message-bg: #4caf50;
@@ -1059,16 +1059,51 @@ box-shadow: 2px 0 5px var(--box-shadow);
     #signin-page .link:hover, #signup-page .link:hover {
         color: #1a5ec8 !important;
     }
-	
-	
-	#QUICKCHATh1 {
-		position: fixed !important;
-		font-size: 100px;
-		font-family: "Parkinsans", serif;
-		top: calc(50% - 168.5px - 27%) !important;
-		color: yellow;
-		z-index: -5;
-	}
+
+
+        #QUICKCHATh1 {
+            position: fixed !important;
+            font-size: 100px;
+            font-family: "Parkinsans", serif;
+            top: calc(50% - 168.5px - 27%) !important;
+            color: yellow;
+            z-index: -5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #QUICKCHATLogo {
+            width: 125px;
+        }
+
+        #QUICKCHATText {
+            margin-left: 10px; /* Adjust spacing between image and text */
+        }
+
+        @media (max-width: 700px) {
+            #QUICKCHATText {
+                display: none;
+            }
+        }
+
+
+        .messageTime {
+            position: relative;
+            right: 0;
+            color: var(--primary-text);
+            font-size: 10px;
+        }
+
+        .receivedT {
+            text-align: left;
+            margin-left: 5px;
+        }
+
+        .sentT {
+            text-align: right;
+            margin-right: 5px;
+        }
     </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1078,32 +1113,36 @@ box-shadow: 2px 0 5px var(--box-shadow);
 </head>
 <body>
 
-	<h1 id="QUICKCHATh1">QUICK CHAT</h1>
-	
+    <h1 id="QUICKCHATh1">
+        <img src="Favicon.png" style="width: 125px" id="QUICKCHATLogo" />
+        <span id="QUICKCHATText">UICK CHAT</span>
+    </h1>
+
+
     <div id="loading-page">
-	<div style="width: 100%; height: 100%; background-color: white; position: fixed; top: 0; left: 0; z-index: -4;"></div>
-        <img src="./Logo.png" style="height: 100px;" /><!-- animation-name: spin; animation-duration: 1000ms; animation-iteration-count: infinite; animation-timing-function: linear; "/>-->
+        <div style="width: 100%; height: 100%; background-color: white; position: fixed; top: 0; left: 0; z-index: -4;"></div>
+        <img src="./Favicon.png" style="height: 100px;" /><!-- animation-name: spin; animation-duration: 1000ms; animation-iteration-count: infinite; animation-timing-function: linear; "/>-->
         <h2>Loading...</h2>
     </div>
 
-<!-- Sign In Page -->
-<div class="container" id="signin-page" style="display: none;">
-    <h2>Sign In</h2>
-    <input type="text" id="signin-username" placeholder="Username">
-    <input type="password" id="signin-password" placeholder="Password">
-    <button id="SIB" class="button" onclick="signIn()">Sign In</button>
-    <p>Don't have an account? <span class="link" onclick="showSignupPage()">Sign up</span></p>
-</div>
+    <!-- Sign In Page -->
+    <div class="container" id="signin-page" style="display: none;">
+        <h2>Sign In</h2>
+        <input type="text" id="signin-username" placeholder="Username">
+        <input type="password" id="signin-password" placeholder="Password">
+        <button id="SIB" class="button" onclick="signIn()">Sign In</button>
+        <p>Don't have an account? <span class="link" onclick="showSignupPage()">Sign up</span></p>
+    </div>
 
-<!-- Sign Up Page -->
-<div class="container" id="signup-page" style="display: none;">
-    <h2>Sign Up</h2>
-    <input type="text" id="signup-username" placeholder="Username">
-    <input type="password" id="signup-password" placeholder="Password">
-    <input type="password" id="signup-password-confirm" placeholder="Confirm Password">
-    <button id="SUB" class="button" onclick="signUp()">Sign Up</button>
-    <p>Already have an account? <span class="link" onclick="showSigninPage()">Sign in</span></p>
-</div>
+    <!-- Sign Up Page -->
+    <div class="container" id="signup-page" style="display: none;">
+        <h2>Sign Up</h2>
+        <input type="text" id="signup-username" placeholder="Username">
+        <input type="password" id="signup-password" placeholder="Password">
+        <input type="password" id="signup-password-confirm" placeholder="Confirm Password">
+        <button id="SUB" class="button" onclick="signUp()">Sign Up</button>
+        <p>Already have an account? <span class="link" onclick="showSigninPage()">Sign in</span></p>
+    </div>
 
 
 
@@ -1127,9 +1166,9 @@ box-shadow: 2px 0 5px var(--box-shadow);
             </div>
             -->
         </div>
-		<button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
-    <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
-</button>
+        <button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
+            <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
+        </button>
 
         <div onclick="settings()" class="icon-div" style="transform: none">
         </div>
@@ -1176,7 +1215,7 @@ box-shadow: 2px 0 5px var(--box-shadow);
                     <option value="dark">Dark</option>
                 </select>
             </div>
-			<button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
+            <button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
         </div>
     </div>
     <div id="NewMsgs" style="display:none;">
@@ -1214,20 +1253,82 @@ box-shadow: 2px 0 5px var(--box-shadow);
 
 
     <script>
-	function toggleSidebar() {
-    const sidebar = document.getElementById('contacts-sidebar');
-    const collapseIcon = document.getElementById('collapse-icon');
-    
-    // Toggle the collapsed state
-    sidebar.classList.toggle('collapsed');
-    
-    // Change the icon between < and >
-    if (sidebar.classList.contains('collapsed')) {
-        collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
-    } else {
-        collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
-    }
-}
+        function getUrlParameters() {
+            var out = {};
+            var str = window.location.search.replace("?", "");
+            var subs = str.split(`&`).map((si) => { var keyVal = si.split(`=`); out[keyVal[0]] = keyVal[1]; });
+            return out
+        }
+
+        console.log(getUrlParameters())
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('contacts-sidebar');
+            const collapseIcon = document.getElementById('collapse-icon');
+
+            // Toggle the collapsed state
+            sidebar.classList.toggle('collapsed');
+
+            // Change the icon between < and >
+            if (sidebar.classList.contains('collapsed')) {
+                collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
+            } else {
+                collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
+            }
+        }
+
+        function beforeLast(value, delimiter) {
+            value = value || ''
+
+            if (delimiter === '') {
+                return value
+            }
+
+            const substrings = value.split(delimiter)
+
+            return substrings.length === 1
+                ? value // delimiter is not part of the string
+                : substrings.slice(0, -1).join(delimiter)
+        }
+
+        function jsonToKeyMap(jsonString) {
+            try {
+                // Convert single quotes to double quotes
+                const correctedJsonString = jsonString.replace(/'/g, '"');
+                const jsonObject = JSON.parse(correctedJsonString);
+
+                // Convert the date and time from UTC to local time zone
+                const utcDate = new Date(Date.UTC(
+                    jsonObject.year,
+                    jsonObject.month - 1, // Months are zero-based in JavaScript
+                    jsonObject.day,
+                    jsonObject.hour,
+                    jsonObject.minute,
+                    jsonObject.second
+                ));
+
+                const localDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+
+                // Update the jsonObject with the local date and time
+                jsonObject.year = localDate.getFullYear();
+                jsonObject.month = localDate.getMonth() + 1;
+                jsonObject.day = localDate.getDate();
+                jsonObject.hour = localDate.getHours();
+                jsonObject.minute = localDate.getMinutes();
+                jsonObject.second = localDate.getSeconds();
+
+                const keyMap = new Map(Object.entries(jsonObject));
+                return keyMap;
+            } catch (error) {
+                console.error("Invalid JSON string:", error);
+                return null;
+            }
+        }
+
+        function n(num, len = 2) {
+            return `${num}`.padStart(len, '0');
+        }
+
 
 
         let connectedUsr = ""
@@ -1243,10 +1344,10 @@ box-shadow: 2px 0 5px var(--box-shadow);
             }
         });
 
-        //const socket = new WebSocket('ws://localhost:12345');
+        const socket = new WebSocket('ws://localhost:12347');
         //const socket = new WebSocket('ws://192.168.1.66:12347');
         var WSLTURL = "quickchat.serveo.net"
-        const socket = new WebSocket('wss://' + WSLTURL);
+        //const socket = new WebSocket('wss://' + WSLTURL);
         let currentUsername = getCookie("quickChatUser");
         let currentPassword = getCookie("quickChatPass");
         const themeSelect = document.getElementById("theme-select")
@@ -1353,9 +1454,17 @@ box-shadow: 2px 0 5px var(--box-shadow);
                 if (!document.hasFocus()) {
                     showNotification("New Message From " + connectedUsr)
                 }
-                addMessageToChat(message.substring(4), false)
+                if (message.includes("[:time:]")) {
+                    addMessageToChat(beforeLast(message.substring(4), "[:time:]"), false, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
+                } else {
+                    addMessageToChat(message.substring(4), false)
+                }
             } else if (message.substring(0, 4) === "1302") {
-                addMessageToChat(message.substring(4), true)
+                if (message.includes("[:time:]")) {
+                    addMessageToChat(beforeLast(message.substring(4), "[:time:]"), true, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
+                } else {
+                    addMessageToChat(message.substring(4), true)
+                }
             } else if (message.substring(0, 4) === "1401") {
                 document.getElementById("NewMsg-notification-badge").style.display = "flex"
                 let newMessage = document.createElement('div');
@@ -1369,14 +1478,19 @@ box-shadow: 2px 0 5px var(--box-shadow);
                 //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
             } else if (message.substring(0, 4) === "1402") {
                 let newMessage = document.createElement('div');
+                try {
+                    document.getElementById("NNM").remove()
+                } catch {
+
+                }
                 newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
                 document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
                 //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
             } else if (message.substring(0, 4) === "1501") {
                 let contact = document.createElement('div');
                 contact.innerHTML = `<div class="contact-item" id="contact-item-${message.substring(4)}" onclick="startChatFromButton('${message.substring(4)}')">
-                    <!--<div class="contact-avatar"></div>-->
-                    <div class="contact-name">${message.substring(4)}</div>
+                        <!--<div class="contact-avatar"></div>-->
+                        <div class="contact-name">${message.substring(4)}</div>
 </div>`;
                 document.getElementById("contacts-sidebar").appendChild(contact.firstChild);
                 //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
@@ -1392,22 +1506,22 @@ box-shadow: 2px 0 5px var(--box-shadow);
                 console.log(message.substring(4))
             }
         };
-		
-		function confirmAccountDeletion() {
-			const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
-			if (confirmation) {
-				if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
-					deleteAccount();
-				}
-			}
-		}
 
-		function deleteAccount() {
-			socket.send("0701")
-			closeSettings()
-			logout()
-		}
-		
+        function confirmAccountDeletion() {
+            const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+            if (confirmation) {
+                if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
+                    deleteAccount();
+                }
+            }
+        }
+
+        function deleteAccount() {
+            socket.send("0701")
+            closeSettings()
+            logout()
+        }
+
         function setCookie(name, value, days) {
             if (getCookie("CookiesAllowed") || name == "CookiesAllowed") {
                 const date = new Date();
@@ -1431,47 +1545,47 @@ box-shadow: 2px 0 5px var(--box-shadow);
             }
         }
 
-let alerts = [];
+        let alerts = [];
 
-function successAlert(text) {
-    createAlert(text, 'success');
-}
+        function successAlert(text) {
+            createAlert(text, 'success');
+        }
 
-function errorAlert(text) {
-    createAlert(text, 'error');
-}
+        function errorAlert(text) {
+            createAlert(text, 'error');
+        }
 
-function createAlert(text, type) {
-    // Create a new alert message element
-    const alertMessage = document.createElement("div");
-    alertMessage.classList.add("alert");
+        function createAlert(text, type) {
+            // Create a new alert message element
+            const alertMessage = document.createElement("div");
+            alertMessage.classList.add("alert");
 
-    // Apply the appropriate class based on the type
-    if (type === 'success') {
-        alertMessage.classList.add('success');
-    } else if (type === 'error') {
-        alertMessage.classList.add('error');
-    }
+            // Apply the appropriate class based on the type
+            if (type === 'success') {
+                alertMessage.classList.add('success');
+            } else if (type === 'error') {
+                alertMessage.classList.add('error');
+            }
 
-    alertMessage.innerText = text;
+            alertMessage.innerText = text;
 
-    // Append the new alert to the container
-    const alertContainer = document.getElementById("alerts-container");
-    alertContainer.appendChild(alertMessage);
+            // Append the new alert to the container
+            const alertContainer = document.getElementById("alerts-container");
+            alertContainer.appendChild(alertMessage);
 
-    // Add the alert to the stack
-    alerts.push(alertMessage);
+            // Add the alert to the stack
+            alerts.push(alertMessage);
 
-    // After 5 seconds, start the fade-out and slide-down animation
-    setTimeout(() => {
-        alertMessage.classList.add("hide"); // Apply the hide animation
-        // Remove the alert from the container after the animation
-        setTimeout(() => {
-            alertMessage.remove();
-            alerts.shift(); // Remove the first alert from the stack
-        }, 500); // Wait for the hide animation to finish (same duration as the transition)
-    }, 5000); // Show the alert for 5 seconds before fading it out
-}
+            // After 5 seconds, start the fade-out and slide-down animation
+            setTimeout(() => {
+                alertMessage.classList.add("hide"); // Apply the hide animation
+                // Remove the alert from the container after the animation
+                setTimeout(() => {
+                    alertMessage.remove();
+                    alerts.shift(); // Remove the first alert from the stack
+                }, 500); // Wait for the hide animation to finish (same duration as the transition)
+            }, 5000); // Show the alert for 5 seconds before fading it out
+        }
 
 
         function getCookie(name) {
@@ -1586,7 +1700,7 @@ function createAlert(text, type) {
             themeSelect.value = "blue"
             document.getElementById("contacts-sidebar").innerHTML = "<h3>Contacts</h3>"
             document.getElementById("newMsgs-area").innerHTML = ""
-			location.reload()
+            location.reload()
         }
 
         function startChat() {
@@ -1648,12 +1762,17 @@ function createAlert(text, type) {
         }
 
         // Mock function to add messages to chat
-        function addMessageToChat(content, isSentByUser) {
+        function addMessageToChat(content, isSentByUser, time = "") {
             const chatMessages = document.getElementById("chat-messages");
+            const message = document.createElement("div");
             const messageElement = document.createElement("div");
+            const messageTimeElement = document.createElement("div");
             messageElement.className = `message ${isSentByUser ? "sent" : "received"}`;
             messageElement.textContent = content;
             chatMessages.prepend(messageElement);
+            messageTimeElement.className = `messageTime ${isSentByUser ? "sentT" : "receivedT"}`;
+            messageTimeElement.textContent = time;
+            chatMessages.prepend(messageTimeElement);
             chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
         }
 
