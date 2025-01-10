@@ -1344,10 +1344,10 @@ box-shadow: 2px 0 5px var(--box-shadow);
             }
         });
 
-        const socket = new WebSocket('ws://localhost:12347');
+        //const socket = new WebSocket('ws://localhost:12347');
         //const socket = new WebSocket('ws://192.168.1.66:12347');
-        var WSLTURL = "quickchat.serveo.net"
-        //const socket = new WebSocket('wss://' + WSLTURL);
+        var WSLTURL = "2f3a49ceba5732.lhr.life"
+        const socket = new WebSocket('wss://' + WSLTURL);
         let currentUsername = getCookie("quickChatUser");
         let currentPassword = getCookie("quickChatPass");
         const themeSelect = document.getElementById("theme-select")
