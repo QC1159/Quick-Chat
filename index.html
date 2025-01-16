@@ -337,50 +337,50 @@
 
     </style>
     <style>
-.collapse-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 30px;
-    color: var(--primary-text);
-    position: fixed;
-    top: 11%;  /* Adjust this for the distance from the top of the sidebar */
-    left: 30px;
-    transform: translateX(-50%); /* Centers the button horizontally */
-    z-index: 3;
-    transition: left 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Add left transition */
-}
+        .collapse-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: var(--primary-text);
+            position: fixed;
+            top: 11%; /* Adjust this for the distance from the top of the sidebar */
+            left: 30px;
+            transform: translateX(-50%); /* Centers the button horizontally */
+            z-index: 3;
+            transition: left 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Add left transition */
+        }
 
-.collapse-button:hover {
-    color: var(--button-bg);
-}
+            .collapse-button:hover {
+                color: var(--button-bg);
+            }
 
-.collapse-icon {
-    display: inline-block;
-    font-size: 30px;
-    transition: transform 0.3s ease;
-}
+        .collapse-icon {
+            display: inline-block;
+            font-size: 30px;
+            transition: transform 0.3s ease;
+        }
 
-/* Sidebar full width */
-.contacts-sidebar {
-    width: 250px; /* Sidebar width when expanded */
-    transition: width 0.3s ease, opacity 0.3s ease;
-    overflow: hidden;
-}
+        /* Sidebar full width */
+        .contacts-sidebar {
+            width: 250px; /* Sidebar width when expanded */
+            transition: width 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+        }
 
-/* Collapse Sidebar: Disappear completely */
-.contacts-sidebar.collapsed {
-    width: 0;
-    opacity: 0; /* Fades out when collapsed */
-}
+            /* Collapse Sidebar: Disappear completely */
+            .contacts-sidebar.collapsed {
+                width: 0;
+                opacity: 0; /* Fades out when collapsed */
+            }
 
-/* When sidebar is collapsed, change the icon to ">" */
-.contacts-sidebar.collapsed ~ .collapse-button {
-background-color: var(--container-bg);
-box-shadow: 2px 0 5px var(--box-shadow);
-    left: 0;  /* Smooth transition for left */
-    transform: translateX(0); /* Adjust if needed */
-}
+                /* When sidebar is collapsed, change the icon to ">" */
+                .contacts-sidebar.collapsed ~ .collapse-button {
+                    background-color: var(--container-bg);
+                    box-shadow: 2px 0 5px var(--box-shadow);
+                    left: 0; /* Smooth transition for left */
+                    transform: translateX(0); /* Adjust if needed */
+                }
 
 
 
@@ -426,7 +426,7 @@ box-shadow: 2px 0 5px var(--box-shadow);
             font-family: Arial, sans-serif;
             margin: 0;
             /*background-color: var(--background-color);*/
-			background: linear-gradient(135deg, #6a11cb, #2575fc) !important;
+            background: linear-gradient(135deg, #6a11cb, #2575fc) !important;
         }
 
         .container {
@@ -849,13 +849,13 @@ box-shadow: 2px 0 5px var(--box-shadow);
             z-index: 2;
         }
 
-        .contacts-sidebar h3 {
-            color: var(--primary-text);
-            font-size: 18px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-        }
+            .contacts-sidebar h3 {
+                color: var(--primary-text);
+                font-size: 18px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+            }
 
         .contact-item {
             display: flex;
@@ -899,166 +899,168 @@ box-shadow: 2px 0 5px var(--box-shadow);
         }
 
             .favorite-button.filled {
-                
             }
 
-#alerts-container {
-    display: flex;
-    flex-direction: column; /* Stack the messages vertically */
-    justify-content: flex-end; /* Align them to the bottom */
-    align-items: center; /* Center them horizontally */
-    position: fixed;
-    bottom: 20px; /* Add some space from the bottom */
-    left: 50%;
-    transform: translateX(-50%); /* Center the container */
-    z-index: 50;
-}
+        #alerts-container {
+            display: flex;
+            flex-direction: column; /* Stack the messages vertically */
+            justify-content: flex-end; /* Align them to the bottom */
+            align-items: center; /* Center them horizontally */
+            position: fixed;
+            bottom: 20px; /* Add some space from the bottom */
+            left: 50%;
+            transform: translateX(-50%); /* Center the container */
+            z-index: 50;
+        }
 
-.alert {
-    width: 500px;
-    height: 60px;
-    margin-bottom: 10px; /* Space between stacked messages */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    opacity: 0; /* Start as invisible */
-    transform: translateY(20px); /* Start below the screen */
-    animation: slideUp 0.5s forwards; /* Animation to slide up */
-}
+        .alert {
+            width: 500px;
+            height: 60px;
+            margin-bottom: 10px; /* Space between stacked messages */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0; /* Start as invisible */
+            transform: translateY(20px); /* Start below the screen */
+            animation: slideUp 0.5s forwards; /* Animation to slide up */
+        }
 
-/* Slide up animation */
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        /* Slide up animation */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-@keyframes slideDown {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-/* Success message styles */
-.success {
-    background: linear-gradient(to bottom, #90ee90, #32cd32);
-}
+        @keyframes slideDown {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
 
-/* Error message styles */
-.error {
-    background: linear-gradient(to bottom, #ff4d4d, #ff0000);
-}
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
 
-/* Hide animation for fade-out and slide down */
-.alert.hide {
-    opacity: 0;
-    animation: slideDown 0.5s forwards;
-}
+        /* Success message styles */
+        .success {
+            background: linear-gradient(to bottom, #90ee90, #32cd32);
+        }
 
-		
-		#delete-account-button {
-  background-color: #f44336; /* Red for warning */
-  border-color: #d32f2f;
-}
-#delete-account-button:hover {
-  background-color: #d32f2f;
-}
+        /* Error message styles */
+        .error {
+            background: linear-gradient(to bottom, #ff4d4d, #ff0000);
+        }
 
-/* Scoped styles for Sign In and Sign Up sections */
-    #signin-page, #signup-page {
-        font-family: Arial, sans-serif !important;
-        background: rgba(200, 200, 255, 0.95) !important;
-        padding: 20px !important;
-        border-radius: 10px !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-        width: 100% !important;
-        max-width: 400px !important;
-        text-align: center !important;
-        position: relative !important;
-        z-index: 2 !important;
-    }
-
-    #signin-page h2, #signup-page h2 {
-        margin-bottom: 20px !important;
-        font-size: 1.8rem !important;
-        color: rgba(100, 0, 255, 1) !important;
-    }
-
-    #signin-page input, #signup-page input {
-        width: calc(100% - 20px) !important;
-        padding: 12px !important;
-        margin: 10px 0 !important;
-        border: 1px solid #ddd !important;
-        border-radius: 5px !important;
-        box-sizing: border-box !important;
-        font-size: 1rem !important;
-    }
-
-#signin-page .button, #signup-page .button {
-    position: relative; /* Needed for positioning the pseudo-element */
-    width: calc(100% - 20px) !important;
-    padding: 12px !important;
-    background-color: #1a5ec8; /* Solid background color */
-    color: white !important;
-    text-align: center; /* Center the text */
-    border: none !important;
-    border-radius: 5px !important;
-    cursor: pointer !important;
-    font-size: 1rem !important;
-    overflow: hidden; /* Ensures the pseudo-element doesn't overflow */
-    z-index: 0; /* Base layer */
-}
-
-#signin-page .button::before, #signup-page .button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #6a11cb, #2575fc); /* The gradient */
-    opacity: 1; /* Fully visible by default */
-    transition: opacity 0.3s ease; /* Smooth fade-out transition */
-    z-index: -1; /* Place the gradient behind the text */
-}
-
-#signin-page .button:hover::before, #signup-page .button:hover::before {
-    opacity: 0; /* Fade out the gradient */
-}
-
-#signin-page .button, #signup-page .button {
-    z-index: 1; /* Ensure the text and button content stay above the pseudo-element */
-}
+        /* Hide animation for fade-out and slide down */
+        .alert.hide {
+            opacity: 0;
+            animation: slideDown 0.5s forwards;
+        }
 
 
+        #delete-account-button {
+            background-color: #f44336; /* Red for warning */
+            border-color: #d32f2f;
+        }
+
+            #delete-account-button:hover {
+                background-color: #d32f2f;
+            }
+
+        /* Scoped styles for Sign In and Sign Up sections */
+        #signin-page, #signup-page {
+            font-family: Arial, sans-serif !important;
+            background: rgba(200, 200, 255, 0.95) !important;
+            padding: 20px !important;
+            border-radius: 10px !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+            width: 100% !important;
+            max-width: 400px !important;
+            text-align: center !important;
+            position: relative !important;
+            z-index: 2 !important;
+        }
+
+            #signin-page h2, #signup-page h2 {
+                margin-bottom: 20px !important;
+                font-size: 1.8rem !important;
+                color: rgba(100, 0, 255, 1) !important;
+            }
+
+            #signin-page input, #signup-page input {
+                width: calc(100% - 20px) !important;
+                padding: 12px !important;
+                margin: 10px 0 !important;
+                border: 1px solid #ddd !important;
+                border-radius: 5px !important;
+                box-sizing: border-box !important;
+                font-size: 1rem !important;
+            }
+
+            #signin-page .button, #signup-page .button {
+                position: relative; /* Needed for positioning the pseudo-element */
+                width: calc(100% - 20px) !important;
+                padding: 12px !important;
+                background-color: #1a5ec8; /* Solid background color */
+                color: white !important;
+                text-align: center; /* Center the text */
+                border: none !important;
+                border-radius: 5px !important;
+                cursor: pointer !important;
+                font-size: 1rem !important;
+                overflow: hidden; /* Ensures the pseudo-element doesn't overflow */
+                z-index: 0; /* Base layer */
+            }
+
+                #signin-page .button::before, #signup-page .button::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(135deg, #6a11cb, #2575fc); /* The gradient */
+                    opacity: 1; /* Fully visible by default */
+                    transition: opacity 0.3s ease; /* Smooth fade-out transition */
+                    z-index: -1; /* Place the gradient behind the text */
+                }
+
+                #signin-page .button:hover::before, #signup-page .button:hover::before {
+                    opacity: 0; /* Fade out the gradient */
+                }
+
+            #signin-page .button, #signup-page .button {
+                z-index: 1; /* Ensure the text and button content stay above the pseudo-element */
+            }
 
 
 
 
 
-    #signin-page .link, #signup-page .link {
-        color: #2575fc !important;
-        cursor: pointer !important;
-        text-decoration: underline !important;
-    }
 
-    #signin-page .link:hover, #signup-page .link:hover {
-        color: #1a5ec8 !important;
-    }
+
+            #signin-page .link, #signup-page .link {
+                color: #2575fc !important;
+                cursor: pointer !important;
+                text-decoration: underline !important;
+            }
+
+                #signin-page .link:hover, #signup-page .link:hover {
+                    color: #1a5ec8 !important;
+                }
 
 
         #QUICKCHATh1 {
@@ -1104,6 +1106,77 @@ box-shadow: 2px 0 5px var(--box-shadow);
             text-align: right;
             margin-right: 5px;
         }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /*#QUICKCHATLogo {
+            animation: pulse 1.5s infinite ease-in-out;
+        }*/
+
+        .maintenance-container-container {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /*background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);*/
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #ffffff;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+
+        .maintenance-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            position: absolute;
+        }
+
+            .maintenance-container h1 {
+                font-size: 3rem;
+                margin: 0 0 1rem;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            }
+
+            .maintenance-container p {
+                font-size: 1.25rem;
+                margin: 0 0 1.5rem;
+                line-height: 1.6;
+                color: lightgray;
+            }
+
+            .maintenance-container a {
+                text-decoration: none;
+                color: #ffd700;
+                font-weight: bold;
+                transition: color 0.3s ease;
+            }
+
+                .maintenance-container a:hover {
+                    color: #ffffff;
+                }
     </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1118,679 +1191,743 @@ box-shadow: 2px 0 5px var(--box-shadow);
         <span id="QUICKCHATText">UICK CHAT</span>
     </h1>
 
+    <div class="maintenance-container-container" id="maintenance-container-container">
+        <div class="maintenance-container">
+            <h1>Server is Down for Maintenance</h1>
+            <p>
+                We apologize for the inconvenience. Our team is working hard to bring everything back online.
+                Please check back later!
+            </p>
+            <p><a href="mailto:quickchatplatform+support@outlook.com">Contact Support</a></p>
+        </div>
+        </div>
 
-    <div id="loading-page">
-        <div style="width: 100%; height: 100%; background-color: white; position: fixed; top: 0; left: 0; z-index: -4;"></div>
-        <img src="./Favicon.png" style="height: 100px;" /><!-- animation-name: spin; animation-duration: 1000ms; animation-iteration-count: infinite; animation-timing-function: linear; "/>-->
-        <h2>Loading...</h2>
-    </div>
+        <div id="loading-page">
+            <div style="width: 100%; height: 100%; background-color: white; position: fixed; top: 0; left: 0; z-index: -4;"></div>
+            <img src="./Favicon.png" style="height: 100px; animation: pulse 1.5s infinite ease-in-out;" /><!-- animation-name: spin; animation-duration: 1000ms; animation-iteration-count: infinite; animation-timing-function: linear; "/>-->
+            <h2>Loading...</h2>
+        </div>
 
-    <!-- Sign In Page -->
-    <div class="container" id="signin-page" style="display: none;">
-        <h2>Sign In</h2>
-        <input type="text" id="signin-username" placeholder="Username">
-        <input type="password" id="signin-password" placeholder="Password">
-        <button id="SIB" class="button" onclick="signIn()">Sign In</button>
-        <p>Don't have an account? <span class="link" onclick="showSignupPage()">Sign up</span></p>
-    </div>
+        <!-- Sign In Page -->
+        <div class="container" id="signin-page" style="display: none;">
+            <h2>Sign In</h2>
+            <input type="text" id="signin-username" placeholder="Username">
+            <input type="password" id="signin-password" placeholder="Password">
+            <button id="SIB" class="button" onclick="signIn()">Sign In</button>
+            <p>Don't have an account? <span class="link" onclick="showSignupPage()">Sign up</span></p>
+        </div>
 
-    <!-- Sign Up Page -->
-    <div class="container" id="signup-page" style="display: none;">
-        <h2>Sign Up</h2>
-        <input type="text" id="signup-username" placeholder="Username">
-        <input type="password" id="signup-password" placeholder="Password">
-        <input type="password" id="signup-password-confirm" placeholder="Confirm Password">
-        <button id="SUB" class="button" onclick="signUp()">Sign Up</button>
-        <p>Already have an account? <span class="link" onclick="showSigninPage()">Sign in</span></p>
-    </div>
-
-
+        <!-- Sign Up Page -->
+        <div class="container" id="signup-page" style="display: none;">
+            <h2>Sign Up</h2>
+            <input type="text" id="signup-username" placeholder="Username">
+            <input type="password" id="signup-password" placeholder="Password">
+            <input type="password" id="signup-password-confirm" placeholder="Confirm Password">
+            <button id="SUB" class="button" onclick="signUp()">Sign Up</button>
+            <p>Already have an account? <span class="link" onclick="showSigninPage()">Sign in</span></p>
+        </div>
 
 
-    <div id="chat-setup-page" style="display: none;">
-        <div class="contacts-sidebar" id="contacts-sidebar">
 
-            <h3>Contacts</h3>
-            <!--
-            <div class="contact-item" onclick="startChatFromButton('jack')">
-                <div class="contact-avatar"></div>
-                <div class="contact-name">jack</div>
+
+        <div id="chat-setup-page" style="display: none;">
+            <div class="contacts-sidebar" id="contacts-sidebar">
+
+                <h3>Contacts</h3>
+                <!--
+                <div class="contact-item" onclick="startChatFromButton('jack')">
+                    <div class="contact-avatar"></div>
+                    <div class="contact-name">jack</div>
+                </div>
+                <div class="contact-item" onclick="startChatFromButton('Bob')">
+                    <div class="contact-avatar"></div>
+                    <div class="contact-name">Bob</div>
+                </div>
+                <div class="contact-item" onclick="startChatFromButton('Charlie')">
+                    <div class="contact-avatar"></div>
+                    <div class="contact-name">Charlie</div>
+                </div>
+                -->
             </div>
-            <div class="contact-item" onclick="startChatFromButton('Bob')">
-                <div class="contact-avatar"></div>
-                <div class="contact-name">Bob</div>
+            <button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
+                <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
+            </button>
+
+            <div onclick="settings()" class="icon-div" style="transform: none">
             </div>
-            <div class="contact-item" onclick="startChatFromButton('Charlie')">
-                <div class="contact-avatar"></div>
-                <div class="contact-name">Charlie</div>
+            <img class="settings-icon" onclick="settings()" src="./gear-icon.png" alt="Settings" />
+
+            <div onclick="NewMsgs()" class="new-icon-div" style="transform: none">
             </div>
-            -->
-        </div>
-        <button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
-            <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
-        </button>
-
-        <div onclick="settings()" class="icon-div" style="transform: none">
-        </div>
-        <img class="settings-icon" onclick="settings()" src="./gear-icon.png" alt="Settings" />
-
-        <div onclick="NewMsgs()" class="new-icon-div" style="transform: none">
-        </div>
-        <img class="new-icon" onclick="NewMsgs()" src="./No-New-Messages.png" alt="New Messages" />
-        <div onclick="NewMsgs()" class="notification-badge" id="NewMsg-notification-badge">!</div>
+            <img class="new-icon" onclick="NewMsgs()" src="./No-New-Messages.png" alt="New Messages" />
+            <div onclick="NewMsgs()" class="notification-badge" id="NewMsg-notification-badge">!</div>
 
 
-        <button class="logout-button" onclick="logout()">Log out</button>
-        <h2>Start a Chat</h2>
-        <input type="text" id="chat-username" placeholder="Enter a username to chat with">
-        <button class="button" onclick="startChat()">Start Chat</button>
-    </div>
+            <button class="logout-button" onclick="logout()">Log out</button>
+            <h2>Start a Chat</h2>
+            <input type="text" id="chat-username" placeholder="Enter a username to chat with">
+            <button class="button" onclick="startChat()">Start Chat</button>
+        </div>
 
-    <div id="chat-page" style="display: none;">
-        <div onclick="goToChatSetup()" class="icon-div" style="transform: none">
-        </div>
-        <img class="back-icon" onclick="goToChatSetup()" src="./back-icon.png" alt="Back" />
-        <button class="favorite-button" onclick="toggleFavorite()">&#9734;</button>
-        <button class="logout-button" onclick="logout()">Log out</button>
-        <div id="chat-messages"></div>
-        <div id="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Type a message...">
-            <button id="send-button" class="button" onclick="sendMessage()">Send</button>
-        </div>
-    </div>
-    <div id="settings" style="display:none;">
-        <div id="fade" onclick="closeSettings()"></div>
-        <div id="settings-pane">
-            <button class="close-settings-button" onclick="closeSettings()">X</button>
-            <div class="theme-switcher">
-                <label for="theme-select">Select Theme:</label>
-                <select id="theme-select">
-                    <option value="red">Red</option>
-                    <option value="orange">Orange</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="green">Green</option>
-                    <option value="blue">Blue</option>
-                    <option value="purple">Purple</option>
-                    <option value="white">Light</option>
-                    <option value="dark">Dark</option>
-                </select>
+        <div id="chat-page" style="display: none;">
+            <div onclick="goToChatSetup()" class="icon-div" style="transform: none">
             </div>
-            <button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
-        </div>
-    </div>
-    <div id="NewMsgs" style="display:none;">
-        <div id="fade" onclick="closeNewMsgs()"></div>
-        <div id="NewMsgs-pane">
-            <button class="close-NewMsgs-button" onclick="closeNewMsgs()">X</button>
-            <div id="newMsgs-area">
+            <img class="back-icon" onclick="goToChatSetup()" src="./back-icon.png" alt="Back" />
+            <button class="favorite-button" onclick="toggleFavorite()">&#9734;</button>
+            <button class="logout-button" onclick="logout()">Log out</button>
+            <div id="chat-messages"></div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button id="send-button" class="button" onclick="sendMessage()">Send</button>
             </div>
-            <br />
-            <br />
-            <a href="#" onclick="location.reload()" style="text-decoration:none; color:var(--link-color)">Refresh</a>
         </div>
-    </div>
-    <div id="alerts-container"></div>
+        <div id="settings" style="display:none;">
+            <div id="fade" onclick="closeSettings()"></div>
+            <div id="settings-pane">
+                <button class="close-settings-button" onclick="closeSettings()">X</button>
+                <div class="theme-switcher">
+                    <label for="theme-select">Select Theme:</label>
+                    <select id="theme-select">
+                        <option value="red">Red</option>
+                        <option value="orange">Orange</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
+                        <option value="purple">Purple</option>
+                        <option value="white">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+                <button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
+            </div>
+        </div>
+        <div id="NewMsgs" style="display:none;">
+            <div id="fade" onclick="closeNewMsgs()"></div>
+            <div id="NewMsgs-pane">
+                <button class="close-NewMsgs-button" onclick="closeNewMsgs()">X</button>
+                <div id="newMsgs-area">
+                </div>
+                <br />
+                <br />
+                <a href="#" onclick="location.reload()" style="text-decoration:none; color:var(--link-color)">Refresh</a>
+            </div>
+        </div>
+        <div id="alerts-container"></div>
 
 
-    <div id="cookie-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
-        <h1 style="font-size: 1.5em; color: #333;">We Value Your Privacy</h1>
-        <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
-            To improve your experience, we use cookies to save your login details and preferences. Please let us know if this is okay with you.
-        </p>
-        <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rC()">Allow</button>
-        <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('cookie-request').style.display = 'None'">Deny</button>
-    </div>
+        <div id="cookie-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
+            <h1 style="font-size: 1.5em; color: #333;">We Value Your Privacy</h1>
+            <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
+                To improve your experience, we use cookies to save your login details and preferences. Please let us know if this is okay with you.
+            </p>
+            <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rC()">Allow</button>
+            <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('cookie-request').style.display = 'None'">Deny</button>
+        </div>
 
-    <div id="notification-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
-        <h1 style="font-size: 1.5em; color: #333;">Would You Like to Get Notifications?</h1>
-        <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
-            Would you like to get notifications when a message arrives?
-        </p>
-        <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rN()">Allow</button>
-        <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('notification-request').style.display = 'None'; setCookie('notifications', false, 365)">Deny</button>
-    </div>
+        <div id="notification-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
+            <h1 style="font-size: 1.5em; color: #333;">Would You Like to Get Notifications?</h1>
+            <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
+                Would you like to get notifications when a message arrives?
+            </p>
+            <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rN()">Allow</button>
+            <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('notification-request').style.display = 'None'; setCookie('notifications', false, 365)">Deny</button>
+        </div>
 
 
 
-    <script>
-        function getUrlParameters() {
-            var out = {};
-            var str = window.location.search.replace("?", "");
-            var subs = str.split(`&`).map((si) => { var keyVal = si.split(`=`); out[keyVal[0]] = keyVal[1]; });
-            return out
-        }
-
-        console.log(getUrlParameters())
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('contacts-sidebar');
-            const collapseIcon = document.getElementById('collapse-icon');
-
-            // Toggle the collapsed state
-            sidebar.classList.toggle('collapsed');
-
-            // Change the icon between < and >
-            if (sidebar.classList.contains('collapsed')) {
-                collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
-            } else {
-                collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
-            }
-        }
-
-        function beforeLast(value, delimiter) {
-            value = value || ''
-
-            if (delimiter === '') {
-                return value
+        <script>
+            let doHr = false;
+            function getUrlParameters() {
+                var out = {};
+                var str = window.location.search.replace("?", "");
+                var subs = str.split(`&`).map((si) => { var keyVal = si.split(`=`); out[keyVal[0]] = keyVal[1]; });
+                return out
             }
 
-            const substrings = value.split(delimiter)
-
-            return substrings.length === 1
-                ? value // delimiter is not part of the string
-                : substrings.slice(0, -1).join(delimiter)
-        }
-
-        function jsonToKeyMap(jsonString) {
-            try {
-                // Convert single quotes to double quotes
-                const correctedJsonString = jsonString.replace(/'/g, '"');
-                const jsonObject = JSON.parse(correctedJsonString);
-
-                // Convert the date and time from UTC to local time zone
-                const utcDate = new Date(Date.UTC(
-                    jsonObject.year,
-                    jsonObject.month - 1, // Months are zero-based in JavaScript
-                    jsonObject.day,
-                    jsonObject.hour,
-                    jsonObject.minute,
-                    jsonObject.second
-                ));
-
-                const localDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-
-                // Update the jsonObject with the local date and time
-                jsonObject.year = localDate.getFullYear();
-                jsonObject.month = localDate.getMonth() + 1;
-                jsonObject.day = localDate.getDate();
-                jsonObject.hour = localDate.getHours();
-                jsonObject.minute = localDate.getMinutes();
-                jsonObject.second = localDate.getSeconds();
-
-                const keyMap = new Map(Object.entries(jsonObject));
-                return keyMap;
-            } catch (error) {
-                console.error("Invalid JSON string:", error);
-                return null;
+            function serverDown() {
+                document.getElementById("maintenance-container-container").style.display = "flex";
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signin-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "none";
+                document.getElementById("chat-setup-page").style.display = "none";
+                document.getElementById("chat-page").style.display = "none";
             }
-        }
 
-        function n(num, len = 2) {
-            return `${num}`.padStart(len, '0');
-        }
+            console.log(getUrlParameters())
 
+            function toggleSidebar() {
+                const sidebar = document.getElementById('contacts-sidebar');
+                const collapseIcon = document.getElementById('collapse-icon');
 
+                // Toggle the collapsed state
+                sidebar.classList.toggle('collapsed');
 
-        let connectedUsr = ""
-        let alert = false
-
-        document.getElementById("chat-input").addEventListener("keypress", function (event) {
-            // If the user presses the "Enter" key on the keyboard
-            if (event.key === "Enter" && (document.getElementById("chat-page").style.display == "flex" || document.getElementById("chat-page").style.display == "block")) {
-                // Cancel the default action, if needed
-                event.preventDefault();
-                // Trigger the button element with a click
-                document.getElementById("send-button").click();
+                // Change the icon between < and >
+                if (sidebar.classList.contains('collapsed')) {
+                    collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
+                } else {
+                    collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
+                }
             }
-        });
 
-        //const socket = new WebSocket('ws://localhost:12347');
-        //const socket = new WebSocket('ws://192.168.1.66:12347');
-        var WSLTURL = "2f3a49ceba5732.lhr.life"
-        const socket = new WebSocket('wss://' + WSLTURL);
-        let currentUsername = getCookie("quickChatUser");
-        let currentPassword = getCookie("quickChatPass");
-        const themeSelect = document.getElementById("theme-select")
+            function beforeLast(value, delimiter) {
+                value = value || ''
 
-        document.documentElement.className = "blue";
-        themeSelect.value = "blue"
+                if (delimiter === '') {
+                    return value
+                }
 
-        socket.onopen = function (event) {
-            checkUserStatus()
-        }
+                const substrings = value.split(delimiter)
 
-        socket.onclose = function () {
-            window.location.reload();
-        }
+                return substrings.length === 1
+                    ? value // delimiter is not part of the string
+                    : substrings.slice(0, -1).join(delimiter)
+            }
 
-        socket.onmessage = function (event) {
-            // Handle server response
-            let message = event.data;
-            //message = atob(message)
-            console.log(message)
-
-            if (message.substring(0, 4) === "1001") {
-                setCookie("quickChatUser", currentUsername, 14);
-                setCookie("quickChatPass", currentPassword, 14);
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-                goToChatSetup();
-            } else if (message.substring(0, 4) === "1101") {
-                setCookie("quickChatUser", currentUsername, 14);
-                setCookie("quickChatPass", currentPassword, 14);
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-                goToChatSetup();
-                successAlert("Account Created!")
-            } else if (message.substring(0, 4) === "2101") {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "block";
-                deleteCookie("quickChatUser")
-                deleteCookie("quickChatPass")
-                errorAlert("Signup failed. Account already exists.");
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-            } else if (message.substring(0, 4) === "2102") {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "block";
-                deleteCookie("quickChatUser")
-                deleteCookie("quickChatPass")
-                errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-            } else if (message.substring(0, 4) === "2103") {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "block";
-                deleteCookie("quickChatUser")
-                deleteCookie("quickChatPass")
-                errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-            } else if (message.substring(0, 4) === "2104") {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "block";
-                deleteCookie("quickChatUser")
-                deleteCookie("quickChatPass")
-                errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-            } else if (message.substring(0, 4) === "2105") {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "block";
-                deleteCookie("quickChatUser")
-                deleteCookie("quickChatPass")
-                errorAlert("Signup failed. Password must be longer than or equal to 8 characters.");
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-            } else if (message.substring(0, 4) === "2001") {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signin-page").style.display = "block";
-                deleteCookie("quickChatUser")
-                deleteCookie("quickChatPass")
-                errorAlert("Login failed. Please check your username/password.");
-                document.getElementById("SIB").disabled = false;
-                document.getElementById("SUB").disabled = false;
-            } else if (message.substring(0, 4) === "1201") {
+            function jsonToKeyMap(jsonString) {
                 try {
-                    if (document.getElementById("contact-item-" + connectedUsr)) {
-                        const button = document.querySelector(".favorite-button");
-                        button.textContent = "★"; // Filled star
-                        button.classList.add("filled");
-                    } else {
-                        const button = document.querySelector(".favorite-button");
-                        button.textContent = "☆"; // Outlined star
-                        button.classList.remove("filled");
+                    // Convert single quotes to double quotes
+                    const correctedJsonString = jsonString.replace(/'/g, '"');
+                    const jsonObject = JSON.parse(correctedJsonString);
+
+                    // Convert the date and time from UTC to local time zone
+                    const utcDate = new Date(Date.UTC(
+                        jsonObject.year,
+                        jsonObject.month - 1, // Months are zero-based in JavaScript
+                        jsonObject.day,
+                        jsonObject.hour,
+                        jsonObject.minute,
+                        jsonObject.second
+                    ));
+
+                    const localDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+
+                    // Update the jsonObject with the local date and time
+                    jsonObject.year = localDate.getFullYear();
+                    jsonObject.month = localDate.getMonth() + 1;
+                    jsonObject.day = localDate.getDate();
+                    jsonObject.hour = localDate.getHours();
+                    jsonObject.minute = localDate.getMinutes();
+                    jsonObject.second = localDate.getSeconds();
+
+                    const keyMap = new Map(Object.entries(jsonObject));
+                    return keyMap;
+                } catch (error) {
+                    console.error("Invalid JSON string:", error);
+                    return null;
+                }
+            }
+
+            function n(num, len = 2) {
+                return `${num}`.padStart(len, '0');
+            }
+
+
+
+            let connectedUsr = ""
+            let alert = false
+
+            document.getElementById("chat-input").addEventListener("keypress", function (event) {
+                // If the user presses the "Enter" key on the keyboard
+                if (event.key === "Enter" && (document.getElementById("chat-page").style.display == "flex" || document.getElementById("chat-page").style.display == "block")) {
+                    // Cancel the default action, if needed
+                    event.preventDefault();
+                    // Trigger the button element with a click
+                    document.getElementById("send-button").click();
+                }
+            });
+
+            //const socket = new WebSocket('ws://localhost:12345');
+            //const socket = new WebSocket('ws://192.168.1.66:12347');
+            //const socket = new WebSocket('wss://' + WSLTURL);
+
+            let socket = "";
+
+            let connectionTries = 0;
+
+            var WSLTURL = "quickchat.serveo.net"
+
+            let socketName = 'wss://' + WSLTURL
+            //let socketName = 'ws://192.168.1.66:12347'
+
+            newSocket()
+
+            //let socket = new WebSocket(socketName);
+            let currentUsername = getCookie("quickChatUser");
+            let currentPassword = getCookie("quickChatPass");
+            const themeSelect = document.getElementById("theme-select")
+
+            document.documentElement.className = "blue";
+            themeSelect.value = "blue"
+
+            function newSocket() {
+                connectionTries++;
+                socket = new WebSocket(socketName);
+
+                socket.onopen = function (event) {
+                    connectionTries = 0;
+                    checkUserStatus()
+                    console.log(currentUsername + "currentUsername")
+                    if (currentUsername != null && getUrlParameters()["chatwith"]) {
+                        startChatFromButton(getUrlParameters()["chatwith"])
                     }
-                } catch {
-                    const button = document.querySelector(".favorite-button");
+                }
+
+                socket.onclose = function () {
+                    if (connectionTries == 0) {
+                        window.location.reload();
+                    } else if (connectionTries > 4) {
+                        serverDown()
+                    } else {
+                        newSocket()
+                    }
+                    //socket = new WebSocket(socketName);
+                }
+
+                socket.onmessage = function (event) {
+                    // Handle server response
+                    let message = event.data;
+                    //message = atob(message)
+                    console.log(message)
+
+                    if (message.substring(0, 4) === "1001") {
+                        setCookie("quickChatUser", currentUsername, 14);
+                        setCookie("quickChatPass", currentPassword, 14);
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                        goToChatSetup();
+                    } else if (message.substring(0, 4) === "1101") {
+                        setCookie("quickChatUser", currentUsername, 14);
+                        setCookie("quickChatPass", currentPassword, 14);
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                        goToChatSetup();
+                        successAlert("Account Created!")
+                    } else if (message.substring(0, 4) === "2101") {
+                        document.getElementById("loading-page").style.display = "none";
+                        document.getElementById("signup-page").style.display = "block";
+                        deleteCookie("quickChatUser")
+                        deleteCookie("quickChatPass")
+                        errorAlert("Signup failed. Account already exists.");
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                    } else if (message.substring(0, 4) === "2102") {
+                        document.getElementById("loading-page").style.display = "none";
+                        document.getElementById("signup-page").style.display = "block";
+                        deleteCookie("quickChatUser")
+                        deleteCookie("quickChatPass")
+                        errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                    } else if (message.substring(0, 4) === "2103") {
+                        document.getElementById("loading-page").style.display = "none";
+                        document.getElementById("signup-page").style.display = "block";
+                        deleteCookie("quickChatUser")
+                        deleteCookie("quickChatPass")
+                        errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                    } else if (message.substring(0, 4) === "2104") {
+                        document.getElementById("loading-page").style.display = "none";
+                        document.getElementById("signup-page").style.display = "block";
+                        deleteCookie("quickChatUser")
+                        deleteCookie("quickChatPass")
+                        errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                    } else if (message.substring(0, 4) === "2105") {
+                        document.getElementById("loading-page").style.display = "none";
+                        document.getElementById("signup-page").style.display = "block";
+                        deleteCookie("quickChatUser")
+                        deleteCookie("quickChatPass")
+                        errorAlert("Signup failed. Password must be longer than or equal to 8 characters.");
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                    } else if (message.substring(0, 4) === "2001") {
+                        document.getElementById("loading-page").style.display = "none";
+                        document.getElementById("signin-page").style.display = "block";
+                        deleteCookie("quickChatUser")
+                        deleteCookie("quickChatPass")
+                        errorAlert("Login failed. Please check your username/password.");
+                        document.getElementById("SIB").disabled = false;
+                        document.getElementById("SUB").disabled = false;
+                    } else if (message.substring(0, 4) === "1201") {
+                        try {
+                            if (document.getElementById("contact-item-" + connectedUsr.toLowerCase())) {
+                                const button = document.querySelector(".favorite-button");
+                                button.textContent = "★"; // Filled star
+                                button.classList.add("filled");
+                            } else {
+                                const button = document.querySelector(".favorite-button");
+                                button.textContent = "☆"; // Outlined star
+                                button.classList.remove("filled");
+                            }
+                        } catch {
+                            const button = document.querySelector(".favorite-button");
+                            button.textContent = "☆"; // Outlined star
+                            button.classList.remove("filled");
+                        }
+                        document.getElementById("chat-setup-page").style.display = "none";
+                        document.getElementById("chat-page").style.display = "flex";
+                    } else if (message.substring(0, 4) === "2201") {
+                        errorAlert("Account not found.")
+                    } else if (message.substring(0, 4) === "1301") {
+                        if (!document.hasFocus()) {
+                            showNotification("New Message From " + connectedUsr)
+                        }
+                        if (message.includes("[:time:]")) {
+                            addMessageToChat(beforeLast(message.substring(4), "[:time:]"), false, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
+                        } else {
+                            addMessageToChat(message.substring(4), false)
+                        }
+                    } else if (message.substring(0, 4) === "1302") {
+                        if (message.includes("[:time:]")) {
+                            addMessageToChat(beforeLast(message.substring(4), "[:time:]"), true, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
+                        } else {
+                            addMessageToChat(message.substring(4), true)
+                        }
+                    } else if (message.substring(0, 4) === "1401") {
+                        document.getElementById("NewMsg-notification-badge").style.display = "flex"
+                        let newMessage = document.createElement('div');
+                        newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}NewMsgUserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton"><strong>${message.substring(4)}</strong></button>`;
+                        try {
+                            document.getElementById("NNM").remove()
+                        } catch {
+
+                        }
+                        document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                        doHr = true
+                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                    } else if (message.substring(0, 4) === "1402") {
+                        let newMessage = document.createElement('div');
+                        try {
+                            document.getElementById("NNM").remove()
+                        } catch {
+
+                        }
+                        newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                        document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                    } else if (message.substring(0, 4) === "1403") {
+                        let newMessage = document.createElement('div');
+                        newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}UserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton">${message.substring(4)}</button>`;
+                        try {
+                            document.getElementById("NNM").remove()
+                        } catch {
+
+                        }
+                        if (doHr) {
+                            document.getElementById("newMsgs-area").appendChild(document.createElement('hr'))
+                        }
+                        document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                        doHr = false
+                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                    } else if (message.substring(0, 4) === "1501") {
+                        let contact = document.createElement('div');
+                        contact.innerHTML = `<div class="contact-item" id="contact-item-${message.substring(4)}" onclick="startChatFromButton('${message.substring(4)}')">
+                                    <!--<div class="contact-avatar"></div>-->
+                                    <div class="contact-name">${message.substring(4)}</div>
+</div>`;
+                        document.getElementById("contacts-sidebar").appendChild(contact.firstChild);
+                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                    } else if (message.substring(0, 4) === "1502") {
+                        try {
+                            document.getElementById("contact-item-" + message.substring(4)).remove()
+                        } catch {
+
+                        }
+                    } else if (message.substring(0, 4) === "1601") {
+                        document.documentElement.className = message.substring(4);
+                        themeSelect.value = message.substring(4).trim()
+                        console.log(message.substring(4))
+                    }
+                };
+            }
+
+            function confirmAccountDeletion() {
+                const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+                if (confirmation) {
+                    if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
+                        deleteAccount();
+                    }
+                }
+            }
+
+            function deleteAccount() {
+                socket.send("0701")
+                closeSettings()
+                logout()
+            }
+
+            function setCookie(name, value, days) {
+                if (getCookie("CookiesAllowed") || name == "CookiesAllowed") {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    const cookieString = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
+                    document.cookie = cookieString;
+                    console.log("Cookie set:", cookieString);
+                }
+            }
+
+            function toggleFavorite() {
+                const button = document.querySelector(".favorite-button");
+                if (button.textContent === "★") { // Filled star
                     button.textContent = "☆"; // Outlined star
                     button.classList.remove("filled");
-                }
-                document.getElementById("chat-setup-page").style.display = "none";
-                document.getElementById("chat-page").style.display = "flex";
-            } else if (message.substring(0, 4) === "2201") {
-                errorAlert("Account not found.")
-            } else if (message.substring(0, 4) === "1301") {
-                if (!document.hasFocus()) {
-                    showNotification("New Message From " + connectedUsr)
-                }
-                if (message.includes("[:time:]")) {
-                    addMessageToChat(beforeLast(message.substring(4), "[:time:]"), false, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
+                    socket.send("0502" + connectedUsr)
                 } else {
-                    addMessageToChat(message.substring(4), false)
-                }
-            } else if (message.substring(0, 4) === "1302") {
-                if (message.includes("[:time:]")) {
-                    addMessageToChat(beforeLast(message.substring(4), "[:time:]"), true, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
-                } else {
-                    addMessageToChat(message.substring(4), true)
-                }
-            } else if (message.substring(0, 4) === "1401") {
-                document.getElementById("NewMsg-notification-badge").style.display = "flex"
-                let newMessage = document.createElement('div');
-                newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}NewMsgUserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton">${message.substring(4)}</button>`;
-                try {
-                    document.getElementById("NNM").remove()
-                } catch {
-
-                }
-                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
-            } else if (message.substring(0, 4) === "1402") {
-                let newMessage = document.createElement('div');
-                try {
-                    document.getElementById("NNM").remove()
-                } catch {
-
-                }
-                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
-                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
-            } else if (message.substring(0, 4) === "1501") {
-                let contact = document.createElement('div');
-                contact.innerHTML = `<div class="contact-item" id="contact-item-${message.substring(4)}" onclick="startChatFromButton('${message.substring(4)}')">
-                        <!--<div class="contact-avatar"></div>-->
-                        <div class="contact-name">${message.substring(4)}</div>
-</div>`;
-                document.getElementById("contacts-sidebar").appendChild(contact.firstChild);
-                //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
-            } else if (message.substring(0, 4) === "1502") {
-                try {
-                    document.getElementById("contact-item-" + message.substring(4)).remove()
-                } catch {
-
-                }
-            } else if (message.substring(0, 4) === "1601") {
-                document.documentElement.className = message.substring(4);
-                themeSelect.value = message.substring(4).trim()
-                console.log(message.substring(4))
-            }
-        };
-
-        function confirmAccountDeletion() {
-            const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
-            if (confirmation) {
-                if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
-                    deleteAccount();
+                    button.textContent = "★"; // Filled star
+                    button.classList.add("filled");
+                    socket.send("0501" + connectedUsr)
                 }
             }
-        }
 
-        function deleteAccount() {
-            socket.send("0701")
-            closeSettings()
-            logout()
-        }
+            let alerts = [];
 
-        function setCookie(name, value, days) {
-            if (getCookie("CookiesAllowed") || name == "CookiesAllowed") {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                const cookieString = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
-                document.cookie = cookieString;
-                console.log("Cookie set:", cookieString);
-            }
-        }
-
-        function toggleFavorite() {
-            const button = document.querySelector(".favorite-button");
-            if (button.textContent === "★") { // Filled star
-                button.textContent = "☆"; // Outlined star
-                button.classList.remove("filled");
-                socket.send("0502" + connectedUsr)
-            } else {
-                button.textContent = "★"; // Filled star
-                button.classList.add("filled");
-                socket.send("0501" + connectedUsr)
-            }
-        }
-
-        let alerts = [];
-
-        function successAlert(text) {
-            createAlert(text, 'success');
-        }
-
-        function errorAlert(text) {
-            createAlert(text, 'error');
-        }
-
-        function createAlert(text, type) {
-            // Create a new alert message element
-            const alertMessage = document.createElement("div");
-            alertMessage.classList.add("alert");
-
-            // Apply the appropriate class based on the type
-            if (type === 'success') {
-                alertMessage.classList.add('success');
-            } else if (type === 'error') {
-                alertMessage.classList.add('error');
+            function successAlert(text) {
+                createAlert(text, 'success');
             }
 
-            alertMessage.innerText = text;
+            function errorAlert(text) {
+                createAlert(text, 'error');
+            }
 
-            // Append the new alert to the container
-            const alertContainer = document.getElementById("alerts-container");
-            alertContainer.appendChild(alertMessage);
+            function createAlert(text, type) {
+                // Create a new alert message element
+                const alertMessage = document.createElement("div");
+                alertMessage.classList.add("alert");
 
-            // Add the alert to the stack
-            alerts.push(alertMessage);
+                // Apply the appropriate class based on the type
+                if (type === 'success') {
+                    alertMessage.classList.add('success');
+                } else if (type === 'error') {
+                    alertMessage.classList.add('error');
+                }
 
-            // After 5 seconds, start the fade-out and slide-down animation
-            setTimeout(() => {
-                alertMessage.classList.add("hide"); // Apply the hide animation
-                // Remove the alert from the container after the animation
+                alertMessage.innerText = text;
+
+                // Append the new alert to the container
+                const alertContainer = document.getElementById("alerts-container");
+                alertContainer.appendChild(alertMessage);
+
+                // Add the alert to the stack
+                alerts.push(alertMessage);
+
+                // After 5 seconds, start the fade-out and slide-down animation
                 setTimeout(() => {
-                    alertMessage.remove();
-                    alerts.shift(); // Remove the first alert from the stack
-                }, 500); // Wait for the hide animation to finish (same duration as the transition)
-            }, 5000); // Show the alert for 5 seconds before fading it out
-        }
-
-
-        function getCookie(name) {
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                let [key, value] = cookie.trim().split('=');
-                if (key === name) return decodeURIComponent(value);
+                    alertMessage.classList.add("hide"); // Apply the hide animation
+                    // Remove the alert from the container after the animation
+                    setTimeout(() => {
+                        alertMessage.remove();
+                        alerts.shift(); // Remove the first alert from the stack
+                    }, 500); // Wait for the hide animation to finish (same duration as the transition)
+                }, 5000); // Show the alert for 5 seconds before fading it out
             }
-            return null;
-        }
 
 
-        function deleteCookie(name) {
-            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
-        }
-
-        function settings() {
-            document.getElementById("settings").style.display = "block";
-            document.getElementById("settings-pane").classList.add("show");
-        }
-
-        function NewMsgs() {
-            document.getElementById("NewMsgs").style.display = "block";
-            document.getElementById("NewMsgs-pane").classList.add("show");
-        }
-
-        function closeSettings() {
-            document.getElementById("settings-pane").classList.remove("show");
-            setTimeout(function () {
-                document.getElementById("settings").style.display = "none";
-            }, 0); // Wait for the transition to finish
-        }
-
-        function closeNewMsgs() {
-            document.getElementById("NewMsgs-pane").classList.remove("show");
-            setTimeout(function () {
-                document.getElementById("NewMsgs").style.display = "none";
-            }, 0); // Wait for the transition to finish
-        }
-
-        function showSignupPage() {
-            document.getElementById("loading-page").style.display = "none";
-            document.getElementById("signin-page").style.display = "none";
-            document.getElementById("signup-page").style.display = "block";
-            document.getElementById("chat-setup-page").style.display = "none";
-            document.getElementById("chat-page").style.display = "none";
-        }
-
-        function showSigninPage() {
-            document.getElementById("loading-page").style.display = "none";
-            document.getElementById("signup-page").style.display = "none";
-            document.getElementById("signin-page").style.display = "block";
-            document.getElementById("chat-setup-page").style.display = "none";
-            document.getElementById("chat-page").style.display = "none";
-        }
-
-        function goToChatSetup() {
-            document.getElementById("loading-page").style.display = "none";
-            document.getElementById("signin-page").style.display = "none";
-            document.getElementById("signup-page").style.display = "none";
-            document.getElementById("chat-setup-page").style.display = "flex";
-            document.getElementById("chat-page").style.display = "none";
-        }
-
-        function signIn() {
-            const username = document.getElementById("signin-username").value;
-            const password = document.getElementById("signin-password").value;
-            if (username && password) {
-                currentUsername = username
-                currentPassword = password
-                document.getElementById("SIB").disabled = true;
-                document.getElementById("SUB").disabled = true;
-                socket.send('0001' + username + "[:pwd:]" + password);
-            } else {
-                errorAlert("Please enter a valid username and password.");
+            function getCookie(name) {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    let [key, value] = cookie.trim().split('=');
+                    if (key === name) return decodeURIComponent(value);
+                }
+                return null;
             }
-        }
 
-        function signUp() {
-            const username = document.getElementById("signup-username").value;
-            const password = document.getElementById("signup-password").value;
-            const passwordConfirm = document.getElementById("signup-password-confirm").value;
-            if (password === passwordConfirm) {
+
+            function deleteCookie(name) {
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+            }
+
+            function settings() {
+                document.getElementById("settings").style.display = "block";
+                document.getElementById("settings-pane").classList.add("show");
+            }
+
+            function NewMsgs() {
+                document.getElementById("NewMsgs").style.display = "block";
+                document.getElementById("NewMsgs-pane").classList.add("show");
+            }
+
+            function closeSettings() {
+                document.getElementById("settings-pane").classList.remove("show");
+                setTimeout(function () {
+                    document.getElementById("settings").style.display = "none";
+                }, 0); // Wait for the transition to finish
+            }
+
+            function closeNewMsgs() {
+                document.getElementById("NewMsgs-pane").classList.remove("show");
+                setTimeout(function () {
+                    document.getElementById("NewMsgs").style.display = "none";
+                }, 0); // Wait for the transition to finish
+            }
+
+            function showSignupPage() {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signin-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "block";
+                document.getElementById("chat-setup-page").style.display = "none";
+                document.getElementById("chat-page").style.display = "none";
+            }
+
+            function showSigninPage() {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "none";
+                document.getElementById("signin-page").style.display = "block";
+                document.getElementById("chat-setup-page").style.display = "none";
+                document.getElementById("chat-page").style.display = "none";
+            }
+
+            function goToChatSetup() {
+                document.getElementById("loading-page").style.display = "none";
+                document.getElementById("signin-page").style.display = "none";
+                document.getElementById("signup-page").style.display = "none";
+                document.getElementById("chat-setup-page").style.display = "flex";
+                document.getElementById("chat-page").style.display = "none";
+            }
+
+            function signIn() {
+                const username = document.getElementById("signin-username").value;
+                const password = document.getElementById("signin-password").value;
                 if (username && password) {
                     currentUsername = username
                     currentPassword = password
                     document.getElementById("SIB").disabled = true;
                     document.getElementById("SUB").disabled = true;
-                    socket.send('0101' + username + "[:pwd:]" + password);
+                    socket.send('0001' + username + "[:pwd:]" + password);
                 } else {
                     errorAlert("Please enter a valid username and password.");
                 }
-            } else {
-                errorAlert("Passwords do not match!")
             }
-        }
 
-        function checkUserStatus() {
-            const user = getCookie("quickChatUser");
-            const pass = getCookie("quickChatPass");
-            if (user) {
-                socket.send('0001' + user + "[:pwd:]" + pass);
-            } else {
+            function signUp() {
+                const username = document.getElementById("signup-username").value;
+                const password = document.getElementById("signup-password").value;
+                const passwordConfirm = document.getElementById("signup-password-confirm").value;
+                if (password === passwordConfirm) {
+                    if (username && password) {
+                        currentUsername = username
+                        currentPassword = password
+                        document.getElementById("SIB").disabled = true;
+                        document.getElementById("SUB").disabled = true;
+                        socket.send('0101' + username + "[:pwd:]" + password);
+                    } else {
+                        errorAlert("Please enter a valid username and password.");
+                    }
+                } else {
+                    errorAlert("Passwords do not match!")
+                }
+            }
+
+            function checkUserStatus() {
+                const user = getCookie("quickChatUser");
+                const pass = getCookie("quickChatPass");
+                if (user) {
+                    socket.send('0001' + user + "[:pwd:]" + pass);
+                } else {
+                    showSigninPage();
+                }
+            }
+
+            function logout() {
+                deleteCookie("quickChatUser");
                 showSigninPage();
+                document.documentElement.className = "blue";
+                themeSelect.value = "blue"
+                document.getElementById("contacts-sidebar").innerHTML = "<h3>Contacts</h3>"
+                document.getElementById("newMsgs-area").innerHTML = ""
+                location.reload()
             }
-        }
 
-        function logout() {
-            deleteCookie("quickChatUser");
-            showSigninPage();
-            document.documentElement.className = "blue";
-            themeSelect.value = "blue"
-            document.getElementById("contacts-sidebar").innerHTML = "<h3>Contacts</h3>"
-            document.getElementById("newMsgs-area").innerHTML = ""
-            location.reload()
-        }
+            function startChat() {
+                const chatUsername = document.getElementById("chat-username").value;
+                if (chatUsername) {
+                    document.getElementById("chat-messages").innerHTML = "";
+                    socket.send('0201' + chatUsername);
+                    socket.send('0401' + chatUsername);
+                    connectedUsr = chatUsername;
+                    try {
+                        document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").innerHTML = ""
+                    } catch {
 
-        function startChat() {
-            const chatUsername = document.getElementById("chat-username").value;
-            if (chatUsername) {
-                document.getElementById("chat-messages").innerHTML = "";
-                socket.send('0201' + chatUsername);
-                socket.send('0401' + chatUsername);
-                connectedUsr = chatUsername;
-                try {
-                    document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").innerHTML = ""
-                } catch {
-
+                    }
+                } else {
+                    errorAlert("Please enter a username to start chatting.");
                 }
-            } else {
-                errorAlert("Please enter a username to start chatting.");
-            }
 
-            div = document.getElementById("NewMsgs-pane")
+                div = document.getElementById("NewMsgs-pane")
 
-            // Check if the div contains any buttons
-            const buttons = div.querySelectorAll('button');
+                // Check if the div contains any buttons
+                const buttons = div.querySelectorAll('button');
 
-            if (buttons.length == 1) {
-                let newMessage = document.createElement('div');
-                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
-                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                document.getElementById("NewMsg-notification-badge").style.display = "none"
-            }
-        }
-
-        function startChatFromButton(chatUsername) {
-            //const chatUsername = document.getElementById("chat-username").value;
-            if (chatUsername) {
-                document.getElementById("chat-messages").innerHTML = "";
-                socket.send('0201' + chatUsername);
-                socket.send('0401' + chatUsername);
-                connectedUsr = chatUsername;
-                try {
-                    document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").remove()
-                } catch {
-
+                if (buttons.length == 1) {
+                    let newMessage = document.createElement('div');
+                    newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                    document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                    document.getElementById("NewMsg-notification-badge").style.display = "none"
                 }
-            } else {
-                errorAlert("Please enter a username to start chatting.");
             }
 
-            div = document.getElementById("NewMsgs-pane")
+            function startChatFromButton(chatUsername) {
+                //const chatUsername = document.getElementById("chat-username").value;
+                if (chatUsername) {
+                    document.getElementById("chat-messages").innerHTML = "";
+                    socket.send('0201' + chatUsername);
+                    socket.send('0401' + chatUsername);
+                    connectedUsr = chatUsername;
+                    try {
+                        document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").remove()
+                    } catch {
 
-            // Check if the div contains any buttons
-            const buttons = div.querySelectorAll('button');
+                    }
+                } else {
+                    errorAlert("Please enter a username to start chatting.");
+                }
 
-            if (buttons.length == 1) {
-                let newMessage = document.createElement('div');
-                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
-                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                document.getElementById("NewMsg-notification-badge").style.display = "none"
+                div = document.getElementById("NewMsgs-pane")
+
+                // Check if the div contains any buttons
+                const buttons = div.querySelectorAll('button');
+
+                if (buttons.length == 1) {
+                    let newMessage = document.createElement('div');
+                    newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                    document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                    document.getElementById("NewMsg-notification-badge").style.display = "none"
+                }
             }
-        }
 
-        // Mock function to add messages to chat
-        function addMessageToChat(content, isSentByUser, time = "") {
-            const chatMessages = document.getElementById("chat-messages");
-            const message = document.createElement("div");
-            const messageElement = document.createElement("div");
-            const messageTimeElement = document.createElement("div");
-            messageElement.className = `message ${isSentByUser ? "sent" : "received"}`;
-            messageElement.textContent = content;
-            chatMessages.prepend(messageElement);
-            messageTimeElement.className = `messageTime ${isSentByUser ? "sentT" : "receivedT"}`;
-            messageTimeElement.textContent = time;
-            chatMessages.prepend(messageTimeElement);
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
-        }
-
-        // Sending a message
-        function sendMessage() {
-            const chatInput = document.getElementById("chat-input");
-            const message = chatInput.value.trim();
-            if (message) {
-                //addMessageToChat(message, true);
-                socket.send("0301" + message); // Send to server
-                chatInput.value = ""; // Clear input
+            // Mock function to add messages to chat
+            function addMessageToChat(content, isSentByUser, time = "") {
+                const chatMessages = document.getElementById("chat-messages");
+                const message = document.createElement("div");
+                const messageElement = document.createElement("div");
+                const messageTimeElement = document.createElement("div");
+                messageElement.className = `message ${isSentByUser ? "sent" : "received"}`;
+                messageElement.textContent = content;
+                chatMessages.prepend(messageElement);
+                messageTimeElement.className = `messageTime ${isSentByUser ? "sentT" : "receivedT"}`;
+                messageTimeElement.textContent = time;
+                chatMessages.prepend(messageTimeElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
             }
-        }
 
-        /*function updateRoot(color) {
-            // The new :root string
-            var newRoot = `
-            :root {
+            // Sending a message
+            function sendMessage() {
+                const chatInput = document.getElementById("chat-input");
+                const message = chatInput.value.trim();
+                if (message) {
+                    //addMessageToChat(message, true);
+                    socket.send("0301" + message); // Send to server
+                    chatInput.value = ""; // Clear input
+                }
+            }
+
+            /*function updateRoot(color) {
+                // The new :root string
+                var newRoot = `
+                :root {
 --sent-message-bg: #424242;
 --sent-message-text: #ffffff;
 --sent-message-border: #616161;
@@ -1815,60 +1952,60 @@ box-shadow: 2px 0 5px var(--box-shadow);
 --icons-bg: #616161;
 }
 
-            `;
-            // Find the existing <style> element and replace its contents
-            var rootStyleElement = document.getElementById('root-style');
-            rootStyleElement.innerHTML = newRoot;
-        }*/
+                `;
+                // Find the existing <style> element and replace its contents
+                var rootStyleElement = document.getElementById('root-style');
+                rootStyleElement.innerHTML = newRoot;
+            }*/
 
-        document.getElementById('theme-select').addEventListener('change', (event) => {
-            document.documentElement.className = event.target.value;
-            socket.send("0601" + event.target.value)
-        });
-
-        function closeSettings() {
-            document.getElementById('settings').style.display = 'none';
-        }
-
-        function rC() {
-            setCookie("CookiesAllowed", true, 365)
-            document.getElementById("cookie-request").style.display = "none"
-            document.getElementById("notification-request").style.display = "block"
-        }
-
-        function rN() {
-            document.getElementById("notification-request").style.display = "none"
-            if (Notification.permission === 'default') {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        setCookie("notifications", true, 365)
-                    } else {
-                        setCookie("notifications", false, 365)
-                    }
-                });
-            }
-        }
-
-        function showNotification(notificationText) {
-            const notification = new Notification('Quick Chat - New Message', {
-                body: notificationText,
-                icon: './logo.png' // Optional: URL to an icon image
+            document.getElementById('theme-select').addEventListener('change', (event) => {
+                document.documentElement.className = event.target.value;
+                socket.send("0601" + event.target.value)
             });
 
-            //notification.onclick = () => {
-            //    window.open('https://yourwebsite.com'); // Optional: Open a URL when the notification is clicked
-            //};
-        }
+            function closeSettings() {
+                document.getElementById('settings').style.display = 'none';
+            }
 
-        // Check if notifications are supported and permission is granted
-        //if ('Notification' in window && Notification.permission === 'granted') {
-        //    showNotification();
-        //}
-        if (getCookie("CookiesAllowed") == null) {
-            document.getElementById("cookie-request").style.display = "Block"
-        } else if (getCookie("notifications") == null && Notification.permission === "default") {
-            document.getElementById("notification-request").style.display = "block"
-        }
-    </script>
+            function rC() {
+                setCookie("CookiesAllowed", true, 365)
+                document.getElementById("cookie-request").style.display = "none"
+                document.getElementById("notification-request").style.display = "block"
+            }
+
+            function rN() {
+                document.getElementById("notification-request").style.display = "none"
+                if (Notification.permission === 'default') {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            setCookie("notifications", true, 365)
+                        } else {
+                            setCookie("notifications", false, 365)
+                        }
+                    });
+                }
+            }
+
+            function showNotification(notificationText) {
+                const notification = new Notification('Quick Chat - New Message', {
+                    body: notificationText,
+                    icon: './logo.png' // Optional: URL to an icon image
+                });
+
+                //notification.onclick = () => {
+                //    window.open('https://yourwebsite.com'); // Optional: Open a URL when the notification is clicked
+                //};
+            }
+
+            // Check if notifications are supported and permission is granted
+            //if ('Notification' in window && Notification.permission === 'granted') {
+            //    showNotification();
+            //}
+            if (getCookie("CookiesAllowed") == null) {
+                document.getElementById("cookie-request").style.display = "Block"
+            } else if (getCookie("notifications") == null && Notification.permission === "default") {
+                document.getElementById("notification-request").style.display = "block"
+            }
+        </script>
 </body>
 </html>
