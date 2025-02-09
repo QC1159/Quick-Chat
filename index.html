@@ -269,72 +269,297 @@
             --icons-bg: #7b1fa2;
         }
 
-/* White & Gray theme with softer gray tones replacing dark blues */
-.white {
-  --sent-message-bg: #e6f7ff; /* Light blue for sent messages */
-  --sent-message-text: #1a1a1a; /* Darker text for better readability */
-  --sent-message-border: #99d6f5; /* Subtle blue border for sent messages */
-  
-  --received-message-bg: #ffffff; /* Clean white background for received messages */
-  --received-message-text: #1a1a1a; /* Darker text for received messages */
-  --received-message-border: #cccccc; /* Slightly darker gray border for received messages */
-  
-  --background-color: #f5f5f5; /* Light gray background for the overall page */
-  --container-bg: #ffffff; /* Pure white for containers */
-  --box-shadow: rgba(0, 0, 0, 0.15); /* Slightly darker shadow for better separation */
-  
-  --primary-text: #1a1a1a; /* Very dark gray text for high contrast */
-  --button-bg: #5a5a5a; /* Neutral medium gray for buttons */
-  --button-hover-bg: #4d4d4d; /* Darker gray for hover effect */
-  --button-disabled-bg: #cccccc; /* Neutral light gray for disabled buttons */
-  
-  --link-color: #6c757d; /* Muted grayish-blue for links */
-  --link-hover-color: #495057; /* Darker gray for link hover states */
-  
-  --chat-setup-bg: #f0f8ff; /* Very light blue background for chat setup */
-  --logout-bg: #f9f9f9; /* Soft light gray background for logout */
-  --logout-border: #dcdcdc; /* Subtle border for logout button */
-  --logout-hover-bg: #e6e6e6; /* Slightly darker gray on hover */
-  
-  --settings-bg: #ffffff; /* Clean white background for settings */
-  --fade-bg: rgba(0, 0, 0, 0.25); /* Slightly darker black fade */
-  --fade-opacity: 0.6; /* Slightly stronger opacity for background fades */
-  
-  --icons-bg: #cccccc; /* Neutral gray for icons */
-  --icons-hover-bg: #999999; /* Darker gray for icons on hover */
-}
+        /* White & Gray theme with softer gray tones replacing dark blues */
+        .white {
+            --sent-message-bg: #e6f7ff; /* Light blue for sent messages */
+            --sent-message-text: #1a1a1a; /* Darker text for better readability */
+            --sent-message-border: #99d6f5; /* Subtle blue border for sent messages */
+
+            --received-message-bg: #ffffff; /* Clean white background for received messages */
+            --received-message-text: #1a1a1a; /* Darker text for received messages */
+            --received-message-border: #cccccc; /* Slightly darker gray border for received messages */
+
+            --background-color: #f5f5f5; /* Light gray background for the overall page */
+            --container-bg: #ffffff; /* Pure white for containers */
+            --box-shadow: rgba(0, 0, 0, 0.15); /* Slightly darker shadow for better separation */
+
+            --primary-text: #1a1a1a; /* Very dark gray text for high contrast */
+            --button-bg: #5a5a5a; /* Neutral medium gray for buttons */
+            --button-hover-bg: #4d4d4d; /* Darker gray for hover effect */
+            --button-disabled-bg: #cccccc; /* Neutral light gray for disabled buttons */
+
+            --link-color: #6c757d; /* Muted grayish-blue for links */
+            --link-hover-color: #495057; /* Darker gray for link hover states */
+
+            --chat-setup-bg: #f0f8ff; /* Very light blue background for chat setup */
+            --logout-bg: #f9f9f9; /* Soft light gray background for logout */
+            --logout-border: #dcdcdc; /* Subtle border for logout button */
+            --logout-hover-bg: #e6e6e6; /* Slightly darker gray on hover */
+
+            --settings-bg: #ffffff; /* Clean white background for settings */
+            --fade-bg: rgba(0, 0, 0, 0.25); /* Slightly darker black fade */
+            --fade-opacity: 0.6; /* Slightly stronger opacity for background fades */
+
+            --icons-bg: #cccccc; /* Neutral gray for icons */
+            --icons-hover-bg: #999999; /* Darker gray for icons on hover */
+        }
 
 
 
 
 
         /* Dark theme */
-.dark {
-  --sent-message-bg: #2c3e50;
-  --sent-message-text: #ecf0f1;
-  --sent-message-border: #3498db;
-  --received-message-bg: #292929;
-  --received-message-text: #f5f5f5;
-  --received-message-border: #464646;
-  --background-color: #121212;
-  --container-bg: #1d1d1d;
-  --box-shadow: rgba(0, 0, 0, 0.9);
-  --primary-text: #d1d1d1;
-  --button-bg: #1e3a8a;
-  --button-hover-bg: #ff6347;
-  --button-disabled-bg: #374151;
-  --link-color: #16a085;
-  --chat-setup-bg: #252525;
-  --logout-bg: #252525;
-  --logout-border: #1e3a8a;
-  --logout-hover-bg: #666666;
-  --settings-bg: #292929;
-  --fade-bg: black;
-  --fade-opacity: 0.9;
-  --icons-bg: #1e3a8a;
-}
+        .dark {
+            --sent-message-bg: #2c3e50;
+            --sent-message-text: #ecf0f1;
+            --sent-message-border: #3498db;
+            --received-message-bg: #292929;
+            --received-message-text: #f5f5f5;
+            --received-message-border: #464646;
+            --background-color: #121212;
+            --container-bg: #1d1d1d;
+            --box-shadow: rgba(0, 0, 0, 0.9);
+            --primary-text: #d1d1d1;
+            --button-bg: #1e3a8a;
+            --button-hover-bg: #ff6347;
+            --button-disabled-bg: #374151;
+            --link-color: #16a085;
+            --chat-setup-bg: #252525;
+            --logout-bg: #252525;
+            --logout-border: #1e3a8a;
+            --logout-hover-bg: #666666;
+            --settings-bg: #292929;
+            --fade-bg: black;
+            --fade-opacity: 0.9;
+            --icons-bg: #1e3a8a;
+        }
 
+        /* dark 2 */
+        .dark2 {
+            --sent-message-bg: #2d3e50; /* Metallic dark gray (UNSC tech) */
+            --sent-message-text: #c7d1dc; /* Cool silver text */
+            --sent-message-border: #1b2a38; /* Dark steel border */
 
+            --received-message-bg: #4f2683; /* Covenant purple */
+            --received-message-text: #f0e9ff; /* Pale light for readability */
+            --received-message-border: #391a64; /* Darker purple for contrast */
+
+            --background-color: #1a1a1a; /* Deep space black for the background */
+            --container-bg: #2c2c2c; /* Gunmetal gray for containers */
+            --box-shadow: rgba(0, 0, 0, 0.7); /* Shadow for a heavier, sci-fi feel */
+
+            --primary-text: #c7d1dc; /* Cool, readable silver text */
+            --button-bg: #3d7040; /* Spartan armor green */
+            --button-hover-bg: #2c5b2e; /* Darker Spartan green on hover */
+            --button-disabled-bg: #748c6c; /* Muted armor green for disabled buttons */
+
+            --link-color: #4aa8ff; /* Energy weapon blue */
+            --link-hover-color: #387fc4; /* Darker blue on hover */
+
+            --chat-setup-bg: #1b2a38; /* Steel gray for chat setup */
+            --logout-bg: #4f2683; /* Covenant purple for logout */
+            --logout-border: #391a64; /* Darker purple for borders */
+            --logout-hover-bg: #6b3ca8; /* Brighter purple for hover effect */
+
+            --settings-bg: #2c2c2c; /* Gunmetal gray for settings */
+            --fade-bg: rgba(0, 0, 0, 0.85); /* Dark fade for an ominous, space-like effect */
+            --fade-opacity: 0.85; /* Strong fade for high contrast */
+
+            --icons-bg: #3d7040; /* Spartan green for icons */
+            --icons-hover-bg: #2c5b2e; /* Darker green for hover */
+        }
+
+        /* dark 3 */
+        .dark3 {
+            --sent-message-bg: #0d47a1; /* Deep navy blue for sent messages */
+            --sent-message-text: #ffffff; /* White text for clarity */
+            --sent-message-border: #0a369d; /* Slightly darker navy for borders */
+
+            --received-message-bg: #1a1a1a; /* Dark gray for received messages */
+            --received-message-text: #e0e0e0; /* Light gray text for readability */
+            --received-message-border: #333333; /* Medium gray for borders */
+
+            --background-color: #121212; /* Dark background for the overall page */
+            --container-bg: #1c1c1c; /* Very dark gray for container backgrounds */
+            --box-shadow: rgba(0, 0, 0, 0.5); /* Subtle, darker shadow for depth */
+
+            --primary-text: #e0e0e0; /* Light gray text for high contrast */
+            --button-bg: #0d47a1; /* Dark navy blue for buttons */
+            --button-hover-bg: #0a369d; /* Even darker navy blue for hover effect */
+            --button-disabled-bg: #5c7dc0; /* Muted, medium blue for disabled buttons */
+
+            --link-color: #ffa41c; /* Amazon orange for links */
+            --link-hover-color: #cc840f; /* Deeper orange for hover states */
+
+            --chat-setup-bg: #1a1a1a; /* Dark gray for chat setup background */
+            --logout-bg: #0d47a1; /* Dark blue for logout button */
+            --logout-border: #0a369d; /* Matching darker blue for borders */
+            --logout-hover-bg: #3385ff; /* Bright blue for hover effect */
+
+            --settings-bg: #1c1c1c; /* Very dark gray for settings pane */
+            --fade-bg: rgba(0, 0, 0, 0.8); /* Dark overlay for fades */
+            --fade-opacity: 0.8; /* High opacity for stronger fade effect */
+
+            --icons-bg: #ffa41c; /* Amazon orange for icons */
+            --icons-hover-bg: #cc840f; /* Richer orange for hover effect */
+            --accent-color: #ff9900; /* Vibrant orange for highlights */
+        }
+
+        /* Default inverted theme variables (Dark Green) */
+        .darkgreen {
+            --sent-message-bg: #b5f6b8;
+            --sent-message-text: #000;
+            --sent-message-border: #a2d1a6;
+            --received-message-bg: #1f1f1f;
+            --received-message-text: #fff;
+            --received-message-border: #454545;
+            --background-color: #0c0d0f;
+            --container-bg: #111111;
+            --box-shadow: rgba(255, 255, 255, 0.1);
+            --primary-text: #cccccc;
+            --button-bg: #3a5fa9;
+            --button-hover-bg: #5c8edb;
+            --button-disabled-bg: #89a4d8;
+            --link-color: #87d2b8;
+            --chat-setup-bg: #2a3b25;
+            --logout-bg: #2a3b25;
+            --logout-border: #b5f6b8;
+            --logout-hover-bg: #98d5b9;
+            --settings-bg: #111111;
+            --fade-bg: white;
+            --fade-opacity: 0.5;
+            --icons-bg: #b5f6b8;
+        }
+
+        /* Inverted Red theme (Dark Red) */
+        .darkred {
+            --sent-message-bg: #ffb8b5;
+            --sent-message-text: #000;
+            --sent-message-border: #f19c9c;
+            --received-message-bg: #1f1f1f;
+            --received-message-text: #fff;
+            --received-message-border: #454545;
+            --background-color: #0c0d0f;
+            --container-bg: #111111;
+            --box-shadow: rgba(255, 255, 255, 0.1);
+            --primary-text: #cccccc;
+            --button-bg: #d2514e;
+            --button-hover-bg: #b03d3a;
+            --button-disabled-bg: #cf7370;
+            --link-color: #ff867c;
+            --chat-setup-bg: #3a2927;
+            --logout-bg: #3a2927;
+            --logout-border: #ffb8b5;
+            --logout-hover-bg: #ff928c;
+            --settings-bg: #111111;
+            --fade-bg: white;
+            --fade-opacity: 0.5;
+            --icons-bg: #ffb8b5;
+        }
+
+        /* Inverted Orange theme (Dark Orange) */
+        .darkorange {
+            --sent-message-bg: #ffd3b5;
+            --sent-message-text: #000;
+            --sent-message-border: #e9bb9c;
+            --received-message-bg: #1f1f1f;
+            --received-message-text: #fff;
+            --received-message-border: #454545;
+            --background-color: #0c0d0f;
+            --container-bg: #111111;
+            --box-shadow: rgba(255, 255, 255, 0.1);
+            --primary-text: #cccccc;
+            --button-bg: #c7783b;
+            --button-hover-bg: #b05e25;
+            --button-disabled-bg: #cf9465;
+            --link-color: #ffa152;
+            --chat-setup-bg: #3a2d21;
+            --logout-bg: #3a2d21;
+            --logout-border: #ffd3b5;
+            --logout-hover-bg: #ffc6a4;
+            --settings-bg: #111111;
+            --fade-bg: white;
+            --fade-opacity: 0.5;
+            --icons-bg: #ffd3b5;
+        }
+
+        /* Inverted Yellow theme (Dark Yellow) */
+        .darkyellow {
+            --sent-message-bg: #fff7b5;
+            --sent-message-text: #000;
+            --sent-message-border: #e9e19c;
+            --received-message-bg: #1f1f1f;
+            --received-message-text: #fff;
+            --received-message-border: #454545;
+            --background-color: #0c0d0f;
+            --container-bg: #111111;
+            --box-shadow: rgba(255, 255, 255, 0.1);
+            --primary-text: #cccccc;
+            --button-bg: #c7ae3b;
+            --button-hover-bg: #b09825;
+            --button-disabled-bg: #cfb865;
+            --link-color: #ffda52;
+            --chat-setup-bg: #3a3621;
+            --logout-bg: #3a3621;
+            --logout-border: #fff7b5;
+            --logout-hover-bg: #fff3a4;
+            --settings-bg: #111111;
+            --fade-bg: white;
+            --fade-opacity: 0.5;
+            --icons-bg: #fff7b5;
+        }
+
+        /* Inverted Blue theme (Dark Blue) */
+        .darkblue {
+            --sent-message-bg: #b5d7ff;
+            --sent-message-text: #000;
+            --sent-message-border: #9cbbd9;
+            --received-message-bg: #1f1f1f;
+            --received-message-text: #fff;
+            --received-message-border: #454545;
+            --background-color: #0c0d0f;
+            --container-bg: #111111;
+            --box-shadow: rgba(255, 255, 255, 0.1);
+            --primary-text: #cccccc;
+            --button-bg: #3b78c7;
+            --button-hover-bg: #255ab0;
+            --button-disabled-bg: #6596cf;
+            --link-color: #52a0ff;
+            --chat-setup-bg: #21323a;
+            --logout-bg: #21323a;
+            --logout-border: #b5d7ff;
+            --logout-hover-bg: #a4c6ff;
+            --settings-bg: #111111;
+            --fade-bg: white;
+            --fade-opacity: 0.5;
+            --icons-bg: #b5d7ff;
+        }
+
+        /* Inverted Purple theme (Dark Purple) */
+        .darkpurple {
+            --sent-message-bg: #dcb5ff;
+            --sent-message-text: #000;
+            --sent-message-border: #c29cd9;
+            --received-message-bg: #1f1f1f;
+            --received-message-text: #fff;
+            --received-message-border: #454545;
+            --background-color: #0c0d0f;
+            --container-bg: #111111;
+            --box-shadow: rgba(255, 255, 255, 0.1);
+            --primary-text: #cccccc;
+            --button-bg: #783bc7;
+            --button-hover-bg: #5a25b0;
+            --button-disabled-bg: #9465cf;
+            --link-color: #aa52ff;
+            --chat-setup-bg: #32213a;
+            --logout-bg: #32213a;
+            --logout-border: #dcb5ff;
+            --logout-hover-bg: #c6a4ff;
+            --settings-bg: #111111;
+            --fade-bg: white;
+            --fade-opacity: 0.5;
+            --icons-bg: #dcb5ff;
+        }
     </style>
     <style>
         .collapse-button {
@@ -524,6 +749,7 @@
             border-radius: 5px;
             font-size: 14px;
             z-index: 2;
+            width: 70.72px;
         }
 
             .logout-button:hover {
@@ -543,6 +769,18 @@
 
         .new-icon, .new-icon-div {
             left: 50px;
+        }
+
+
+        .sun-moon-icon, .sun-moon-icon-div {
+            right: 90px;
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            top: 10px;
+            z-index: 3;
+            filter: drop-shadow(0px 1000px 0 var(--icons-bg));
+            transform: translateY(-1000px);
         }
 
         .notification-badge {
@@ -701,6 +939,30 @@
             z-index: 5;
         }
 
+        #settings-imagecrop {
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+
+        .image-container {
+            width: 95%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%; /* Circular shape */
+            overflow: hidden; /* Ensures content outside the circle is hidden */
+            position: relative; /* Required for positioning the image */
+            border: 2px solid #000; /* Optional border for styling */
+            background-color: #ddd;
+        }
+
+            .image-container img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                cursor: grab; /* Change cursor to indicate draggable area */
+                transition: transform 0.1s ease; /* Smooth transition when zooming */
+            }
+
         #NewMsgs {
             width: 100%;
             height: 100%;
@@ -733,6 +995,25 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 6;
+        }
+
+        #settings-pane-imagecrop {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 60%; /* Adjusted for a better fit */
+        max-width: 500px; /* Added max-width */
+        padding: 30px;
+        background-color: var(--settings-bg);
+        box-shadow: 0px 4px 8px var(--box-shadow);
+        border-radius: 8px;
+        text-align: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 6;
         }
 
         #NewMsgs-pane {
@@ -815,12 +1096,60 @@
             }
 
             .theme-switcher select {
+                font-size: 15px;
+                height: 40px;
                 width: 100%;
                 padding: 10px;
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 background-color: var(--container-bg);
+                text-align: left;
             }
+
+        /* Theme Switcher */
+        .avatar-selector {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+            .avatar-selector label {
+                display: flex; /* Use Flexbox */
+                align-items: center; /* Align items vertically */
+                gap: 10px; /* Add space between items */
+                font-size: 16px;
+                margin-bottom: 10px;
+                color: var(--primary-text);
+            }
+
+                .avatar-selector label button {
+                    font-size: 15px;
+                    height: 40px;
+                    color: var(--primary-text);
+                    flex-grow: 1; /* Button takes remaining space */
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    background-color: var(--container-bg);
+                    text-align: left;
+                }
+
+                /*.avatar-selector label img {
+                    vertical-align: top;
+                    width: 40px;
+                    border-radius: 50px;
+                    margin-right: 15px;
+                    padding: 0px;
+                }*/
+
+            /*.avatar-selector input {
+                width: calc(100% - 10px) !important;
+                padding: 10px;
+                padding-right: 0px;
+                padding-left: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: var(--container-bg);
+            }*/
 
         @keyframes spin {
             from {
@@ -878,6 +1207,25 @@
             background-color: #ddd;
             margin-right: 10px;
         }
+
+        .contact-avatar img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 10px;
+        }
+
+            .contact-avatar h1 {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%; 
+                margin-right: 10px;
+                margin-top: 0; 
+                padding-top: 0;
+                color: black;
+                font-size: 32px;
+            }
 
         .contact-name {
             color: var(--primary-text);
@@ -972,6 +1320,7 @@
 
 
         #delete-account-button {
+            height: 40px;
             background-color: #f44336; /* Red for warning */
             border-color: #d32f2f;
         }
@@ -980,8 +1329,8 @@
                 background-color: #d32f2f;
             }
 
-        /* Scoped styles for Sign In and Sign Up sections */
-        #signin-page, #signup-page {
+        /* Scoped styles for Sign In, Sign Up, and Forgot Password sections */
+        #signin-page, #signup-page, #forgot-page, #forgot-CI-page, #forgot-PI-page {
             font-family: Arial, sans-serif !important;
             background: rgba(200, 200, 255, 0.95) !important;
             padding: 20px !important;
@@ -994,13 +1343,13 @@
             z-index: 2 !important;
         }
 
-            #signin-page h2, #signup-page h2 {
+            #signin-page h2, #signup-page h2, #forgot-page h2, #forgot-CI-page h2, #forgot-PI-page h2 {
                 margin-bottom: 20px !important;
                 font-size: 1.8rem !important;
                 color: rgba(100, 0, 255, 1) !important;
             }
 
-            #signin-page input, #signup-page input {
+            #signin-page input, #signup-page input, #forgot-page input, #forgot-CI-page input, #forgot-PI-page input {
                 width: calc(100% - 20px) !important;
                 padding: 12px !important;
                 margin: 10px 0 !important;
@@ -1010,7 +1359,7 @@
                 font-size: 1rem !important;
             }
 
-            #signin-page .button, #signup-page .button {
+            #signin-page .button, #signup-page .button, #forgot-page .button, #forgot-CI-page .button, #forgot-PI-page .button {
                 position: relative; /* Needed for positioning the pseudo-element */
                 width: calc(100% - 20px) !important;
                 padding: 12px !important;
@@ -1025,7 +1374,7 @@
                 z-index: 0; /* Base layer */
             }
 
-                #signin-page .button::before, #signup-page .button::before {
+                #signin-page .button::before, #signup-page .button::before, #forgot-page .button::before, #forgot-CI-page .button::before, #forgot-PI-page .button::before {
                     content: '';
                     position: absolute;
                     top: 0;
@@ -1038,29 +1387,24 @@
                     z-index: -1; /* Place the gradient behind the text */
                 }
 
-                #signin-page .button:hover::before, #signup-page .button:hover::before {
+                #signin-page .button:hover::before, #signup-page .button:hover::before, #forgot-page .button:hover::before, #forgot-CI-page .button:hover::before, #forgot-PI-page .button:hover::before {
                     opacity: 0; /* Fade out the gradient */
                 }
 
-            #signin-page .button, #signup-page .button {
+            #signin-page .button, #signup-page .button, #forgot-page .button, #forgot-CI-page .button, #forgot-PI-page .button {
                 z-index: 1; /* Ensure the text and button content stay above the pseudo-element */
             }
 
-
-
-
-
-
-
-            #signin-page .link, #signup-page .link {
+            #signin-page .link, #signup-page .link, #forgot-page .link, #forgot-CI-page .link, #forgot-PI-page .link {
                 color: #2575fc !important;
                 cursor: pointer !important;
                 text-decoration: underline !important;
             }
 
-                #signin-page .link:hover, #signup-page .link:hover {
+                #signin-page .link:hover, #signup-page .link:hover, #forgot-page .link:hover, #forgot-CI-page .link:hover, #forgot-PI-page .link:hover {
                     color: #1a5ec8 !important;
                 }
+
 
 
         #QUICKCHATh1 {
@@ -1177,11 +1521,126 @@
                 .maintenance-container a:hover {
                     color: #ffffff;
                 }
+
+        .sun-moon-icon {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .sun-moon-icon {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 1; /* Fully visible by default */
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            right: 90px;
+            top: 10px;
+            z-index: 3;
+            filter: drop-shadow(0px 1000px 0 var(--icons-bg));
+            transform: translateY(-1000px);
+        }
+
+        #export-btn {
+            width: 95%;
+            height: 50px;
+            margin-top: 10px;
+            background: var(--button-bg);
+            border: none;
+            border-radius: 20px;
+            color: var(--primary-text);
+            font-size: 20px;
+        }
+
+        #export-btn:hover {
+            background: var(--button-hover-bg);
+        }
+
+        #profilePictureDiv {
+            left: 10px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-color: #ddd;
+            padding: 0;
+            display: flex; /* Enables Flexbox */
+            justify-content: center; /* Centers horizontally */
+            align-items: center; /* Centers vertically */
+        }
+
+        #profilePicture {
+            width: 100%;
+            border-radius: 50px;
+        }
+
+        #profilePictureLetter {
+            font-size: 26px;
+            border-radius: 50%;
+            color: black;
+            top: 0px;
+        }
+
+        .avatar-selector #chooseImageImage {
+            display: flex; /* Ensures alignment inside the avatar container */
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+        }
+
+            .avatar-selector #chooseImageImage img {
+                display: none; /* Image hidden initially */
+                width: 100%;
+                height: auto;
+                border-radius: 50%;
+            }
+
+            .avatar-selector #chooseImageImage h1 {
+                font-size: 32px;
+                margin: 0;
+                color: black;
+            }
+
+        .chatter-avatar {
+            vertical-align: bottom;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 10px;
+            padding-top: 20px;
+        }
+
+            .chatter-avatar img {
+                vertical-align: bottom;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #ddd;
+                margin-right: 10px;
+            }
+
+            .chatter-avatar h1 {
+                vertical-align: bottom;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 10px;
+                margin-top: 0;
+                padding-top: 0;
+                color: black;
+                font-size: 32px;
+            }
     </style>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -1198,736 +1657,996 @@
                 We apologize for the inconvenience. Our team is working hard to bring everything back online.
                 Please check back later!
             </p>
-            <p><a href="mailto:quickchatplatform+support@outlook.com">Contact Support</a></p>
+            <p><a href="mailto:quickchatplatform+support@hotmail.com">Contact Support</a></p>
         </div>
-        </div>
+    </div>
 
-        <div id="loading-page">
-            <div style="width: 100%; height: 100%; background-color: white; position: fixed; top: 0; left: 0; z-index: -4;"></div>
-            <img src="./Favicon.png" style="height: 100px; animation: pulse 1.5s infinite ease-in-out;" /><!-- animation-name: spin; animation-duration: 1000ms; animation-iteration-count: infinite; animation-timing-function: linear; "/>-->
-            <h2>Loading...</h2>
-        </div>
+    <div id="loading-page">
+        <div style="width: 100%; height: 100%; background-color: white; position: fixed; top: 0; left: 0; z-index: -4;"></div>
+        <img src="./Favicon.png" style="height: 100px; animation: pulse 1.5s infinite ease-in-out;" /><!-- animation-name: spin; animation-duration: 1000ms; animation-iteration-count: infinite; animation-timing-function: linear; "/>-->
+        <h2>Loading...</h2>
+    </div>
 
-        <!-- Sign In Page -->
-        <div class="container" id="signin-page" style="display: none;">
-            <h2>Sign In</h2>
-            <input type="text" id="signin-username" placeholder="Username">
-            <input type="password" id="signin-password" placeholder="Password">
-            <button id="SIB" class="button" onclick="signIn()">Sign In</button>
-            <p>Don't have an account? <span class="link" onclick="showSignupPage()">Sign up</span></p>
-        </div>
+    <!-- Sign In Page -->
+    <div class="container" id="signin-page" style="display: none;">
+        <h2>Sign In</h2>
+        <input type="text" id="signin-username" placeholder="Username">
+        <input type="password" id="signin-password" placeholder="Password">
 
-        <!-- Sign Up Page -->
-        <div class="container" id="signup-page" style="display: none;">
-            <h2>Sign Up</h2>
-            <input type="text" id="signup-username" placeholder="Username">
-            <input type="password" id="signup-password" placeholder="Password">
-            <input type="password" id="signup-password-confirm" placeholder="Confirm Password">
-            <button id="SUB" class="button" onclick="signUp()">Sign Up</button>
-            <p>Already have an account? <span class="link" onclick="showSigninPage()">Sign in</span></p>
-        </div>
+        <button id="SIB" class="button" onclick="signIn()">Sign In</button>
+        <p style="margin-top: 10px; margin-bottom: 4px; text-align: left;"><span class="link" style="padding-left: 10px;" onclick="showForgetPage()">Forgot Password?</span></p>
+        <p>Don't have an account? <span class="link" onclick="showSignupPage()">Sign up</span></p>
+    </div>
+
+    <div class="container" id="forgot-page" style="display: none;">
+        <h2>Forgot Password</h2>
+        <p>Please enter your username and press "Send Email"</p>
+        <input type="text" id="forgot-username" placeholder="Username">
+
+        <button id="FPB" class="button" onclick="socket.send('0901' + document.getElementById('forgot-username').value)">Send Email</button>
+        <p>Remember password? <span class="link" onclick="showSigninPage()">Sign in</span></p>
+    </div>
+
+    <div class="container" id="forgot-CI-page" style="display: none;">
+        <h2>Forgot Password</h2>
+        <p>Now check your email (don't forget to check you spam folder) and enter your 8 digit code</p>
+        <input type="text" id="forgot-CI-code" placeholder="Code">
+
+        <button id="FPCIB" class="button" onclick="socket.send('0902' + document.getElementById('forgot-CI-code').value)">Confirm</button>
+        <p>Remember password? <span class="link" onclick="showSigninPage()">Sign in</span></p>
+    </div>
+
+    <div class="container" id="forgot-PI-page" style="display: none;">
+        <h2>Forgot Password</h2>
+        <p>Please choose a new password and input it below</p>
+        <input type="password" id="forgot-PI-password" placeholder="New Password">
+        <input type="password" id="forgot-PI-password-confirm" placeholder="Confirm New Password">
+        <button id="FPPIB" class="button" onclick="if (document.getElementById('forgot-PI-password').value == document.getElementById('forgot-PI-password-confirm').value) { socket.send('0903' + document.getElementById('forgot-PI-password').value) } else {errorAlert('Your passwords do not match')}">Confirm</button>
+        <p>Remember password? <span class="link" onclick="showSigninPage()">Sign in</span></p>
+    </div>
+
+    <!-- Sign Up Page -->
+    <div class="container" id="signup-page" style="display: none;">
+        <h2>Sign Up</h2>
+        <input type="text" id="signup-username" placeholder="Username">
+        <input type="text" id="signup-email" placeholder="Email (Optional)">
+        <input type="password" id="signup-password" placeholder="Password">
+        <input type="password" id="signup-password-confirm" placeholder="Confirm Password">
+        <button id="SUB" class="button" onclick="signUp()">Sign Up</button>
+        <p>Already have an account? <span class="link" onclick="showSigninPage()">Sign in</span></p>
+    </div>
 
 
 
 
-        <div id="chat-setup-page" style="display: none;">
-            <div class="contacts-sidebar" id="contacts-sidebar">
+    <div id="chat-setup-page" style="display: none;">
+        <div class="contacts-sidebar" id="contacts-sidebar">
 
-                <h3>Contacts</h3>
-                <!--
-                <div class="contact-item" onclick="startChatFromButton('jack')">
-                    <div class="contact-avatar"></div>
-                    <div class="contact-name">jack</div>
-                </div>
-                <div class="contact-item" onclick="startChatFromButton('Bob')">
-                    <div class="contact-avatar"></div>
-                    <div class="contact-name">Bob</div>
-                </div>
-                <div class="contact-item" onclick="startChatFromButton('Charlie')">
-                    <div class="contact-avatar"></div>
-                    <div class="contact-name">Charlie</div>
-                </div>
-                -->
+            <h3>Contacts</h3>
+            <!--
+            <div class="contact-item" onclick="startChatFromButton('jack')">
+                <div class="contact-avatar"></div>
+                <div class="contact-name">jack</div>
             </div>
-            <button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
-                <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
-            </button>
-
-            <div onclick="settings()" class="icon-div" style="transform: none">
+            <div class="contact-item" onclick="startChatFromButton('Bob')">
+                <div class="contact-avatar"></div>
+                <div class="contact-name">Bob</div>
             </div>
-            <img class="settings-icon" onclick="settings()" src="./gear-icon.png" alt="Settings" />
-
-            <div onclick="NewMsgs()" class="new-icon-div" style="transform: none">
+            <div class="contact-item" onclick="startChatFromButton('Charlie')">
+                <div class="contact-avatar"></div>
+                <div class="contact-name">Charlie</div>
             </div>
-            <img class="new-icon" onclick="NewMsgs()" src="./No-New-Messages.png" alt="New Messages" />
-            <div onclick="NewMsgs()" class="notification-badge" id="NewMsg-notification-badge">!</div>
+            -->
+        </div>
+        <button id="collapse-button" onclick="toggleSidebar()" class="collapse-button">
+            <span id="collapse-icon" class="collapse-icon">&#10094;</span> <!-- < symbol -->
+        </button>
 
-
-            <button class="logout-button" onclick="logout()">Log out</button>
-            <h2>Start a Chat</h2>
-            <input type="text" id="chat-username" placeholder="Enter a username to chat with">
-            <button class="button" onclick="startChat()">Start Chat</button>
+        <div id="profilePictureDiv">
+            <h1 class="user-image-hide-user user-letter" id="profilePictureLetter"></h1>
+            <img class="user-image-user" id="profilePicture" style="display: none" />
         </div>
 
-        <div id="chat-page" style="display: none;">
-            <div onclick="goToChatSetup()" class="icon-div" style="transform: none">
+        <div onclick="settings()" class="icon-div" style="transform: none">
+        </div>
+        <!--img class="settings-icon" onclick="settings()" src="./gear-icon.png" alt="Settings" /-->
+
+        <div onclick="NewMsgs()" class="new-icon-div" style="transform: none">
+        </div>
+        <img class="new-icon" onclick="NewMsgs()" src="./No-New-Messages.png" alt="New Messages" />
+        <div onclick="NewMsgs()" class="notification-badge" id="NewMsg-notification-badge">!</div>
+
+        <div onclick="darklightmode()" class="sun-moon-icon-div" style="transform: none">
+        </div>
+        <img class="sun-moon-icon" id="sun-moon-icon" onclick="darklightmode()" src="./sun.png" alt="Light/Dark Mode" />
+        <button class="logout-button" onclick="logout()">Log out</button>
+        <h2>Start a Chat</h2>
+        <input type="text" id="chat-username" placeholder="Enter a username to chat with">
+        <button class="button" onclick="startChat()">Start Chat</button>
+    </div>
+
+    <div id="chat-page" style="display: none;">
+        <div onclick="goToChatSetup()" class="icon-div" style="transform: none">
+        </div>
+        <img class="back-icon" onclick="goToChatSetup()" src="./back-icon.png" alt="Back" />
+        <!--<div id="Chatter-Name" style="align-items: center; justify-content: center; text-align: center; width: 100%; padding-bottom: 0px; margin-bottom: 0px; display: flex; vertical-align: bottom; position: absolute; z-index: 1; background: var(--settings-bg);"><div class="chatter-avatar" style="position: relative;"><img class="user-image-bobthebuilder" style="display:none"><h1 class="user-image-hide-bobthebuilder">b</h1></div><h1 style="color: var(--primary-text); padding-top: 25px; padding-bottom: 0px; margin-bottom: 0px; vertical-align:bottom; position: relative;">Jackson</h1></div>
+    -->
+        <div id="Chatter-Name" style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: var(--settings-bg);
+    padding: 10px 0;
+">
+            <div class="chatter-avatar" style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-sizing: border-box;
+    ">
+                <img class="user-image-ou" style="
+            width: 40px;
+            height: 40px;
+            object-fit: cover; /* Ensures the image covers the circle */
+            object-position: center; /* Centers the image */
+            position: absolute;
+            padding: 0;
+            top: 20px;
+            margin: 0;
+        ">
+                <h1 class="user-image-hide-ou" id="connectedUserNameLetter" style="
+            width: 40px;
+            height: 40px;
+            object-fit: cover; /* Ensures the image covers the circle */
+            object-position: center; /* Centers the image */
+            position: absolute;
+            padding: 0;
+            top: 20px;
+            margin: 0;
+        ">b</h1>
             </div>
-            <img class="back-icon" onclick="goToChatSetup()" src="./back-icon.png" alt="Back" />
-            <button class="favorite-button" onclick="toggleFavorite()">&#9734;</button>
-            <button class="logout-button" onclick="logout()">Log out</button>
-            <div id="chat-messages"></div>
-            <div id="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Type a message...">
-                <button id="send-button" class="button" onclick="sendMessage()">Send</button>
+            <h1 style="color: var(--primary-text); margin: 0; padding: 0;" id="connectedUserName"></h1>
+        </div>
+
+
+
+
+
+
+
+
+        <button class="favorite-button" onclick="toggleFavorite()">&#9734;</button>
+        <button class="logout-button" onclick="logout()">Log out</button>
+        <div id="chat-messages"></div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="send-button" class="button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <div id="settings" style="display:none;">
+        <div id="fade" onclick="closeSettings()"></div>
+        <div id="settings-pane">
+            <button class="close-settings-button" onclick="closeSettings()">X</button>
+            <div class="theme-switcher">
+                <label for="theme-select">Select Theme:</label>
+                <select id="theme-select" style="color: var(--primary-text)">
+                    <option value="red">Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                    <option value="white">Light</option>
+                    <option value="dark">Dark</option>
+                    <!--option value="dark2">Dark 2</option>
+                    <option value="dark3">Dark 3</option-->
+                    <option value="darkred">Dark Red</option>
+                    <option value="darkorange">Dark Orange</option>
+                    <option value="darkyellow">Dark Yellow</option>
+                    <option value="darkgreen">Dark Green</option>
+                    <option value="darkblue">Dark Blue</option>
+                    <option value="darkpurple">Dark Purple</option>
+
+                </select>
             </div>
-        </div>
-        <div id="settings" style="display:none;">
-            <div id="fade" onclick="closeSettings()"></div>
-            <div id="settings-pane">
-                <button class="close-settings-button" onclick="closeSettings()">X</button>
-                <div class="theme-switcher">
-                    <label for="theme-select">Select Theme:</label>
-                    <select id="theme-select">
-                        <option value="red">Red</option>
-                        <option value="orange">Orange</option>
-                        <option value="yellow">Yellow</option>
-                        <option value="green">Green</option>
-                        <option value="blue">Blue</option>
-                        <option value="purple">Purple</option>
-                        <option value="white">Light</option>
-                        <option value="dark">Dark</option>
-                    </select>
-                </div>
-                <button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
+
+            <div class="avatar-selector">
+                <label for="input-file">
+                    <div id="chooseImageImage">
+                        <img class="user-image-user" />
+                        <h1 class="user-image-hide-user user-letter">j</h1>
+                    </div>
+                    <button onclick="document.getElementById('input-file').click()">Choose File</button>
+                </label>
+                <input type="file" id="input-file" accept="image/*" style="display:none">
             </div>
+
+
+            <button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
         </div>
-        <div id="NewMsgs" style="display:none;">
-            <div id="fade" onclick="closeNewMsgs()"></div>
-            <div id="NewMsgs-pane">
-                <button class="close-NewMsgs-button" onclick="closeNewMsgs()">X</button>
-                <div id="newMsgs-area">
-                </div>
-                <br />
-                <br />
-                <a href="#" onclick="location.reload()" style="text-decoration:none; color:var(--link-color)">Refresh</a>
+    </div>
+
+    <div id="settings-imagecrop" style="display:none;">
+        <div id="fade" onclick="closeSettings()"></div>
+
+        <div id="settings-pane-imagecrop">
+            <button class="close-settings-button" onclick="closeSettings()">X</button>
+            <div class="image-container">
+                <img id="settings-image" />
             </div>
+            <button id="export-btn">Set Profile Image</button>
+            <canvas id="output-canvas" style="display: none;"></canvas>
         </div>
-        <div id="alerts-container"></div>
+    </div>
 
-
-        <div id="cookie-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
-            <h1 style="font-size: 1.5em; color: #333;">We Value Your Privacy</h1>
-            <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
-                To improve your experience, we use cookies to save your login details and preferences. Please let us know if this is okay with you.
-            </p>
-            <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rC()">Allow</button>
-            <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('cookie-request').style.display = 'None'">Deny</button>
+    <div id="NewMsgs" style="display:none;">
+        <div id="fade" onclick="closeNewMsgs()"></div>
+        <div id="NewMsgs-pane">
+            <button class="close-NewMsgs-button" onclick="closeNewMsgs()">X</button>
+            <div id="newMsgs-area">
+            </div>
+            <br />
+            <br />
+            <a href="#" onclick="location.reload()" style="text-decoration:none; color:var(--link-color)">Refresh</a>
         </div>
-
-        <div id="notification-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
-            <h1 style="font-size: 1.5em; color: #333;">Would You Like to Get Notifications?</h1>
-            <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
-                Would you like to get notifications when a message arrives?
-            </p>
-            <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rN()">Allow</button>
-            <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('notification-request').style.display = 'None'; setCookie('notifications', false, 365)">Deny</button>
-        </div>
+    </div>
+    <div id="alerts-container"></div>
 
 
+    <div id="cookie-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
+        <h1 style="font-size: 1.5em; color: #333;">We Value Your Privacy</h1>
+        <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
+            To improve your experience, we use cookies to save your login details and preferences. Please let us know if this is okay with you.
+        </p>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rC()">Allow</button>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('cookie-request').style.display = 'None'">Deny</button>
+    </div>
 
-        <script>
-            let doHr = false;
-            function getUrlParameters() {
-                var out = {};
-                var str = window.location.search.replace("?", "");
-                var subs = str.split(`&`).map((si) => { var keyVal = si.split(`=`); out[keyVal[0]] = keyVal[1]; });
-                return out
+    <div id="notification-request" style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 20px; max-width: 400px; margin: 20px auto; z-index: 40; position: absolute; display: none;">
+        <h1 style="font-size: 1.5em; color: #333;">Would You Like to Get Notifications?</h1>
+        <p style="font-size: 1em; color: #555; margin: 10px 0 20px;">
+            Would you like to get notifications when a message arrives?
+        </p>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rN()">Allow</button>
+        <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('notification-request').style.display = 'None'; setCookie('notifications', false, 365)">Deny</button>
+    </div>
+
+
+
+    <script>
+        const imageMap = new Map();
+
+        let email = "";
+
+        let doHr = false;
+        function getUrlParameters() {
+            var out = {};
+            var str = window.location.search.replace("?", "");
+            var subs = str.split(`&`).map((si) => { var keyVal = si.split(`=`); out[keyVal[0]] = keyVal[1]; });
+            return out
+        }
+
+        function serverDown() {
+            document.getElementById("maintenance-container-container").style.display = "flex";
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        console.log(getUrlParameters())
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('contacts-sidebar');
+            const collapseIcon = document.getElementById('collapse-icon');
+
+            // Toggle the collapsed state
+            sidebar.classList.toggle('collapsed');
+
+            // Change the icon between < and >
+            if (sidebar.classList.contains('collapsed')) {
+                collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
+            } else {
+                collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
+            }
+        }
+
+        function beforeLast(value, delimiter) {
+            value = value || ''
+
+            if (delimiter === '') {
+                return value
             }
 
-            function serverDown() {
-                document.getElementById("maintenance-container-container").style.display = "flex";
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signin-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "none";
-                document.getElementById("chat-setup-page").style.display = "none";
-                document.getElementById("chat-page").style.display = "none";
+            const substrings = value.split(delimiter)
+
+            return substrings.length === 1
+                ? value // delimiter is not part of the string
+                : substrings.slice(0, -1).join(delimiter)
+        }
+
+        function jsonToKeyMap(jsonString) {
+            try {
+                // Convert single quotes to double quotes
+                const correctedJsonString = jsonString.replace(/'/g, '"');
+                const jsonObject = JSON.parse(correctedJsonString);
+
+                // Convert the date and time from UTC to local time zone
+                const utcDate = new Date(Date.UTC(
+                    jsonObject.year,
+                    jsonObject.month - 1, // Months are zero-based in JavaScript
+                    jsonObject.day,
+                    jsonObject.hour,
+                    jsonObject.minute,
+                    jsonObject.second
+                ));
+
+                const localDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+
+                // Update the jsonObject with the local date and time
+                jsonObject.year = localDate.getFullYear();
+                jsonObject.month = localDate.getMonth() + 1;
+                jsonObject.day = localDate.getDate();
+                jsonObject.hour = localDate.getHours();
+                jsonObject.minute = localDate.getMinutes();
+                jsonObject.second = localDate.getSeconds();
+
+                const keyMap = new Map(Object.entries(jsonObject));
+                return keyMap;
+            } catch (error) {
+                console.error("Invalid JSON string:", error);
+                return null;
             }
+        }
 
-            console.log(getUrlParameters())
+        function n(num, len = 2) {
+            return `${num}`.padStart(len, '0');
+        }
 
-            function toggleSidebar() {
-                const sidebar = document.getElementById('contacts-sidebar');
-                const collapseIcon = document.getElementById('collapse-icon');
 
-                // Toggle the collapsed state
-                sidebar.classList.toggle('collapsed');
 
-                // Change the icon between < and >
-                if (sidebar.classList.contains('collapsed')) {
-                    collapseIcon.innerHTML = '&#10095;';  // ">" symbol when collapsed
-                } else {
-                    collapseIcon.innerHTML = '&#10094;';  // "<" symbol when expanded
-                }
+        let connectedUsr = ""
+        let alert = false
+
+        document.getElementById("chat-input").addEventListener("keypress", function (event) {
+            // If the user presses the "Enter" key on the keyboard
+            if (event.key === "Enter" && (document.getElementById("chat-page").style.display == "flex" || document.getElementById("chat-page").style.display == "block")) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.getElementById("send-button").click();
             }
+        });
 
-            function beforeLast(value, delimiter) {
-                value = value || ''
+        //const socket = new WebSocket('ws://localhost:12345');
+        //const socket = new WebSocket('ws://192.168.1.66:12347');
+        //const socket = new WebSocket('wss://' + WSLTURL);
 
-                if (delimiter === '') {
-                    return value
-                }
+        let socket = "";
 
-                const substrings = value.split(delimiter)
+        let connectionTries = 0;
 
-                return substrings.length === 1
-                    ? value // delimiter is not part of the string
-                    : substrings.slice(0, -1).join(delimiter)
-            }
+        var WSLTURL = "quickchat.serveo.net"
 
-            function jsonToKeyMap(jsonString) {
-                try {
-                    // Convert single quotes to double quotes
-                    const correctedJsonString = jsonString.replace(/'/g, '"');
-                    const jsonObject = JSON.parse(correctedJsonString);
+        //let socketName = 'wss://' + WSLTURL
+        //let socketName = 'ws://192.168.1.66:12347'
+        let socketName = 'ws://localhost:12347'
 
-                    // Convert the date and time from UTC to local time zone
-                    const utcDate = new Date(Date.UTC(
-                        jsonObject.year,
-                        jsonObject.month - 1, // Months are zero-based in JavaScript
-                        jsonObject.day,
-                        jsonObject.hour,
-                        jsonObject.minute,
-                        jsonObject.second
-                    ));
+        newSocket()
 
-                    const localDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-
-                    // Update the jsonObject with the local date and time
-                    jsonObject.year = localDate.getFullYear();
-                    jsonObject.month = localDate.getMonth() + 1;
-                    jsonObject.day = localDate.getDate();
-                    jsonObject.hour = localDate.getHours();
-                    jsonObject.minute = localDate.getMinutes();
-                    jsonObject.second = localDate.getSeconds();
-
-                    const keyMap = new Map(Object.entries(jsonObject));
-                    return keyMap;
-                } catch (error) {
-                    console.error("Invalid JSON string:", error);
-                    return null;
-                }
-            }
-
-            function n(num, len = 2) {
-                return `${num}`.padStart(len, '0');
-            }
-
-
-
-            let connectedUsr = ""
-            let alert = false
-
-            document.getElementById("chat-input").addEventListener("keypress", function (event) {
-                // If the user presses the "Enter" key on the keyboard
-                if (event.key === "Enter" && (document.getElementById("chat-page").style.display == "flex" || document.getElementById("chat-page").style.display == "block")) {
-                    // Cancel the default action, if needed
-                    event.preventDefault();
-                    // Trigger the button element with a click
-                    document.getElementById("send-button").click();
-                }
+        //let socket = new WebSocket(socketName);
+        let currentUsername = getCookie("quickChatUser");
+        if (currentUsername != null) {
+            [...document.getElementsByClassName("user-letter")].forEach(element => {
+                element.innerText = currentUsername.charAt(0).toLowerCase()
             });
+        }
+        let currentPassword = getCookie("quickChatPass");
+        const themeSelect = document.getElementById("theme-select")
 
-            //const socket = new WebSocket('ws://localhost:12345');
-            //const socket = new WebSocket('ws://192.168.1.66:12347');
-            //const socket = new WebSocket('wss://' + WSLTURL);
+        document.documentElement.className = "blue";
+        themeSelect.value = "blue"
 
-            let socket = "";
+        function newSocket() {
+            connectionTries++;
+            socket = new WebSocket(socketName);
 
-            let connectionTries = 0;
-
-            var WSLTURL = "quickchat.serveo.net"
-
-            let socketName = 'wss://' + WSLTURL
-            //let socketName = 'ws://192.168.1.66:12347'
-
-            newSocket()
-
-            //let socket = new WebSocket(socketName);
-            let currentUsername = getCookie("quickChatUser");
-            let currentPassword = getCookie("quickChatPass");
-            const themeSelect = document.getElementById("theme-select")
-
-            document.documentElement.className = "blue";
-            themeSelect.value = "blue"
-
-            function newSocket() {
-                connectionTries++;
-                socket = new WebSocket(socketName);
-
-                socket.onopen = function (event) {
-                    connectionTries = 0;
-                    checkUserStatus()
-                    console.log(currentUsername + "currentUsername")
-                    if (currentUsername != null && getUrlParameters()["chatwith"]) {
-                        startChatFromButton(getUrlParameters()["chatwith"])
-                    }
+            socket.onopen = function (event) {
+                connectionTries = 0;
+                checkUserStatus()
+                console.log(currentUsername + "currentUsername")
+                if (currentUsername != null && getUrlParameters()["chatwith"]) {
+                    startChatFromButton(getUrlParameters()["chatwith"])
                 }
+            }
 
-                socket.onclose = function () {
-                    if (connectionTries == 0) {
-                        window.location.reload();
-                    } else if (connectionTries > 4) {
-                        serverDown()
-                    } else {
-                        newSocket()
-                    }
-                    //socket = new WebSocket(socketName);
+            socket.onclose = function () {
+                if (connectionTries == 0) {
+                    window.location.reload();
+                } else if (connectionTries > 4) {
+                    serverDown()
+                } else {
+                    newSocket()
                 }
+                //socket = new WebSocket(socketName);
+            }
 
-                socket.onmessage = function (event) {
-                    // Handle server response
-                    let message = event.data;
-                    //message = atob(message)
-                    console.log(message)
+            socket.onmessage = function (event) {
+                // Handle server response
+                let message = event.data;
+                //message = atob(message)
+                console.log(message)
 
-                    if (message.substring(0, 4) === "1001") {
-                        setCookie("quickChatUser", currentUsername, 14);
-                        setCookie("quickChatPass", currentPassword, 14);
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                        goToChatSetup();
-                    } else if (message.substring(0, 4) === "1101") {
-                        setCookie("quickChatUser", currentUsername, 14);
-                        setCookie("quickChatPass", currentPassword, 14);
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                        goToChatSetup();
-                        successAlert("Account Created!")
-                    } else if (message.substring(0, 4) === "2101") {
-                        document.getElementById("loading-page").style.display = "none";
-                        document.getElementById("signup-page").style.display = "block";
-                        deleteCookie("quickChatUser")
-                        deleteCookie("quickChatPass")
-                        errorAlert("Signup failed. Account already exists.");
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                    } else if (message.substring(0, 4) === "2102") {
-                        document.getElementById("loading-page").style.display = "none";
-                        document.getElementById("signup-page").style.display = "block";
-                        deleteCookie("quickChatUser")
-                        deleteCookie("quickChatPass")
-                        errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                    } else if (message.substring(0, 4) === "2103") {
-                        document.getElementById("loading-page").style.display = "none";
-                        document.getElementById("signup-page").style.display = "block";
-                        deleteCookie("quickChatUser")
-                        deleteCookie("quickChatPass")
-                        errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                    } else if (message.substring(0, 4) === "2104") {
-                        document.getElementById("loading-page").style.display = "none";
-                        document.getElementById("signup-page").style.display = "block";
-                        deleteCookie("quickChatUser")
-                        deleteCookie("quickChatPass")
-                        errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                    } else if (message.substring(0, 4) === "2105") {
-                        document.getElementById("loading-page").style.display = "none";
-                        document.getElementById("signup-page").style.display = "block";
-                        deleteCookie("quickChatUser")
-                        deleteCookie("quickChatPass")
-                        errorAlert("Signup failed. Password must be longer than or equal to 8 characters.");
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                    } else if (message.substring(0, 4) === "2001") {
-                        document.getElementById("loading-page").style.display = "none";
-                        document.getElementById("signin-page").style.display = "block";
-                        deleteCookie("quickChatUser")
-                        deleteCookie("quickChatPass")
-                        errorAlert("Login failed. Please check your username/password.");
-                        document.getElementById("SIB").disabled = false;
-                        document.getElementById("SUB").disabled = false;
-                    } else if (message.substring(0, 4) === "1201") {
-                        try {
-                            if (document.getElementById("contact-item-" + connectedUsr.toLowerCase())) {
-                                const button = document.querySelector(".favorite-button");
-                                button.textContent = "★"; // Filled star
-                                button.classList.add("filled");
-                            } else {
-                                const button = document.querySelector(".favorite-button");
-                                button.textContent = "☆"; // Outlined star
-                                button.classList.remove("filled");
-                            }
-                        } catch {
+                if (message.substring(0, 4) === "1001") {
+                    setCookie("quickChatUser", currentUsername, 14);
+                    setCookie("quickChatPass", currentPassword, 14);
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                    goToChatSetup();
+                } else if (message.substring(0, 4) === "1101") {
+                    setCookie("quickChatUser", currentUsername, 14);
+                    setCookie("quickChatPass", currentPassword, 14);
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                    if (email != "") {
+                        socket.send("0102" + email)
+                    }
+                    goToChatSetup();
+                    successAlert("Account Created!")
+                } else if (message.substring(0, 4) === "2101") {
+                    document.getElementById("loading-page").style.display = "none";
+                    document.getElementById("signup-page").style.display = "block";
+                    deleteCookie("quickChatUser")
+                    deleteCookie("quickChatPass")
+                    errorAlert("Signup failed. Account already exists.");
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                } else if (message.substring(0, 4) === "2102") {
+                    document.getElementById("loading-page").style.display = "none";
+                    document.getElementById("signup-page").style.display = "block";
+                    deleteCookie("quickChatUser")
+                    deleteCookie("quickChatPass")
+                    errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                } else if (message.substring(0, 4) === "2103") {
+                    document.getElementById("loading-page").style.display = "none";
+                    document.getElementById("signup-page").style.display = "block";
+                    deleteCookie("quickChatUser")
+                    deleteCookie("quickChatPass")
+                    errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                } else if (message.substring(0, 4) === "2104") {
+                    document.getElementById("loading-page").style.display = "none";
+                    document.getElementById("signup-page").style.display = "block";
+                    deleteCookie("quickChatUser")
+                    deleteCookie("quickChatPass")
+                    errorAlert("Signup failed. Username/Password cannot contain '/', '\\' or '[:pwd:]'.");
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                } else if (message.substring(0, 4) === "2105") {
+                    document.getElementById("loading-page").style.display = "none";
+                    document.getElementById("signup-page").style.display = "block";
+                    deleteCookie("quickChatUser")
+                    deleteCookie("quickChatPass")
+                    errorAlert("Signup failed. Password must be longer than or equal to 8 characters.");
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                } else if (message.substring(0, 4) === "2001") {
+                    document.getElementById("loading-page").style.display = "none";
+                    document.getElementById("signin-page").style.display = "block";
+                    deleteCookie("quickChatUser")
+                    deleteCookie("quickChatPass")
+                    errorAlert("Login failed. Please check your username/password.");
+                    document.getElementById("SIB").disabled = false;
+                    document.getElementById("SUB").disabled = false;
+                } else if (message.substring(0, 4) === "1201") {
+                    try {
+                        if (document.getElementById("contact-item-" + connectedUsr.toLowerCase())) {
+                            const button = document.querySelector(".favorite-button");
+                            button.textContent = "★"; // Filled star
+                            button.classList.add("filled");
+                        } else {
                             const button = document.querySelector(".favorite-button");
                             button.textContent = "☆"; // Outlined star
                             button.classList.remove("filled");
                         }
-                        document.getElementById("chat-setup-page").style.display = "none";
-                        document.getElementById("chat-page").style.display = "flex";
-                    } else if (message.substring(0, 4) === "2201") {
-                        errorAlert("Account not found.")
-                    } else if (message.substring(0, 4) === "1301") {
-                        if (!document.hasFocus()) {
-                            showNotification("New Message From " + connectedUsr)
-                        }
-                        if (message.includes("[:time:]")) {
-                            addMessageToChat(beforeLast(message.substring(4), "[:time:]"), false, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
-                        } else {
-                            addMessageToChat(message.substring(4), false)
-                        }
-                    } else if (message.substring(0, 4) === "1302") {
-                        if (message.includes("[:time:]")) {
-                            addMessageToChat(beforeLast(message.substring(4), "[:time:]"), true, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
-                        } else {
-                            addMessageToChat(message.substring(4), true)
-                        }
-                    } else if (message.substring(0, 4) === "1401") {
-                        document.getElementById("NewMsg-notification-badge").style.display = "flex"
-                        let newMessage = document.createElement('div');
-                        newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}NewMsgUserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton"><strong>${message.substring(4)}</strong></button>`;
-                        try {
-                            document.getElementById("NNM").remove()
-                        } catch {
+                    } catch {
+                        const button = document.querySelector(".favorite-button");
+                        button.textContent = "☆"; // Outlined star
+                        button.classList.remove("filled");
+                    }
+                    document.getElementById("chat-setup-page").style.display = "none";
+                    document.getElementById("chat-page").style.display = "flex";
+                } else if (message.substring(0, 4) === "2201") {
+                    errorAlert("Account not found.")
+                } else if (message.substring(0, 4) === "1301") {
+                    if (!document.hasFocus()) {
+                        showNotification("New Message From " + connectedUsr)
+                    }
+                    if (message.includes("[:time:]")) {
+                        addMessageToChat(beforeLast(message.substring(4), "[:time:]"), false, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
+                    } else {
+                        addMessageToChat(message.substring(4), false)
+                    }
+                } else if (message.substring(0, 4) === "1302") {
+                    if (message.includes("[:time:]")) {
+                        addMessageToChat(beforeLast(message.substring(4), "[:time:]"), true, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
+                    } else {
+                        addMessageToChat(message.substring(4), true)
+                    }
+                } else if (message.substring(0, 4) === "1401") {
+                    document.getElementById("NewMsg-notification-badge").style.display = "flex"
+                    let newMessage = document.createElement('div');
+                    newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}NewMsgUserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton"><strong>${message.substring(4)}</strong></button>`;
+                    try {
+                        document.getElementById("NNM").remove()
+                    } catch {
 
-                        }
-                        document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                        doHr = true
-                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
-                    } else if (message.substring(0, 4) === "1402") {
-                        let newMessage = document.createElement('div');
-                        try {
-                            document.getElementById("NNM").remove()
-                        } catch {
+                    }
+                    document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                    doHr = true
+                    //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                } else if (message.substring(0, 4) === "1402") {
+                    let newMessage = document.createElement('div');
+                    try {
+                        document.getElementById("NNM").remove()
+                    } catch {
 
-                        }
-                        newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
-                        document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
-                    } else if (message.substring(0, 4) === "1403") {
-                        let newMessage = document.createElement('div');
-                        newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}UserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton">${message.substring(4)}</button>`;
-                        try {
-                            document.getElementById("NNM").remove()
-                        } catch {
+                    }
+                    newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                    document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                    //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                } else if (message.substring(0, 4) === "1403") {
+                    let newMessage = document.createElement('div');
+                    newMessage.innerHTML = `<button id="${message.substring(4).toLowerCase()}UserButton" onclick="closeNewMsgs(); startChatFromButton('${message.substring(4)}')" class="NewMsgButton">${message.substring(4)}</button>`;
+                    try {
+                        document.getElementById("NNM").remove()
+                    } catch {
 
-                        }
-                        if (doHr) {
-                            document.getElementById("newMsgs-area").appendChild(document.createElement('hr'))
-                        }
-                        document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                        doHr = false
-                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
-                    } else if (message.substring(0, 4) === "1501") {
-                        let contact = document.createElement('div');
-                        contact.innerHTML = `<div class="contact-item" id="contact-item-${message.substring(4)}" onclick="startChatFromButton('${message.substring(4)}')">
-                                    <!--<div class="contact-avatar"></div>-->
-                                    <div class="contact-name">${message.substring(4)}</div>
+                    }
+                    if (doHr) {
+                        document.getElementById("newMsgs-area").appendChild(document.createElement('hr'))
+                    }
+                    document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                    doHr = false
+                    //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                } else if (message.substring(0, 4) === "1501") {
+                    let contact = document.createElement('div');
+                    let contactId = message.substring(4);
+                    let imageUrl = imageMap.has(contactId) ? `<img src="${imageMap.get(contactId)}" />` : `<img class="user-image-${contactId}" style="display:none"/><h1 class="user-image-hide-${contactId}">${contactId.substring(0, 1)}</h1>`; // Compute the image URL
+                    contact.innerHTML = `<div class="contact-item" id="contact-item-${message.substring(4)}" onclick="startChatFromButton('${message.substring(4)}')">
+                                                            <div class="contact-avatar">${imageUrl}</div>
+                                                            <div class="contact-name">${message.substring(4)}</div>
 </div>`;
-                        document.getElementById("contacts-sidebar").appendChild(contact.firstChild);
-                        //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
-                    } else if (message.substring(0, 4) === "1502") {
-                        try {
-                            document.getElementById("contact-item-" + message.substring(4)).remove()
-                        } catch {
+                    document.getElementById("contacts-sidebar").appendChild(contact.firstChild);
+                    //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
+                } else if (message.substring(0, 4) === "1502") {
+                    try {
+                        document.getElementById("contact-item-" + message.substring(4)).remove()
+                    } catch {
 
-                        }
-                    } else if (message.substring(0, 4) === "1601") {
-                        document.documentElement.className = message.substring(4);
-                        themeSelect.value = message.substring(4).trim()
-                        console.log(message.substring(4))
                     }
-                };
-            }
-
-            function confirmAccountDeletion() {
-                const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
-                if (confirmation) {
-                    if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
-                        deleteAccount();
+                } else if (message.substring(0, 4) === "1601") {
+                    document.documentElement.className = message.substring(4);
+                    themeSelect.value = message.substring(4).trim()
+                    console.log(message.substring(4))
+                    sunMoonSelector(true)
+                } else if (message.substring(0, 4) === "1801") {
+                    const imageKey = message.substring(4).split(",")[0]
+                    const imageData = message.split(",").slice(1).join(",")
+                    imageMap.set(imageKey, imageData);
+                    [...document.getElementsByClassName("user-image-" + imageKey)].forEach(element => {
+                        element.src = imageData
+                        element.style.display = "block"
+                    });
+                    [...document.getElementsByClassName("user-image-hide-" + imageKey)].forEach(element => {
+                        element.src = imageData
+                        element.style.display = "none"
+                    })
+                    if (imageKey === currentUsername.toLowerCase()) {
+                        [...document.getElementsByClassName("user-image-user")].forEach(element => {
+                            element.src = imageData
+                            element.style.display = "block"
+                        });
+                        [...document.getElementsByClassName("user-image-hide-user")].forEach(element => {
+                            element.src = imageData
+                            element.style.display = "none"
+                        })
                     }
+                    if (imageKey === connectedUsr.toLowerCase()) {
+                        [...document.getElementsByClassName("user-image-ou")].forEach(element => {
+                            element.src = imageData
+                            element.style.display = "block"
+                        });
+                        [...document.getElementsByClassName("user-image-hide-ou")].forEach(element => {
+                            element.src = imageData
+                            element.style.display = "none"
+                        })
+                    }
+                } else if (message.substring(0, 4) === "1901") {
+                    showForgetCIPage()
+                } else if (message.substring(0, 4) === "1902") {
+                    showForgetPIPage()
+                } else if (message.substring(0, 4) === "1903") {
+                    showSigninPage()
+                    successAlert("Password successfully reset")
+                } else if (message.substring(0, 4) === "2901") {
+                    errorAlert("That account does not exist or you have not linked an email address to it")
+                } else if (message.substring(0, 4) === "2902") {
+                    errorAlert("That code is incorrect")
+                } else if (message.substring(0, 4) === "2904") {
+                    errorAlert("Your password must be at least 8 characters long and can't contain '[:pwd:]', '/' or '\\'")
+                }
+            };
+        }
+
+        function confirmAccountDeletion() {
+            const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+            if (confirmation) {
+                if (prompt('Type "DELETE" (without double quotes) to continue') === "DELETE") {
+                    deleteAccount();
                 }
             }
+        }
 
-            function deleteAccount() {
-                socket.send("0701")
-                closeSettings()
-                logout()
+        function deleteAccount() {
+            socket.send("0701")
+            closeSettings()
+            logout()
+        }
+
+        function setCookie(name, value, days) {
+            if (getCookie("CookiesAllowed") || name == "CookiesAllowed") {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                const cookieString = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
+                document.cookie = cookieString;
+                console.log("Cookie set:", cookieString);
+            }
+        }
+
+        function toggleFavorite() {
+            const button = document.querySelector(".favorite-button");
+            if (button.textContent === "★") { // Filled star
+                button.textContent = "☆"; // Outlined star
+                button.classList.remove("filled");
+                socket.send("0502" + connectedUsr)
+            } else {
+                button.textContent = "★"; // Filled star
+                button.classList.add("filled");
+                socket.send("0501" + connectedUsr)
+            }
+        }
+
+        let alerts = [];
+
+        function successAlert(text) {
+            createAlert(text, 'success');
+        }
+
+        function errorAlert(text) {
+            createAlert(text, 'error');
+        }
+
+        function createAlert(text, type) {
+            // Create a new alert message element
+            const alertMessage = document.createElement("div");
+            alertMessage.classList.add("alert");
+
+            // Apply the appropriate class based on the type
+            if (type === 'success') {
+                alertMessage.classList.add('success');
+            } else if (type === 'error') {
+                alertMessage.classList.add('error');
             }
 
-            function setCookie(name, value, days) {
-                if (getCookie("CookiesAllowed") || name == "CookiesAllowed") {
-                    const date = new Date();
-                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                    const cookieString = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
-                    document.cookie = cookieString;
-                    console.log("Cookie set:", cookieString);
-                }
-            }
+            alertMessage.innerText = text;
 
-            function toggleFavorite() {
-                const button = document.querySelector(".favorite-button");
-                if (button.textContent === "★") { // Filled star
-                    button.textContent = "☆"; // Outlined star
-                    button.classList.remove("filled");
-                    socket.send("0502" + connectedUsr)
-                } else {
-                    button.textContent = "★"; // Filled star
-                    button.classList.add("filled");
-                    socket.send("0501" + connectedUsr)
-                }
-            }
+            // Append the new alert to the container
+            const alertContainer = document.getElementById("alerts-container");
+            alertContainer.appendChild(alertMessage);
 
-            let alerts = [];
+            // Add the alert to the stack
+            alerts.push(alertMessage);
 
-            function successAlert(text) {
-                createAlert(text, 'success');
-            }
-
-            function errorAlert(text) {
-                createAlert(text, 'error');
-            }
-
-            function createAlert(text, type) {
-                // Create a new alert message element
-                const alertMessage = document.createElement("div");
-                alertMessage.classList.add("alert");
-
-                // Apply the appropriate class based on the type
-                if (type === 'success') {
-                    alertMessage.classList.add('success');
-                } else if (type === 'error') {
-                    alertMessage.classList.add('error');
-                }
-
-                alertMessage.innerText = text;
-
-                // Append the new alert to the container
-                const alertContainer = document.getElementById("alerts-container");
-                alertContainer.appendChild(alertMessage);
-
-                // Add the alert to the stack
-                alerts.push(alertMessage);
-
-                // After 5 seconds, start the fade-out and slide-down animation
+            // After 5 seconds, start the fade-out and slide-down animation
+            setTimeout(() => {
+                alertMessage.classList.add("hide"); // Apply the hide animation
+                // Remove the alert from the container after the animation
                 setTimeout(() => {
-                    alertMessage.classList.add("hide"); // Apply the hide animation
-                    // Remove the alert from the container after the animation
-                    setTimeout(() => {
-                        alertMessage.remove();
-                        alerts.shift(); // Remove the first alert from the stack
-                    }, 500); // Wait for the hide animation to finish (same duration as the transition)
-                }, 5000); // Show the alert for 5 seconds before fading it out
+                    alertMessage.remove();
+                    alerts.shift(); // Remove the first alert from the stack
+                }, 500); // Wait for the hide animation to finish (same duration as the transition)
+            }, 5000); // Show the alert for 5 seconds before fading it out
+        }
+
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                let [key, value] = cookie.trim().split('=');
+                if (key === name) return decodeURIComponent(value);
             }
+            return null;
+        }
 
 
-            function getCookie(name) {
-                const cookies = document.cookie.split(';');
-                for (let cookie of cookies) {
-                    let [key, value] = cookie.trim().split('=');
-                    if (key === name) return decodeURIComponent(value);
+        function deleteCookie(name) {
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+        }
+
+        function settings() {
+            document.getElementById("settings").style.display = "block";
+            document.getElementById("settings-pane").classList.add("show");
+            document.getElementById("settings-pane-imagecrop").classList.remove("show");
+        }
+
+        function NewMsgs() {
+            document.getElementById("NewMsgs").style.display = "block";
+            document.getElementById("NewMsgs-pane").classList.add("show");
+        }
+
+        function closeSettings() {
+            document.getElementById('input-file').value = '';
+            document.getElementById("settings-pane-imagecrop").classList.remove("show");
+            document.getElementById("settings-imagecrop").style.display = "none";
+            document.getElementById("settings-pane").classList.remove("show");
+            document.getElementById("settings").style.display = "none";
+        }
+
+
+        function closeNewMsgs() {
+            document.getElementById("NewMsgs-pane").classList.remove("show");
+            setTimeout(function () {
+                document.getElementById("NewMsgs").style.display = "none";
+            }, 0); // Wait for the transition to finish
+        }
+
+        function showSignupPage() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "block";
+            document.getElementById("forgot-CI-page").style.display = "none";
+            document.getElementById("forgot-PI-page").style.display = "none";
+            document.getElementById("forgot-page").style.display = "none";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function showForgetPage() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("forgot-page").style.display = "block";
+            document.getElementById("forgot-CI-page").style.display = "none";
+            document.getElementById("forgot-PI-page").style.display = "none";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function showForgetCIPage() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("forgot-page").style.display = "none";
+            document.getElementById("forgot-CI-page").style.display = "block";
+            document.getElementById("forgot-PI-page").style.display = "none";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function showForgetPIPage() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("forgot-page").style.display = "none";
+            document.getElementById("forgot-CI-page").style.display = "none";
+            document.getElementById("forgot-PI-page").style.display = "block";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function showSigninPage() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "block";
+            document.getElementById("forgot-page").style.display = "none";
+            document.getElementById("forgot-CI-page").style.display = "none";
+            document.getElementById("forgot-PI-page").style.display = "none";
+            document.getElementById("chat-setup-page").style.display = "none";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function goToChatSetup() {
+            document.getElementById("loading-page").style.display = "none";
+            document.getElementById("signin-page").style.display = "none";
+            document.getElementById("signup-page").style.display = "none";
+            document.getElementById("forgot-page").style.display = "none";
+            document.getElementById("forgot-CI-page").style.display = "none";
+            document.getElementById("forgot-PI-page").style.display = "none";
+            document.getElementById("chat-setup-page").style.display = "flex";
+            document.getElementById("chat-page").style.display = "none";
+        }
+
+        function signIn() {
+            const username = document.getElementById("signin-username").value;
+            const password = document.getElementById("signin-password").value;
+            if (username && password) {
+                currentUsername = username;
+                if (currentUsername != null) {
+                    [...document.getElementsByClassName("user-letter")].forEach(element => {
+                        element.innerText = currentUsername.charAt(0).toLowerCase()
+                    });
                 }
-                return null;
+                currentPassword = password
+                document.getElementById("SIB").disabled = true;
+                document.getElementById("SUB").disabled = true;
+                socket.send('0001' + username + "[:pwd:]" + password);
+            } else {
+                errorAlert("Please enter a valid username and password.");
             }
+        }
 
-
-            function deleteCookie(name) {
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
-            }
-
-            function settings() {
-                document.getElementById("settings").style.display = "block";
-                document.getElementById("settings-pane").classList.add("show");
-            }
-
-            function NewMsgs() {
-                document.getElementById("NewMsgs").style.display = "block";
-                document.getElementById("NewMsgs-pane").classList.add("show");
-            }
-
-            function closeSettings() {
-                document.getElementById("settings-pane").classList.remove("show");
-                setTimeout(function () {
-                    document.getElementById("settings").style.display = "none";
-                }, 0); // Wait for the transition to finish
-            }
-
-            function closeNewMsgs() {
-                document.getElementById("NewMsgs-pane").classList.remove("show");
-                setTimeout(function () {
-                    document.getElementById("NewMsgs").style.display = "none";
-                }, 0); // Wait for the transition to finish
-            }
-
-            function showSignupPage() {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signin-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "block";
-                document.getElementById("chat-setup-page").style.display = "none";
-                document.getElementById("chat-page").style.display = "none";
-            }
-
-            function showSigninPage() {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "none";
-                document.getElementById("signin-page").style.display = "block";
-                document.getElementById("chat-setup-page").style.display = "none";
-                document.getElementById("chat-page").style.display = "none";
-            }
-
-            function goToChatSetup() {
-                document.getElementById("loading-page").style.display = "none";
-                document.getElementById("signin-page").style.display = "none";
-                document.getElementById("signup-page").style.display = "none";
-                document.getElementById("chat-setup-page").style.display = "flex";
-                document.getElementById("chat-page").style.display = "none";
-            }
-
-            function signIn() {
-                const username = document.getElementById("signin-username").value;
-                const password = document.getElementById("signin-password").value;
+        function signUp() {
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+            const emailSU = document.getElementById("signup-email").value;
+            const passwordConfirm = document.getElementById("signup-password-confirm").value;
+            if (password === passwordConfirm) {
                 if (username && password) {
-                    currentUsername = username
+                    currentUsername = username;
+                    if (currentUsername != null) {
+                        [...document.getElementsByClassName("user-letter")].forEach(element => {
+                            element.innerText = currentUsername.charAt(0).toLowerCase()
+                        });
+                    }
                     currentPassword = password
                     document.getElementById("SIB").disabled = true;
                     document.getElementById("SUB").disabled = true;
-                    socket.send('0001' + username + "[:pwd:]" + password);
+                    if (emailSU != "") {
+                        email = emailSU;
+                    }
+                    socket.send('0101' + username + "[:pwd:]" + password);
                 } else {
                     errorAlert("Please enter a valid username and password.");
                 }
+            } else {
+                errorAlert("Passwords do not match!")
             }
+        }
 
-            function signUp() {
-                const username = document.getElementById("signup-username").value;
-                const password = document.getElementById("signup-password").value;
-                const passwordConfirm = document.getElementById("signup-password-confirm").value;
-                if (password === passwordConfirm) {
-                    if (username && password) {
-                        currentUsername = username
-                        currentPassword = password
-                        document.getElementById("SIB").disabled = true;
-                        document.getElementById("SUB").disabled = true;
-                        socket.send('0101' + username + "[:pwd:]" + password);
-                    } else {
-                        errorAlert("Please enter a valid username and password.");
-                    }
-                } else {
-                    errorAlert("Passwords do not match!")
-                }
-            }
-
-            function checkUserStatus() {
-                const user = getCookie("quickChatUser");
-                const pass = getCookie("quickChatPass");
-                if (user) {
-                    socket.send('0001' + user + "[:pwd:]" + pass);
-                } else {
-                    showSigninPage();
-                }
-            }
-
-            function logout() {
-                deleteCookie("quickChatUser");
+        function checkUserStatus() {
+            const user = getCookie("quickChatUser");
+            const pass = getCookie("quickChatPass");
+            if (user) {
+                socket.send('0001' + user + "[:pwd:]" + pass);
+            } else {
                 showSigninPage();
-                document.documentElement.className = "blue";
-                themeSelect.value = "blue"
-                document.getElementById("contacts-sidebar").innerHTML = "<h3>Contacts</h3>"
-                document.getElementById("newMsgs-area").innerHTML = ""
-                location.reload()
+            }
+        }
+
+        function logout() {
+            deleteCookie("quickChatUser");
+            showSigninPage();
+            document.documentElement.className = "blue";
+            themeSelect.value = "blue"
+            document.getElementById("contacts-sidebar").innerHTML = "<h3>Contacts</h3>"
+            document.getElementById("newMsgs-area").innerHTML = ""
+            location.reload()
+        }
+
+        function startChat() {
+            const chatUsername = document.getElementById("chat-username").value;
+            if (chatUsername) {
+                document.getElementById("chat-messages").innerHTML = "";
+                document.getElementsByClassName("user-image-ou")[0].style.display = "none"
+                document.getElementsByClassName("user-image-hide-ou")[0].style.display = "block"
+                socket.send('0201' + chatUsername);
+                socket.send('0401' + chatUsername);
+                connectedUsr = chatUsername;
+                document.getElementById("connectedUserName").innerHTML = chatUsername.toLowerCase()
+                document.getElementById("connectedUserNameLetter").innerHTML = chatUsername.toLowerCase().substring(0,1)
+                try {
+                    document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").innerHTML = ""
+                } catch {
+
+                }
+            } else {
+                errorAlert("Please enter a username to start chatting.");
             }
 
-            function startChat() {
-                const chatUsername = document.getElementById("chat-username").value;
-                if (chatUsername) {
-                    document.getElementById("chat-messages").innerHTML = "";
-                    socket.send('0201' + chatUsername);
-                    socket.send('0401' + chatUsername);
-                    connectedUsr = chatUsername;
-                    try {
-                        document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").innerHTML = ""
-                    } catch {
+            div = document.getElementById("NewMsgs-pane")
 
-                    }
-                } else {
-                    errorAlert("Please enter a username to start chatting.");
+            // Check if the div contains any buttons
+            const buttons = div.querySelectorAll('button');
+
+            if (buttons.length == 1) {
+                let newMessage = document.createElement('div');
+                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                document.getElementById("NewMsg-notification-badge").style.display = "none"
+            }
+        }
+
+        function startChatFromButton(chatUsername) {
+            //const chatUsername = document.getElementById("chat-username").value; 
+            if (chatUsername) {
+                document.getElementById("chat-messages").innerHTML = "";
+                document.getElementsByClassName("user-image-ou")[0].style.display = "none"
+                document.getElementsByClassName("user-image-hide-ou")[0].style.display = "block"
+                socket.send('0201' + chatUsername);
+                socket.send('0401' + chatUsername);
+                connectedUsr = chatUsername;
+                document.getElementById("connectedUserName").innerHTML = chatUsername
+                document.getElementById("connectedUserNameLetter").innerHTML = chatUsername.toLowerCase().substring(0, 1)
+                try {
+                    document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").remove()
+                } catch {
+
                 }
-
-                div = document.getElementById("NewMsgs-pane")
-
-                // Check if the div contains any buttons
-                const buttons = div.querySelectorAll('button');
-
-                if (buttons.length == 1) {
-                    let newMessage = document.createElement('div');
-                    newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
-                    document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                    document.getElementById("NewMsg-notification-badge").style.display = "none"
-                }
+            } else {
+                errorAlert("Please enter a username to start chatting.");
             }
 
-            function startChatFromButton(chatUsername) {
-                //const chatUsername = document.getElementById("chat-username").value;
-                if (chatUsername) {
-                    document.getElementById("chat-messages").innerHTML = "";
-                    socket.send('0201' + chatUsername);
-                    socket.send('0401' + chatUsername);
-                    connectedUsr = chatUsername;
-                    try {
-                        document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").remove()
-                    } catch {
+            div = document.getElementById("NewMsgs-pane")
 
-                    }
-                } else {
-                    errorAlert("Please enter a username to start chatting.");
-                }
+            // Check if the div contains any buttons
+            const buttons = div.querySelectorAll('button');
 
-                div = document.getElementById("NewMsgs-pane")
-
-                // Check if the div contains any buttons
-                const buttons = div.querySelectorAll('button');
-
-                if (buttons.length == 1) {
-                    let newMessage = document.createElement('div');
-                    newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
-                    document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
-                    document.getElementById("NewMsg-notification-badge").style.display = "none"
-                }
+            if (buttons.length == 1) {
+                let newMessage = document.createElement('div');
+                newMessage.innerHTML = "<h2 id='NNM'>No New Messages!</h2>";
+                document.getElementById("newMsgs-area").appendChild(newMessage.firstChild);
+                document.getElementById("NewMsg-notification-badge").style.display = "none"
             }
+        }
 
-            // Mock function to add messages to chat
-            function addMessageToChat(content, isSentByUser, time = "") {
-                const chatMessages = document.getElementById("chat-messages");
-                const message = document.createElement("div");
-                const messageElement = document.createElement("div");
-                const messageTimeElement = document.createElement("div");
-                messageElement.className = `message ${isSentByUser ? "sent" : "received"}`;
-                messageElement.textContent = content;
-                chatMessages.prepend(messageElement);
-                messageTimeElement.className = `messageTime ${isSentByUser ? "sentT" : "receivedT"}`;
-                messageTimeElement.textContent = time;
-                chatMessages.prepend(messageTimeElement);
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        // Mock function to add messages to chat
+        function addMessageToChat(content, isSentByUser, time = "") {
+            const chatMessages = document.getElementById("chat-messages");
+            const message = document.createElement("div");
+            const messageElement = document.createElement("div");
+            const messageTimeElement = document.createElement("div");
+            messageElement.className = `message ${isSentByUser ? "sent" : "received"}`;
+            messageElement.textContent = content;
+            chatMessages.prepend(messageElement);
+            messageTimeElement.className = `messageTime ${isSentByUser ? "sentT" : "receivedT"}`;
+            messageTimeElement.textContent = time;
+            chatMessages.prepend(messageTimeElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        }
+
+        // Sending a message
+        function sendMessage() {
+            const chatInput = document.getElementById("chat-input");
+            const message = chatInput.value.trim();
+            if (message) {
+                //addMessageToChat(message, true);
+                socket.send("0301" + message); // Send to server
+                chatInput.value = ""; // Clear input
             }
+        }
 
-            // Sending a message
-            function sendMessage() {
-                const chatInput = document.getElementById("chat-input");
-                const message = chatInput.value.trim();
-                if (message) {
-                    //addMessageToChat(message, true);
-                    socket.send("0301" + message); // Send to server
-                    chatInput.value = ""; // Clear input
-                }
-            }
-
-            /*function updateRoot(color) {
-                // The new :root string
-                var newRoot = `
-                :root {
+        /*function updateRoot(color) {
+            // The new :root string
+            var newRoot = `
+            :root {
 --sent-message-bg: #424242;
 --sent-message-text: #ffffff;
 --sent-message-border: #616161;
@@ -1952,60 +2671,306 @@
 --icons-bg: #616161;
 }
 
-                `;
-                // Find the existing <style> element and replace its contents
-                var rootStyleElement = document.getElementById('root-style');
-                rootStyleElement.innerHTML = newRoot;
-            }*/
+            `;
+            // Find the existing <style> element and replace its contents
+            var rootStyleElement = document.getElementById('root-style');
+            rootStyleElement.innerHTML = newRoot;
+        }*/
 
-            document.getElementById('theme-select').addEventListener('change', (event) => {
-                document.documentElement.className = event.target.value;
-                socket.send("0601" + event.target.value)
+        document.getElementById('theme-select').addEventListener('change', (event) => {
+            document.documentElement.className = event.target.value;
+            socket.send("0601" + event.target.value)
+        });
+
+        /*function closeSettings() {
+            document.getElementById('settings').style.display = 'none';
+        }*/
+
+        function rC() {
+            setCookie("CookiesAllowed", true, 365)
+            document.getElementById("cookie-request").style.display = "none"
+            document.getElementById("notification-request").style.display = "block"
+        }
+
+        function rN() {
+            document.getElementById("notification-request").style.display = "none"
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        setCookie("notifications", true, 365)
+                    } else {
+                        setCookie("notifications", false, 365)
+                    }
+                });
+            }
+        }
+
+        function showNotification(notificationText) {
+            const notification = new Notification('Quick Chat - New Message', {
+                body: notificationText,
+                icon: './logo.png' // Optional: URL to an icon image
             });
 
-            function closeSettings() {
-                document.getElementById('settings').style.display = 'none';
+            //notification.onclick = () => {
+            //    window.open('https://yourwebsite.com'); // Optional: Open a URL when the notification is clicked
+            //};
+        }
+
+        // Check if notifications are supported and permission is granted
+        //if ('Notification' in window && Notification.permission === 'granted') {
+        //    showNotification();
+        //}
+        if (getCookie("CookiesAllowed") == null) {
+            document.getElementById("cookie-request").style.display = "Block"
+        } else if (getCookie("notifications") == null && Notification.permission === "default") {
+            document.getElementById("notification-request").style.display = "block"
+        }
+
+        function darklightmode() {
+            if (["red", "orange", "yellow", "green", "blue", "purple"].includes(themeSelect.value)) {
+                document.documentElement.className = "dark" + themeSelect.value
+            } else if (themeSelect.value == "white") {
+                document.documentElement.className = "dark"
+            } else if (["darkred", "darkorange", "darkyellow", "darkgreen", "darkblue", "darkpurple"].includes(themeSelect.value)) {
+                document.documentElement.className = themeSelect.value.replace('dark', '')
+            } else if (themeSelect.value == "dark") {
+                document.documentElement.className = "white"
             }
 
-            function rC() {
-                setCookie("CookiesAllowed", true, 365)
-                document.getElementById("cookie-request").style.display = "none"
-                document.getElementById("notification-request").style.display = "block"
-            }
+            socket.send("0601" + document.documentElement.className)
+            themeSelect.value = document.documentElement.className
+            sunMoonSelector()
+        }
 
-            function rN() {
-                document.getElementById("notification-request").style.display = "none"
-                if (Notification.permission === 'default') {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === 'granted') {
-                            setCookie("notifications", true, 365)
-                        } else {
-                            setCookie("notifications", false, 365)
-                        }
-                    });
+        function sunMoonSelector(now = false) {
+            const icon = document.getElementById("sun-moon-icon");
+            if (now) {
+                if (["red", "orange", "yellow", "green", "blue", "purple", "white"].includes(themeSelect.value)) {
+                    icon.src = "./moon.png";
+                } else {
+                    icon.src = "./sun.png";
                 }
-            }
+            } else {
 
-            function showNotification(notificationText) {
-                const notification = new Notification('Quick Chat - New Message', {
-                    body: notificationText,
-                    icon: './logo.png' // Optional: URL to an icon image
+
+                // Add a fade-out effect
+                icon.style.opacity = 0;
+
+                // Wait for the fade-out transition to complete before changing the `src`
+                setTimeout(() => {
+                    if (["red", "orange", "yellow", "green", "blue", "purple", "white"].includes(themeSelect.value)) {
+                        icon.src = "./moon.png";
+                    } else {
+                        icon.src = "./sun.png";
+                    }
+
+                    // Fade the icon back in
+                    icon.style.opacity = 1;
+                }, 500); // Match this to the CSS transition duration
+            }
+        }
+
+
+        // Function to read and send image file
+        function sendImage(file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const dataUrl = event.target.result;
+                // Send image data through WebSocket
+                socket.send("0801" + dataUrl);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleImage(file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const dataUrl = event.target.result;
+
+                // Create an img element with the data URL
+                let image = document.createElement('img');
+                const canvas = document.getElementById("output-canvas");
+                const exportBtn = document.getElementById("export-btn");
+                const container = document.querySelector(".image-container");
+
+                let scale = 1;
+                let offsetX = 0;
+                let offsetY = 0;
+                let isDragging = false;
+                let startX, startY;
+                let startMouseX, startMouseY;
+                let startOffsetX, startOffsetY;
+                
+
+                // 🖱️ Mouse Down (Start Dragging)
+                image.addEventListener("mousedown", (e) => {
+                    isDragging = true;
+                    startMouseX = e.clientX;
+                    startMouseY = e.clientY;
+                    startOffsetX = offsetX;
+                    startOffsetY = offsetY;
+                    image.style.cursor = "grabbing";
                 });
 
-                //notification.onclick = () => {
-                //    window.open('https://yourwebsite.com'); // Optional: Open a URL when the notification is clicked
-                //};
-            }
+                // Ensure image loads first
+                image.onload = () => {
+                    // Center the image in the container initially
+                    offsetX = 0 - image.width / 2;
+                    offsetY = 0 - image.height / 2;
+                    updateTransform(image, offsetX, offsetY, scale);
+                };
 
-            // Check if notifications are supported and permission is granted
-            //if ('Notification' in window && Notification.permission === 'granted') {
-            //    showNotification();
-            //}
-            if (getCookie("CookiesAllowed") == null) {
-                document.getElementById("cookie-request").style.display = "Block"
-            } else if (getCookie("notifications") == null && Notification.permission === "default") {
-                document.getElementById("notification-request").style.display = "block"
+
+                // 🚀 Mouse Move (Dragging)
+                window.addEventListener("mousemove", (e) => {
+                    if (!isDragging) return;
+
+                    // Calculate movement delta
+                    const dx = e.clientX - startMouseX;
+                    const dy = e.clientY - startMouseY;
+
+                    // Compute new offsets
+                    let newOffsetX = startOffsetX + dx;
+                    let newOffsetY = startOffsetY + dy;
+
+                    // Get container dimensions
+                    const rect = container.getBoundingClientRect();
+                    const containerSize = rect.width; // Assume square container
+                    const containerRadius = containerSize / 2;
+
+                    // Get scaled image dimensions
+                    const imgWidth = image.naturalWidth * scale;
+                    const imgHeight = image.naturalHeight * scale;
+
+                    // Ensure image stays within the circle
+                    const minOffsetX = containerRadius - imgWidth / 2 - image.width / 2 + containerRadius;
+                    const maxOffsetX = imgWidth / 2 - containerRadius - image.width / 2 + containerRadius;
+                    const minOffsetY = containerRadius - imgHeight / 2 - image.height / 2 + containerRadius;
+                    const maxOffsetY = imgHeight / 2 - containerRadius - image.height / 2 + containerRadius;
+
+                    // Clamp values to keep image inside
+                    offsetX = Math.min(maxOffsetX, Math.max(minOffsetX, newOffsetX));
+                    offsetY = Math.min(maxOffsetY, Math.max(minOffsetY, newOffsetY));
+
+                    updateTransform(image, offsetX, offsetY, scale);
+                });
+
+                // 🖱️ Mouse Up (Stop Dragging)
+                window.addEventListener("mouseup", () => {
+                    isDragging = false;
+                    image.style.cursor = "grab";
+                });
+
+                // 🔍 Scroll to Zoom
+                image.addEventListener("wheel", (e) => {
+                    e.preventDefault
+
+                    startMouseX = e.clientX;
+                    startMouseY = e.clientY;
+                    startOffsetX = offsetX;
+                    startOffsetY = offsetY;
+
+                    // Get container and image dimensions
+                    const rect = container.getBoundingClientRect();
+                    const containerRadius = rect.width / 2;
+
+
+
+                    // Calculate movement delta
+const dx = e.clientX - startMouseX;
+const dy = e.clientY - startMouseY;
+
+                    let newOffsetX = startOffsetX + dx;
+                    let newOffsetY = startOffsetY + dy;
+
+                    // Adjust zoom level
+                    const scaleAmount = 0.1;
+                    let newScale = scale + (e.deltaY < 0 ? scaleAmount : -scaleAmount);
+                    newScale = Math.max(Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight), Math.min(2, newScale)); // Clamp zoom between 0.5 and 2
+
+                    
+
+                    scale = newScale;
+
+                    let imgWidth = image.naturalWidth * scale;
+                    let imgHeight = image.naturalHeight * scale;
+
+                    // Compute new offset limits
+                    let minOffsetX = containerRadius - imgWidth / 2 - image.width / 2 + containerRadius;
+                    let maxOffsetX = imgWidth / 2 - containerRadius - image.width / 2 + containerRadius;
+                    let minOffsetY = containerRadius - imgHeight / 2 - image.height / 2 + containerRadius;
+                    let maxOffsetY = imgHeight / 2 - containerRadius - image.height / 2 + containerRadius;
+
+                    // Adjust offsets if needed to keep image inside
+                    offsetX = Math.min(maxOffsetX, Math.max(minOffsetX, newOffsetX));
+                    offsetY = Math.min(maxOffsetY, Math.max(minOffsetY, newOffsetY));
+
+                    
+                    updateTransform(image, offsetX, offsetY, scale);
+                });
+
+                image.setAttribute("src", dataUrl);
+                image.setAttribute("id", "settings-image")
+                image.setAttribute("draggable", "false")
+
+                // Replace the existing image
+                document.getElementById("settings-image").replaceWith(image);
+
+                // Export the image as a square
+                exportBtn.addEventListener("click", () => {
+                    const rect = container.getBoundingClientRect();
+                    const containerSize = rect.width; // Assuming the container is square
+                    const img = new Image();
+                    img.src = image.src;
+
+                    img.onload = () => {
+                        canvas.width = containerSize;
+                        canvas.height = containerSize;
+                        const ctx = canvas.getContext("2d");
+
+                        // Calculate scaled and panned values
+                        const imgWidth = img.width * scale;
+                        const imgHeight = img.height * scale;
+
+                        // Center of the container relative to the image
+                        const drawX = offsetX + img.width / 2 - imgWidth / 2;
+                        const drawY = offsetY + img.height / 2 - imgHeight / 2;
+
+                        // Clear the canvas
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        // Draw the image to the canvas
+                        ctx.drawImage(img, drawX, drawY, imgWidth, imgHeight);
+
+                        // Get the base64 encoded string
+                        const exportedSrc = canvas.toDataURL("image/png");
+                        console.log(exportedSrc); // Log the base64 string
+                        socket.send("0801" + exportedSrc);
+                    };
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+
+        // Example usage: sending a selected image
+        document.getElementById('input-file').addEventListener('change', function (event) {
+            document.getElementById("settings").style.display = "none";
+            document.getElementById("settings-imagecrop").style.display = "block";
+            document.getElementById("settings-pane").classList.remove("show");
+            document.getElementById("settings-pane-imagecrop").classList.add("show");
+
+            const file = event.target.files[0];
+            if (file) {
+                handleImage(file);
             }
-        </script>
+        });
+
+        function updateTransform(image, offsetX, offsetY, scale) {
+            image.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        }
+
+    </script>
 </body>
 </html>
