@@ -998,22 +998,22 @@
         }
 
         #settings-pane-imagecrop {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 60%; /* Adjusted for a better fit */
-        max-width: 500px; /* Added max-width */
-        padding: 30px;
-        background-color: var(--settings-bg);
-        box-shadow: 0px 4px 8px var(--box-shadow);
-        border-radius: 8px;
-        text-align: center;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 60%; /* Adjusted for a better fit */
+            max-width: 500px; /* Added max-width */
+            padding: 30px;
+            background-color: var(--settings-bg);
+            box-shadow: 0px 4px 8px var(--box-shadow);
+            border-radius: 8px;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
         }
 
         #NewMsgs-pane {
@@ -1133,7 +1133,15 @@
                     text-align: left;
                 }
 
-                /*.avatar-selector label img {
+                .avatar-selector label p {
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                    position: absolute;
+                    flex-grow: 1;
+                }
+
+        /*.avatar-selector label img {
                     vertical-align: top;
                     width: 40px;
                     border-radius: 50px;
@@ -1141,7 +1149,7 @@
                     padding: 0px;
                 }*/
 
-            /*.avatar-selector input {
+        /*.avatar-selector input {
                 width: calc(100% - 10px) !important;
                 padding: 10px;
                 padding-right: 0px;
@@ -1208,20 +1216,20 @@
             margin-right: 10px;
         }
 
-        .contact-avatar img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 10px;
-        }
+            .contact-avatar img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #ddd;
+                margin-right: 10px;
+            }
 
             .contact-avatar h1 {
                 width: 40px;
                 height: 40px;
-                border-radius: 50%; 
+                border-radius: 50%;
                 margin-right: 10px;
-                margin-top: 0; 
+                margin-top: 0;
                 padding-top: 0;
                 color: black;
                 font-size: 32px;
@@ -1552,9 +1560,9 @@
             font-size: 20px;
         }
 
-        #export-btn:hover {
-            background: var(--button-hover-bg);
-        }
+            #export-btn:hover {
+                background: var(--button-hover-bg);
+            }
 
         #profilePictureDiv {
             left: 10px;
@@ -1636,12 +1644,18 @@
                 color: black;
                 font-size: 32px;
             }
+
+        #change-password-button, #change-email-button {
+            margin-bottom: 10px;
+        }
     </style>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 </head>
 <body>
 
@@ -1770,7 +1784,7 @@
         </div>
         <img class="back-icon" onclick="goToChatSetup()" src="./back-icon.png" alt="Back" />
         <!--<div id="Chatter-Name" style="align-items: center; justify-content: center; text-align: center; width: 100%; padding-bottom: 0px; margin-bottom: 0px; display: flex; vertical-align: bottom; position: absolute; z-index: 1; background: var(--settings-bg);"><div class="chatter-avatar" style="position: relative;"><img class="user-image-bobthebuilder" style="display:none"><h1 class="user-image-hide-bobthebuilder">b</h1></div><h1 style="color: var(--primary-text); padding-top: 25px; padding-bottom: 0px; margin-bottom: 0px; vertical-align:bottom; position: relative;">Jackson</h1></div>
-    -->
+        -->
         <div id="Chatter-Name" style="
     display: flex;
     align-items: center;
@@ -1816,7 +1830,9 @@
             padding: 0;
             top: 20px;
             margin: 0;
-        ">b</h1>
+        ">
+                    b
+                </h1>
             </div>
             <h1 style="color: var(--primary-text); margin: 0; padding: 0;" id="connectedUserName"></h1>
         </div>
@@ -1863,8 +1879,10 @@
                 </select>
             </div>
 
-            <div class="avatar-selector">
+            <label for="avatar-selector" style="width: 100%; text-align: center; color: var(--primary-text)">Change Avatar:</label>
+            <div class="avatar-selector" id="avatar-selector">
                 <label for="input-file">
+
                     <div id="chooseImageImage">
                         <img class="user-image-user" />
                         <h1 class="user-image-hide-user user-letter">j</h1>
@@ -1874,6 +1892,9 @@
                 <input type="file" id="input-file" accept="image/*" style="display:none">
             </div>
 
+            <button id="change-password-button" class="button" onclick="$(function () {$('#passwordSet').dialog();});">Change Password</button>
+
+            <button id="change-email-button" class="button" onclick="$(function () {$('#emailSet').dialog();});">Change Email</button>
 
             <button id="delete-account-button" class="button" onclick="confirmAccountDeletion()">Delete Account</button>
         </div>
@@ -1923,8 +1944,18 @@
         <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="rN()">Allow</button>
         <button style="padding: 10px 20px; margin: 5px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;" onclick="document.getElementById('notification-request').style.display = 'None'; setCookie('notifications', false, 365)">Deny</button>
     </div>
+    <div id="emailSet" title="Email Reset" style="display: none;">
+        <p style="text-align: center; color: black;">Please enter your email.</p>
+        <input type="text" id="emailSetInput" placeholder="Email" />
+        <button class="button" onclick="socket.send('0102' + document.getElementById('emailSetInput').value); $(function () {$('#emailSet').dialog('close');});">Submit</button>
+    </div>
 
-
+    <div id="passwordSet" title="Password Reset" style="display: none;">
+        <p style="text-align: center; color: black;">Please enter your new password.</p>
+        <input type="password" id="passwordSetInput" placeholder="New Password" style="margin-top: 0"/>
+        <input type="password" id="confirmPasswordSetInput" placeholder="Confirm New Password" style="margin-top: 0"/>
+        <button class="button" onclick="if ($('#passwordSetInput').val() == $('#confirmPasswordSetInput').val()) { socket.send('0103' + $('#passwordSetInput').val()) } else {errorAlert('Passwords do not match.');}">Submit</button>
+    </div>
 
     <script>
         const imageMap = new Map();
@@ -2107,6 +2138,12 @@
                     }
                     goToChatSetup();
                     successAlert("Account Created!")
+                } else if (message.substring(0, 4) === "1102") {
+                    currentPassword = $('#passwordSetInput').val()
+                    setCookie("quickChatUser", currentUsername, 14);
+                    setCookie("quickChatPass", currentPassword, 14);
+                    $(function () { $('#passwordSet').dialog('close'); });
+                    successAlert("Password change successful")
                 } else if (message.substring(0, 4) === "2101") {
                     document.getElementById("loading-page").style.display = "none";
                     document.getElementById("signup-page").style.display = "block";
@@ -2147,6 +2184,14 @@
                     errorAlert("Signup failed. Password must be longer than or equal to 8 characters.");
                     document.getElementById("SIB").disabled = false;
                     document.getElementById("SUB").disabled = false;
+                } else if (message.substring(0, 4) === "2106") {
+                    errorAlert("Password cannot contain '/', '\\' or '[:pwd:]'.");
+                } else if (message.substring(0, 4) === "2107") {
+                    errorAlert("Password cannot contain '/', '\\' or '[:pwd:]'.");
+                } else if (message.substring(0, 4) === "2108") {
+                    errorAlert("Password cannot contain '/', '\\' or '[:pwd:]'.");
+                } else if (message.substring(0, 4) === "2109") {
+                    errorAlert("Password must be longer than or equal to 8 characters.");
                 } else if (message.substring(0, 4) === "2001") {
                     document.getElementById("loading-page").style.display = "none";
                     document.getElementById("signin-page").style.display = "block";
@@ -2231,8 +2276,8 @@
                     let contactId = message.substring(4);
                     let imageUrl = imageMap.has(contactId) ? `<img src="${imageMap.get(contactId)}" />` : `<img class="user-image-${contactId}" style="display:none"/><h1 class="user-image-hide-${contactId}">${contactId.substring(0, 1)}</h1>`; // Compute the image URL
                     contact.innerHTML = `<div class="contact-item" id="contact-item-${message.substring(4)}" onclick="startChatFromButton('${message.substring(4)}')">
-                                                            <div class="contact-avatar">${imageUrl}</div>
-                                                            <div class="contact-name">${message.substring(4)}</div>
+                                                                    <div class="contact-avatar">${imageUrl}</div>
+                                                                    <div class="contact-name">${message.substring(4)}</div>
 </div>`;
                     document.getElementById("contacts-sidebar").appendChild(contact.firstChild);
                     //document.getElementById("newMsgs-area").appendChild("<h2>No New Messages!</h2>")
@@ -2561,7 +2606,7 @@
                 socket.send('0401' + chatUsername);
                 connectedUsr = chatUsername;
                 document.getElementById("connectedUserName").innerHTML = chatUsername.toLowerCase()
-                document.getElementById("connectedUserNameLetter").innerHTML = chatUsername.toLowerCase().substring(0,1)
+                document.getElementById("connectedUserNameLetter").innerHTML = chatUsername.toLowerCase().substring(0, 1)
                 try {
                     document.getElementById(chatUsername.toLowerCase() + "NewMsgUserButton").innerHTML = ""
                 } catch {
@@ -2585,7 +2630,7 @@
         }
 
         function startChatFromButton(chatUsername) {
-            //const chatUsername = document.getElementById("chat-username").value; 
+            //const chatUsername = document.getElementById("chat-username").value;
             if (chatUsername) {
                 document.getElementById("chat-messages").innerHTML = "";
                 document.getElementsByClassName("user-image-ou")[0].style.display = "none"
@@ -2800,7 +2845,7 @@
                 let startX, startY;
                 let startMouseX, startMouseY;
                 let startOffsetX, startOffsetY;
-                
+
 
                 // 🖱️ Mouse Down (Start Dragging)
                 image.addEventListener("mousedown", (e) => {
@@ -2877,8 +2922,8 @@
 
 
                     // Calculate movement delta
-const dx = e.clientX - startMouseX;
-const dy = e.clientY - startMouseY;
+                    const dx = e.clientX - startMouseX;
+                    const dy = e.clientY - startMouseY;
 
                     let newOffsetX = startOffsetX + dx;
                     let newOffsetY = startOffsetY + dy;
@@ -2888,7 +2933,7 @@ const dy = e.clientY - startMouseY;
                     let newScale = scale + (e.deltaY < 0 ? scaleAmount : -scaleAmount);
                     newScale = Math.max(Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight), Math.min(2, newScale)); // Clamp zoom between 0.5 and 2
 
-                    
+
 
                     scale = newScale;
 
@@ -2905,7 +2950,7 @@ const dy = e.clientY - startMouseY;
                     offsetX = Math.min(maxOffsetX, Math.max(minOffsetX, newOffsetX));
                     offsetY = Math.min(maxOffsetY, Math.max(minOffsetY, newOffsetY));
 
-                    
+
                     updateTransform(image, offsetX, offsetY, scale);
                 });
 
@@ -2970,7 +3015,6 @@ const dy = e.clientY - startMouseY;
         function updateTransform(image, offsetX, offsetY, scale) {
             image.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
         }
-
     </script>
 </body>
 </html>
