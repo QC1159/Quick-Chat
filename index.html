@@ -1957,10 +1957,16 @@
         <button class="button" onclick="if ($('#passwordSetInput').val() == $('#confirmPasswordSetInput').val()) { socket.send('0103' + $('#passwordSetInput').val()) } else {errorAlert('Passwords do not match.');}">Submit</button>
     </div>
 
+    <!--script src="websocketURL.js"></script--!>
+
     <script>
         const imageMap = new Map();
 
+        let alreadyConnected = false;
+
         let email = "";
+
+        let connectionUUID = crypto.randomUUID();
 
         let doHr = false;
         function getUrlParameters() {
@@ -2071,7 +2077,9 @@
 
         let connectionTries = 0;
 
-        var WSLTURL = "quickchat.serveo.net"
+        //var WSLTURL = "quickchat.serveo.net"
+
+        var WSLTURL = "example.com";
 
         let socketName = 'wss://' + WSLTURL
         //let socketName = 'ws://192.168.1.66:12347'
@@ -2097,20 +2105,102 @@
             socket = new WebSocket(socketName);
 
             socket.onopen = function (event) {
+                socket.send("3001" + connectionUUID);
+                console.log("Connected to server with Connection ID: " + connectionUUID);
                 connectionTries = 0;
-                checkUserStatus()
-                console.log(currentUsername + "currentUsername")
-                if (currentUsername != null && getUrlParameters()["chatwith"]) {
-                    startChatFromButton(getUrlParameters()["chatwith"])
+
+                if (!alreadyConnected) {
+                    setTimeout(() => {
+                        checkUserStatus()
+                        console.log(currentUsername + "currentUsername")
+                        if (currentUsername != null && getUrlParameters()["chatwith"]) {
+                            startChatFromButton(getUrlParameters()["chatwith"])
+                        }
+                        alreadyConnected = true;
+                    }, 1000);
                 }
             }
 
-            socket.onclose = function () {
+            socket.onclose = async function () {
+                //----------------------------------------------------TODO: Set up client ids so that reconection is smoother
                 if (connectionTries == 0) {
-                    window.location.reload();
+                    //window.location.reload();
+                    var tempWSLTURL = WSLTURL;
+                    var WSLTURL100 = "";
+                    console.log('Importing websocketURL.js...');
+                    /*try {
+                        const { WSLTURL2 } = await import(`https://cdn.jsdelivr.net/gh/QC1159/Websocket/websocketURL.js?cacheBust=${Date.now()}`);
+                        WSLTURL100 = WSLTURL2;
+                        console.log('WSLTURL2:', WSLTURL2);
+                    } catch (error) {
+                        console.error('Error during import:', error);
+                    }*/
+					
+					try {
+    // Fetch the script from raw.githubusercontent.com
+    const response = await fetch(`https://raw.githubusercontent.com/QC1159/Websocket/refs/heads/main/websocketURL.js?cacheBust=${Date.now()}`);
+
+    // Check if the response is OK
+    if (!response.ok) {
+        throw new Error(`Failed to fetch script: ${response.statusText}`);
+    }
+
+    // Get the script content as text
+    const scriptContent = await response.text();
+
+        WSLTURL100 = scriptContent;  // Set WSLTURL100 to the value of WSLTURL2 from the script
+        console.log('WSLTURL2:', WSLTURL2);
+        console.log('WSLTURL100:', WSLTURL100);
+
+} catch (error) {
+    console.error('Error during script loading:', error);
+}
+
+                    console.log(WSLTURL100)
+
+                    if (tempWSLTURL != WSLTURL100) {
+                        connectionTries = 0;
+                        WSLTURL = WSLTURL100;
+                        socketName = 'wss://' + WSLTURL100;
+                        console.log("New URL: " + socketName);
+                    }
+                    connectionTries++;
+                    newSocket()
                 } else if (connectionTries > 4) {
                     serverDown()
                 } else {
+                    var tempWSLTURL = WSLTURL;
+                    var WSLTURL100 = "";
+                    console.log('Importing websocketURL.js...');
+                    try {
+    // Fetch the script from raw.githubusercontent.com
+    const response = await fetch(`https://raw.githubusercontent.com/QC1159/Websocket/refs/heads/main/websocketURL.js?cacheBust=${Date.now()}`);
+
+    // Check if the response is OK
+    if (!response.ok) {
+        throw new Error(`Failed to fetch script: ${response.statusText}`);
+    }
+
+    // Get the script content as text
+    const scriptContent = await response.text();
+
+        WSLTURL100 = scriptContent;  // Set WSLTURL100 to the value of WSLTURL2 from the script
+        console.log('WSLTURL2:', WSLTURL2);
+        console.log('WSLTURL100:', WSLTURL100);
+
+} catch (error) {
+    console.error('Error during script loading:', error);
+}
+
+
+                    console.log(WSLTURL100)
+
+                    if (tempWSLTURL != WSLTURL100) {
+                        connectionTries = 0;
+                        WSLTURL = WSLTURL100;
+                        socketName = 'wss://' + WSLTURL100;
+                        console.log("New URL: " + socketName);
+                    }
                     newSocket()
                 }
                 //socket = new WebSocket(socketName);
