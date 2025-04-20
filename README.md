@@ -27,7 +27,7 @@ Quick Chat allows you to send messages instantly through our **web-based interfa
 ## 🛠️ SDK Documentation
 
 Currently available:
-- **[Python SDK](https://github.com/qc1159/quickchat-python)**: Integrate Quick Chat messaging into Python applications.
+- **[Python SDK](https://github.com/qc1159/quickchat-python-sdk)**: Integrate Quick Chat messaging into Python applications.
 
 Coming soon:
 - **Node.js SDK**: Use Quick Chat messaging in your Node.js app.
