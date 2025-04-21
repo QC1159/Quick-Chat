@@ -1957,7 +1957,7 @@
         <button class="button" onclick="if ($('#passwordSetInput').val() == $('#confirmPasswordSetInput').val()) { socket.send('0103' + $('#passwordSetInput').val()) } else {errorAlert('Passwords do not match.');}">Submit</button>
     </div>
 
-    <!--script src="websocketURL.js"></script--!>
+    <!--script src="websocketURL.js"></script-->
 
     <script>
         const imageMap = new Map();
@@ -2077,13 +2077,13 @@
 
         let connectionTries = 0;
 
-        //var WSLTURL = "quickchat.serveo.net"
+        var WSLTURL = "quickchat.serveo.net"
 
-        var WSLTURL = "example.com";
+        //var WSLTURL = "example.com";
 
         let socketName = 'wss://' + WSLTURL
-        //let socketName = 'ws://192.168.1.66:12347'
-        //let socketName = 'ws://localhost:12347'
+        //socketName = 'ws://192.168.1.66:12347'
+        //socketName = 'ws://localhost:12347'
 
         newSocket()
 
@@ -2311,13 +2311,19 @@
                 } else if (message.substring(0, 4) === "2201") {
                     errorAlert("Account not found.")
                 } else if (message.substring(0, 4) === "1301") {
-                    if (!document.hasFocus()) {
+                    /*if (!document.hasFocus()) {
                         showNotification("New Message From " + connectedUsr)
-                    }
+                    }*/
                     if (message.includes("[:time:]")) {
                         addMessageToChat(beforeLast(message.substring(4), "[:time:]"), false, jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('month') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('day') + "/" + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('year') + " " + jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('hour') + ":" + n(jsonToKeyMap(message.substring(4).split("[:time:]").pop(), false).get('minute')))
                     } else {
                         addMessageToChat(message.substring(4), false)
+                    }
+                } else if (message.substring(0, 4) === "1303") {
+                    let index = message.substring(4).indexOf("[:pwd:]"); // Find first occurrence
+                    let tempText = index !== -1 ? message.substring(4).slice(0, index) : message.substring(4);
+                    if (!document.hasFocus()) {
+                        showNotification("New Message From " + tempText)
                     }
                 } else if (message.substring(0, 4) === "1302") {
                     if (message.includes("[:time:]")) {
