@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // Redirect immediately if token is present
+        (function() {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; token=`);
+            if (parts.length === 2) {
+                window.location.replace('./'); // replace() avoids adding to history
+            }
+        })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick Chat</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1f2937, #0f172a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s ease;
+        }
+        .tab {
+            transition: 0.3s ease;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            color: white;
+            border-bottom: 2px solid #60a5fa;
+        }
+        input {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+            height: 48px;
+        }
+        input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        #closeBtn {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        #forgotBtn {
+            position: absolute;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            right: 12px;
+            padding-top: 10px;
+        }
+
+        .error-popup {
+            position: absolute;
+            background: #dc2626; /* red-600 */
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transform: translateY(-50%);
+            top: 50%;
+            left: 102%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .error-popup::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent #dc2626 transparent transparent;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .fade-out {
+            opacity: 0;
+            pointer-events: none; /* prevents interaction after fading */
+            transition: opacity 350ms ease; /* controls the fade duration */
+        }
+    </style>
+</head>
+<body>
+<h1 id="closeBtn" class="text-gray-400">×</h1>
+<div class="glass w-[90%] max-w-md p-8 text-center">
+    <h1 class="text-3xl font-semibold text-white mb-6">Quick Chat</h1>
+
+    <div class="flex justify-center mb-6">
+        <span id="loginTab" class="tab text-gray-400 px-4 py-2 active">Login</span>
+        <span id="signupTab" class="tab text-gray-400 px-4 py-2">Sign Up</span>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-4">
+        <div class="input-container">
+            <input type="text" placeholder="Username" id="loginUsername" class="w-full p-3 rounded-md" onfocus="this.style.border = '2px solid transparent'" />
+        </div>
+        <div class="input-container">
+            <input type="password" placeholder="Password" id="loginPassword" class="w-full p-3 rounded-md" onfocus="this.style.border = '2px solid transparent'" />
+            <button id="forgotBtn" class="text-gray-400"><strong>Forgot?</strong></button>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-md mt-4 transition-all">Login</button>
+        <p class="text-gray-400">By signing in to Quick Chat, you agree to the <strong><a href="./terms.html">Terms</a></strong> and <strong><a href="./privacy.html">Privacy Policy</a></strong>.</p>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="space-y-4 hidden">
+        <div class="input-container">
+            <input type="text" placeholder="Username" id="signupUsername" class="w-full p-3 rounded-md" />
+        </div>
+        <!--div class="input-container">
+            <input type="email" placeholder="Email (optional)" id="signupEmail" class="w-full p-3 rounded-md" />
+        </div-->
+        <div class="input-container">
+            <input type="password" placeholder="Password" id="signupPassword" class="w-full p-3 rounded-md" />
+        </div>
+        <div class="input-container">
+            <input type="password" placeholder="Confirm Password" id="signupPasswordConfirm" class="w-full p-3 rounded-md" />
+        </div>
+        <div class="input-container">
+            <label class="flex items-center text-gray-300 text-sm">
+                <input type="checkbox" id="agreeTerms" class="mr-2 accent-blue-500">
+                I agree to the <a href="./terms.html" class="text-blue-400 underline mx-1">Terms</a> and <a href="./privacy.html" class="text-blue-400 underline ml-1">Privacy Policy</a>.
+            </label>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-md mt-4 transition-all">Sign Up</button>
+    </form>
+</div>
+
+<div id="loading-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-br from-[#1e1f26] to-[#111217] flex flex-col items-center justify-center backdrop-blur-sm">
+
+    <!-- Logo and Program Name -->
+    <div class="absolute top-20 flex items-center space-x-6">
+        <img src="assets/logo.png" alt="Quick Chat Logo" class="h-36 w-36 drop-shadow-lg">
+        <h1 class="text-white text-7xl font-extrabold tracking-tight">Quick Chat</h1>
+    </div>
+
+    <!-- Loader Box -->
+    <div class="mt-48 bg-[#2a2b31] px-10 py-14 rounded-2xl flex flex-col items-center space-y-6 border border-[#1e1f25] shadow-2xl">
+
+        <!-- Spinner -->
+        <div class="relative h-16 w-16">
+            <div class="absolute inset-0 rounded-full border-4 border-gray-700"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-gray-300 border-b-transparent border-l-transparent border-r-transparent animate-spin"></div>
+        </div>
+
+        <!-- Loading Text -->
+        <p class="text-gray-100 text-xl font-semibold tracking-wide">Loading, please wait...</p>
+    </div>
+
+</div>
+
+<script>
+    const loginTab = document.getElementById('loginTab');
+    const signupTab = document.getElementById('signupTab');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const forgotBtn = document.getElementById('forgotBtn');
+
+    loginTab.onclick = () => {
+        loginTab.classList.add('active');
+        signupTab.classList.remove('active');
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+    };
+
+    signupTab.onclick = () => {
+        signupTab.classList.add('active');
+        loginTab.classList.remove('active');
+        signupForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+    };
+
+    forgotBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        alert('To reset your password, please contact Jackson Haney at jackhaney22@gmail.com. Auto reset functionality will be added in a future update.');
+    });
+
+    const ws = new WebSocket("wss://skirtless-ernesto-prescientific.ngrok-free.dev/ws");
+
+    let loginRequested = false;
+
+    ws.onopen = () => {
+        console.log("Connected to server");
+        overlay = document.getElementById('loading-overlay');
+        overlay.classList.add('fade-out');
+        overlay.addEventListener('transitionend', () => {
+            overlay.classList.add('hidden');
+        });
+        if (loginRequested) {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            loginUser(username, password);
+        }
+    };
+
+    ws.onmessage = event => {
+        const data = JSON.parse(event.data);
+        if (data.type === "auth_success") {
+            console.log("Authenticated as", data.username);
+
+            if (data.token) {
+                const expiryDate = new Date();
+                expiryDate.setDate(expiryDate.getDate() + 30);
+                document.cookie = `token=${data.token}; expires=${expiryDate.toUTCString()}; path=/; Secure; SameSite=Lax`;
+
+                console.log("Token saved to cookie:", data.token);
+            }
+
+            window.location.href = "./";
+        } else if (data.type === "password_auth_failed") {
+            showErrorPopup('loginUsername', 'Incorrect username or password');
+            showErrorPopup('loginPassword', 'Incorrect username or password');
+        } else if (data.type === "signup_failed") {
+            showErrorPopup('signupUsername', data.reason);
+        } else if (data.type === "signup_success") {
+            alert('Account created successfully! You can now log in.');
+
+            if (data.token) {
+                const expiryDate = new Date();
+                expiryDate.setDate(expiryDate.getDate() + 30);
+                document.cookie = `token=${data.token}; expires=${expiryDate.toUTCString()}; path=/; Secure; SameSite=Lax`;
+
+                console.log("Token saved to cookie:", data.token);
+            }
+
+            window.location.href = "./";
+        }
+
+        console.log("Received:", data);
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const username = e.target.querySelector('#loginUsername').value;
+        const password = e.target.querySelector('#loginPassword').value;
+
+        loginUser(username, password);
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const agreeTerms = document.getElementById('agreeTerms');
+        if (!agreeTerms.checked) {
+            showErrorPopup('agreeTerms', 'You must agree to the Terms and Privacy Policy');
+            return;
+        }
+
+        const username = e.target.querySelector('#signupUsername').value;
+        const password = e.target.querySelector('#signupPassword').value;
+
+        if (!username) {
+            showErrorPopup('signupUsername', 'Username cannot be empty');
+            return;
+        }
+
+        if (!password) {
+            showErrorPopup('signupPassword', 'Password cannot be empty');
+            return;
+        }
+
+        if (password !== e.target.querySelector('#signupPasswordConfirm').value) {
+            showErrorPopup('signupPasswordConfirm', 'Passwords do not match');
+            return;
+        }
+
+        signupUser(username, password);
+    });
+
+    function loginUser(username, password) {
+        if (!username || !password) {
+            if (!username) {
+                showErrorPopup('loginUsername', 'Username cannot be empty');
+            }
+            if (!password) {
+                showErrorPopup('loginPassword', 'Password cannot be empty');
+            }
+            return;
+        }
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({
+                type: "password_auth",
+                username: username,
+                password: password
+            }));
+        } else {
+            loginRequested = true;
+        }
+    }
+
+    function signupUser(username, password) {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({
+                type: "create_account",
+                username: username,
+                password: password
+            }));
+        } else {
+            showErrorPopup('signupUsername', 'Connection not established. Please try again.');
+        }
+    }
+
+    function showErrorPopup(inputId, message) {
+        // Remove existing popup if any
+        const inputContainer = document.getElementById(inputId).parentElement;
+        const oldPopup = inputContainer.querySelector('.error-popup');
+        if (oldPopup) oldPopup.remove();
+
+        // Create popup
+        const popup = document.createElement('div');
+        popup.className = 'error-popup';
+        popup.textContent = message;
+        inputContainer.appendChild(popup);
+
+        document.getElementById(inputId).style.border = "2px solid red";
+
+        // Animate it in
+        setTimeout(() => {
+            popup.style.opacity = '1';
+        }, 50);
+
+        // Remove it after 3 seconds
+        setTimeout(() => {
+            popup.style.opacity = '0';
+            setTimeout(() => popup.remove(), 300);
+        }, 5000);
+    }
+</script>
+</body>
+</html>

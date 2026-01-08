@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    // Redirect immediately if token is present
+    (function() {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; token=`);
+      if (parts.length !== 2) {
+        window.location.replace('./login.html'); // replace() avoids adding to history
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Chat</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #1e1f26, #111217);
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2f3136;
+      border-radius: 8px;
+    }
+
+    /* Chat message bubble */
+    .message {
+      transition: background-color 0.2s;
+    }
+    .message:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .fade-out {
+      opacity: 0;
+      pointer-events: none; /* prevents interaction after fading */
+      transition: opacity 350ms ease; /* controls the fade duration */
+    }
+
+    iframe {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col">
+
+<!-- Header -->
+<div class="w-full h-12 bg-[#2a2b31] flex items-center border-b border-[#1e1f25]">
+  <!-- Center group -->
+  <div class="flex-1 flex justify-center items-center">
+    <img src="assets/logo.png" class="w-7 mr-2">
+    <h1 class="text-white text-lg font-semibold">Quick Chat</h1>
+  </div>
+
+  <!-- Right item -->
+  <div class="w-9 h-9 rounded-full bg-gray-600 ml-auto mr-2 usr-icon" onclick="document.getElementById('profilePopup').classList.toggle('hidden')" onmouseenter="showTooltip(event, 'Profile')" onmouseleave="hideTooltip()">
+  </div>
+</div>
+
+<div id="profilePopup" class="absolute top-12 right-2 bg-[#2a2b31] border border-[#1e1f25] rounded-md shadow-lg p-4 hidden">
+  <button onclick="deleteCookie('token'); location.reload();">Logout</button>
+</div>
+
+
+<!-- Rest of the layout -->
+<div class="flex flex-1" style="max-height: calc(100vh - 3rem);">
+  <!-- Left sidebars (servers/channels) -->
+  <div class="w-[88px] bg-[#1e1f25] flex flex-col border-r border-[#2a2b31]">
+    <!-- Friends -->
+    <div id="friendsSidebar" class="flex-1 overflow-y-auto flex flex-col items-center overflow-x-hidden">
+      <div class="p-3 text-gray-400 uppercase text-xs tracking-wider">Friends</div>
+      <div class="py-2 cursor-pointer rounded-full flex justify-center w-full" onclick="document.getElementById('find-friend-popup').classList.remove('hidden')">
+        <img class="rounded-full bg-gray-700 w-14 h-14 shrink-0" src="assets/CreateRoomButton.png" onmouseenter="showTooltip(event, 'Add Friend')" onmouseleave="hideTooltip()">
+      </div>
+
+    </div>
+    <hr class="border-[#2a2b31]">
+    <!-- Rooms -->
+    <div
+            class="flex-1 overflow-y-auto flex flex-col items-center overflow-x-hidden"
+            id="rooms-sidebar"
+    >
+      <div class="p-3 text-gray-400 uppercase text-xs tracking-wider">Rooms</div>
+
+      <div
+              class="py-2 cursor-pointer rounded-full flex justify-center w-full"
+              onclick="document.getElementById('new-room-popup').classList.remove('hidden')"
+      >
+        <img
+                class="rounded-full bg-gray-700 w-14 h-14 shrink-0"
+                src="assets/CreateRoomButton.png"
+                onmouseenter="showTooltip(event, 'Create Room')"
+                onmouseleave="hideTooltip()"
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Channel header -->
+    <div class="p-4 border-b border-[#2a2b31] flex justify-center items-center bg-[#1b1c21] text-center">
+      <h2 id="channel-header" class="text-lg font-semibold text-white text-center">-</h2>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages" class="flex-1 overflow-y-auto p-5">
+    </div>
+
+    <!-- Input box -->
+    <div class="p-4 bg-[#1e1f25] border-t border-[#2a2b31] flex items-center space-x-3">
+      <input
+              id="messageInput"
+              type="text"
+              placeholder="Message #general"
+              onkeyup="if(event.key === 'Enter') sendMessage()"
+              class="flex-1 bg-[#2b2d31] text-gray-200 rounded-lg px-4 py-2 outline-none"
+      />
+      <button
+              onclick="sendMessage()"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+      >
+        Send
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Tooltip element -->
+<div id="tooltip" class="fixed px-2 py-1 bg-[#2a2b31] text-gray-200 text-sm rounded-md shadow-lg opacity-0 pointer-events-none transition-opacity duration-150"></div>
+
+<div id="loading-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-br from-[#1e1f26] to-[#111217] flex flex-col items-center justify-center backdrop-blur-sm">
+
+  <!-- Logo and Program Name -->
+  <div class="absolute top-20 flex items-center space-x-6">
+    <img src="assets/logo.png" alt="Quick Chat Logo" class="h-36 w-36 drop-shadow-lg">
+    <h1 class="text-white text-7xl font-extrabold tracking-tight">Quick Chat</h1>
+  </div>
+
+  <!-- Loader Box -->
+  <div class="mt-48 bg-[#2a2b31] px-10 py-14 rounded-2xl flex flex-col items-center space-y-6 border border-[#1e1f25] shadow-2xl">
+
+    <!-- Spinner -->
+    <div class="relative h-16 w-16">
+      <div class="absolute inset-0 rounded-full border-4 border-gray-700"></div>
+      <div class="absolute inset-0 rounded-full border-4 border-gray-300 border-b-transparent border-l-transparent border-r-transparent animate-spin"></div>
+    </div>
+
+    <!-- Loading Text -->
+    <p class="text-gray-100 text-xl font-semibold tracking-wide">Loading, please wait...</p>
+  </div>
+
+</div>
+
+<div id="new-room-popup" class="fixed inset-0 z-[10000] bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-[#2a2b31] p-6 rounded-lg shadow-lg w-96">
+    <h2 class="text-white text-2xl font-semibold mb-4">Create New Room</h2>
+    <input
+      id="roomNameInput"
+      type="text"
+      placeholder="Room Name"
+      class="w-full bg-[#1e1f25] text-gray-200 rounded-lg px-4 py-2 mb-4 outline-none"
+    />
+    <div class="flex justify-end space-x-4">
+      <button
+        onclick="document.getElementById('new-room-popup').classList.add('hidden')"
+        class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
+      >
+        Cancel
+      </button>
+      <button
+        onclick="createRoom()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+      >
+        Create
+      </button>
+    </div>
+    </div>
+</div>
+
+<div id="find-friend-popup" class="fixed inset-0 z-[10000] bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-[#2a2b31] p-6 rounded-lg shadow-lg w-96">
+    <h2 class="text-white text-2xl font-semibold mb-4">Find Friend</h2>
+    <input
+            id="friendNameInput"
+            type="text"
+            placeholder="Friend Username"
+            class="w-full bg-[#1e1f25] text-gray-200 rounded-lg px-4 py-2 mb-4 outline-none"
+    />
+    <div class="flex justify-end space-x-4">
+      <button
+              onclick="document.getElementById('find-friend-popup').classList.add('hidden')"
+              class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
+      >
+        Cancel
+      </button>
+      <button
+              onclick="findFriend()"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+      >
+        Find
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function createRoom() {
+    const roomName = document.getElementById('roomNameInput').value.trim();
+    if (roomName) {
+      ws.send(JSON.stringify({
+        type: "create_room",
+        room_name: roomName
+      }));
+      document.getElementById('roomNameInput').value = '';
+      document.getElementById('new-room-popup').classList.add('hidden');
+    }
+  }
+
+  function findFriend() {
+    const friendName = document.getElementById('friendNameInput').value.trim();
+    if (friendName) {
+      //openChat(friendName);
+      //document.getElementById('friendNameInput').value = '';
+      //document.getElementById('find-friend-popup').classList.add('hidden');
+
+        ws.send(JSON.stringify({
+          type: "check_if_user_exists",
+          username: friendName
+        })
+      );
+    }
+  }
+
+  let username = null;
+  let privateChats = [];
+  let rooms = [];
+  let roomNames = [];
+  let loadedRooms = [];
+  let connectedChat = null;
+  let room = false;
+
+  const chatContainer = document.getElementById('chat-container');
+
+  function openChat(targetUser) {
+    room = false
+
+    connectedChat = targetUser;
+
+    document.querySelectorAll('#chat-messages > div').forEach(div => {
+      div.classList.add('hidden');
+    });
+
+    // Show the selected chat message div
+    const chatDiv = document.getElementById('chat-messages-private-' + targetUser);
+    if (chatDiv) {
+      chatDiv.classList.remove('hidden');
+    }
+
+    const channelHeader = document.getElementById('channel-header');
+    channelHeader.textContent = targetUser;
+
+    const messageInput = document.getElementById('messageInput');
+    messageInput.placeholder = `Message ${targetUser}`;
+  }
+
+
+  const imageCacheBust = Date.now();
+
+  // Get the value of a cookie by name
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
+    }
+    return null;
+  }
+
+  // Delete a cookie by setting its expiration to the past
+  function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
+
+
+  const ws = new WebSocket("wss://skirtless-ernesto-prescientific.ngrok-free.dev/ws");
+
+  ws.onopen = () => {
+    ws.send(JSON.stringify({
+      type: "auth",
+      token: getCookie('token')
+    }));
+  };
+
+  ws.onmessage = event => {
+    const data = JSON.parse(event.data);
+    if (data.type === "auth_success") {
+      console.log("Signed in successfully.");
+      username = data.username;
+      ws.send(JSON.stringify({
+        type: "get_private_messages"
+      }));
+      ws.send(JSON.stringify({
+        type: "get_rooms"
+      }));
+      overlay = document.getElementById('loading-overlay');
+      overlay.classList.add('fade-out');
+      overlay.addEventListener('transitionend', () => {
+        overlay.classList.add('hidden');
+      });
+      let elements = document.getElementsByClassName("usr-icon");
+
+      for (let i = 0; i < elements.length; i++) {
+        let iframe = document.createElement("iframe");
+        iframe.src = `avatar.html?u=${username}&v=${imageCacheBust}`;
+        iframe.classList.add("w-9", "h-9", "rounded-full", "border-0");
+        iframe.setAttribute("sandbox", "allow-scripts");
+
+        elements[i].appendChild(iframe);
+      }
+    } else if (data.type === "auth_failed") {
+      deleteCookie('token');
+      window.location.replace('./login.html');
+    } else if (data.type === "private_messages") {
+      data.messages.forEach(msg => {
+        addToPrivateChats(msg[1]);
+        addToPrivateChats(msg[0]);
+        addMessage(msg[0], msg[1], msg[2], msg[3]);
+      });
+    } else if (data.type === "private_message") {
+      addToPrivateChats(data.from);
+      addMessage(data.from, data.to, data.message, data.time);
+    } else if (data.type === "sent_private_message") {
+      addToPrivateChats(data.to);
+      addMessage(username, data.to, data.message, data.time);
+    } else if (data.type === "rooms") {
+      data.rooms.forEach(msg => {
+        addToRoomChats(msg);
+      });
+    } else if (data.type === "room_message") {
+      if (!loadedRooms.includes(data.room_id)) return
+      const chat = document.getElementById(`chat-messages-room-${data.room_id}`);
+      const div = document.createElement('div');
+
+      const time = formatDateTime(data.time);
+
+      div.className = 'message flex items-start space-x-3';
+      div.innerHTML = `
+          <div class="w-10 h-10 rounded-full bg-gray-600">
+              <iframe
+                  src="avatar.html?u=${data.from}&v=${imageCacheBust}"
+                  class="w-10 h-10 rounded-full border-0"
+                  sandbox="allow-scripts">
+              </iframe>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="font-semibold text-white">${data.from}</span>
+              <span class="text-xs text-gray-400">${time}</span>
+            </div>
+            <p class="text-gray-300">${data.message}</p>
+          </div>
+         `;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    } else if (data.type === "room_messages") {
+      data.messages.forEach(msg => {
+        const chat = document.getElementById(`chat-messages-room-${data.room_id}`);
+        const div = document.createElement('div');
+
+        const time = formatDateTime(msg[3]);
+
+        div.className = 'message flex items-start space-x-3';
+        div.innerHTML = `
+              <div class="w-10 h-10 rounded-full bg-gray-600">
+                  <iframe
+                      src="avatar.html?u=${msg[0]}&v=${imageCacheBust}"
+                      class="w-10 h-10 rounded-full border-0"
+                      sandbox="allow-scripts">
+                  </iframe>
+              </div>
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="font-semibold text-white">${msg[0]}</span>
+                  <span class="text-xs text-gray-400">${time}</span>
+                </div>
+                <p class="text-gray-300">${msg[2]}</p>
+              </div>
+            `;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+      }
+      );
+    } else if (data.type === "private_room") {
+      // Switch to a different chat if currently connected to the deleted room
+      if (connectedChat === data.room_id) {
+        connectedChat = null;
+        document.getElementById('channel-header').textContent = '-';
+        document.getElementById('messageInput').placeholder = 'Select a chat to start messaging';
+      }
+
+      // Removes the room from the room list and chat area
+      removeFromRoomChats(data.room_id);
+    } else if (data.type === "room_created") {
+      addToRoomChats([data.room_id, data.room_name]);
+    } else if (data.type === "user_exists") {
+      document.getElementById('friendNameInput').classList.remove('border', 'border-red-500');
+      addToPrivateChats(data.username);
+      openChat(data.username);
+      document.getElementById('friendNameInput').value = '';
+      document.getElementById('find-friend-popup').classList.add('hidden');
+    } else if (data.type === "user_not_found") {
+      document.getElementById('friendNameInput').classList.add('border', 'border-red-500');
+    }
+
+    console.log("Received:", data);
+  }
+
+  function getRoom(room_id) {
+    room = true
+
+    room_name = ""
+    roomNames.forEach(room => {
+      if (room[0] === room_id) {
+        room_name = room[1];
+      }
+    });
+
+    if (!loadedRooms.includes(room_id)) {
+      loadedRooms.push(room_id);
+      ws.send(JSON.stringify({
+        type: "get_room_messages",
+        room_id: room_id
+      }));
+    }
+
+    connectedChat = room_id;
+
+    document.querySelectorAll('#chat-messages > div').forEach(div => {
+      div.classList.add('hidden');
+    });
+
+    // Show the selected chat message div
+    const chatDiv = document.getElementById('chat-messages-room-' + room_id);
+    if (chatDiv) {
+      chatDiv.classList.remove('hidden');
+    }
+
+    const channelHeader = document.getElementById('channel-header');
+    channelHeader.textContent = room_name;
+
+    const messageInput = document.getElementById('messageInput');
+    messageInput.placeholder = `Send Message to ${room_name}`;
+  }
+
+  function addToPrivateChats(name) {
+    if (!privateChats.includes(name) && name !== username) {
+      privateChats.push(name);
+
+      const newDiv = document.createElement('div');
+      newDiv.id = 'chat-messages-private-' + name;
+      newDiv.classList.add('w-full', 'h-full', 'overflow-y-auto', 'space-y-4', 'hidden');
+
+      document.getElementById("chat-messages").appendChild(newDiv)
+      document.getElementById('friendsSidebar').innerHTML += `
+          <div class="px-4 py-2 text-gray-300 cursor-pointer rounded-md relative" onclick="openChat('${name}')">
+          <div class="w-14 h-14 rounded-full bg-gray-600" onmouseenter="showTooltip(event, '${name}')" onmouseleave="hideTooltip()">
+            <iframe
+                src="avatar.html?u=${name}&v=${imageCacheBust}"
+                class="w-14 h-14 rounded-full border-0"
+                sandbox="allow-scripts">
+            </iframe>
+          </div>
+          </div>
+        `;
+
+      openChat(name)
+    }
+  }
+
+  function removeFromRoomChats(room_id) {
+    const index = rooms.indexOf(room_id);
+    console.log(rooms);
+    if (index > -1) {
+      rooms.splice(index, 1);
+      const chatDiv = document.getElementById('chat-messages-room-' + room_id);
+      if (chatDiv) {
+        chatDiv.remove();
+      }
+      const roomDiv = document.querySelector(`#rooms-sidebar div[onclick="getRoom(${room_id})"]`);
+      if (roomDiv) {
+        roomDiv.remove();
+      }
+    }
+  }
+
+  function addToRoomChats(room) {
+    let room_id = room[0];
+    let room_name = room[1];
+    if (!rooms.includes(room_id)) {
+      rooms.push(room_id);
+      roomNames.push([room_id, room_name]);
+      const newDiv = document.createElement('div');
+      newDiv.id = 'chat-messages-room-' + room_id;
+      newDiv.classList.add('w-full', 'h-full', 'overflow-y-auto', 'space-y-4', 'hidden');
+
+      document.getElementById("chat-messages").appendChild(newDiv);
+      document.getElementById("rooms-sidebar").innerHTML += `
+          <div class="px-4 py-2 text-gray-300 cursor-pointer rounded-md relative" onclick="getRoom(${room_id})">
+            <iframe
+                src="avatar.html?r=${room_id}&rn=${room_name}&v=${imageCacheBust}"
+                class="w-14 h-14 rounded-md border-0"
+                sandbox="allow-scripts">
+            </iframe>
+          </div>
+        `;
+    }
+  }
+
+  const tooltip = document.getElementById('tooltip');
+
+  // Keep one tooltip and a per-target cleanup handle
+  let currentCleanup = null;
+
+  function showTooltip(e, text) {
+    const target = e.target;
+
+    // Clear any previous tooltip bindings
+    if (currentCleanup) currentCleanup();
+
+    tooltip.textContent = text;
+    tooltip.style.opacity = '1';
+
+    const rect = target.getBoundingClientRect();
+    tooltip.style.left = `${rect.right + 8}px`;
+    tooltip.style.top = `${rect.top + rect.height / 2 - tooltip.offsetHeight / 2}px`;
+
+    // AbortController ties all listeners together for easy cleanup
+    const ac = new AbortController();
+    const { signal } = ac;
+
+    // Normal hide when leaving the element
+    target.addEventListener('mouseleave', hideTooltip, { signal });
+
+    // Bonus: if pointer is canceled (e.g., due to DOM changes), hide
+    target.addEventListener('pointercancel', hideTooltip, { signal });
+
+    // If page scrolls or resizes, optionally reposition or hide
+    window.addEventListener('scroll', hideTooltip, { signal, passive: true });
+    window.addEventListener('resize', hideTooltip, { signal, passive: true });
+
+    // Observe the entire document for removals; also check isConnected
+    const observer = new MutationObserver((mutations) => {
+      // Fast path: target disconnected
+      if (!target.isConnected) {
+        hideTooltip();
+        cleanup();
+        return;
+      }
+      // Removal path: target explicitly in removedNodes
+      for (const m of mutations) {
+        for (const removed of m.removedNodes) {
+          if (removed === target || (removed.nodeType === 1 && removed.contains(target))) {
+            hideTooltip();
+            cleanup();
+            return;
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Optional: periodic guard for edge cases (e.g., shadow DOM moves)
+    let rafId = null;
+    const tick = () => {
+      if (!target.isConnected) {
+        hideTooltip();
+        cleanup();
+        return;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
+    // One-shot cleanup to avoid leaks
+    function cleanup() {
+      ac.abort();
+      observer.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
+      currentCleanup = null;
+    }
+
+    currentCleanup = cleanup;
+  }
+
+  function hideTooltip() {
+    tooltip.style.opacity = '0';
+  }
+
+
+
+  function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    if (room) {
+      ws.send(JSON.stringify({
+          type: "send_room_message",
+          room_id: connectedChat,
+          message: text
+      }))
+    } else {
+      ws.send(JSON.stringify({
+        type: "send_private_message",
+        to: connectedChat,
+        message: text
+      }))
+    }
+
+    /*const chat = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = 'message flex items-start space-x-3';
+    div.innerHTML = `
+        <div class="w-10 h-10 rounded-full bg-gray-600">
+            <iframe
+                src="avatar.html?u=${username}&v=${imageCacheBust}"
+                class="w-10 h-10 rounded-full border-0"
+                sandbox="allow-scripts">
+            </iframe>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-semibold text-white">You</span>
+            <span class="text-xs text-gray-400">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+          </div>
+          <p class="text-gray-300">${text}</p>
+        </div>
+      `;
+    chat.appendChild(div);*/
+    input.value = '';
+    /*chat.scrollTop = chat.scrollHeight;*/
+  }
+
+  function addMessage(sender, receiver, text, time) {
+    const privateChatId = sender === username ? receiver : sender;
+
+    const chat = document.getElementById(`chat-messages-private-${privateChatId}`);
+    const div = document.createElement('div');
+
+    time = formatDateTime(time);
+
+    div.className = 'message flex items-start space-x-3';
+    div.innerHTML = `
+        <div class="w-10 h-10 rounded-full bg-gray-600">
+            <iframe
+                src="avatar.html?u=${sender}&v=${imageCacheBust}"
+                class="w-10 h-10 rounded-full border-0"
+                sandbox="allow-scripts">
+            </iframe>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-semibold text-white">${sender}</span>
+            <span class="text-xs text-gray-400">${time}</span>
+          </div>
+          <p class="text-gray-300">${text}</p>
+        </div>
+      `;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function formatDateTime(isoString) {
+    const inputDate = new Date(isoString);
+    const now = new Date();
+
+    const isToday =
+            inputDate.getFullYear() === now.getFullYear() &&
+            inputDate.getMonth() === now.getMonth() &&
+            inputDate.getDate() === now.getDate();
+
+    const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const optionsDate = { year: 'numeric', month: 'short', day: 'numeric' };
+
+    return isToday
+            ? inputDate.toLocaleTimeString(undefined, optionsTime)
+            : `${inputDate.toLocaleDateString(undefined, optionsDate)} ${inputDate.toLocaleTimeString(undefined, optionsTime)}`;
+  }
+</script>
+
+</body>
+</html>
