@@ -19,10 +19,100 @@
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
   <link rel="manifest" href="./site.webmanifest">
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
+    :root {
+      --bg-main: #111217;
+      --bg-secondary: #1e1f25;
+      --bg-tertiary: #2a2b31;
+
+      --border-main: #1e1f25;
+      --border-soft: #2a2b31;
+
+      --text-main: #e0e0e0;
+      --text-muted: #9ca3af;
+
+      --accent: #2563eb;
+    }
+
+    /* Light theme */
+    [data-theme="light"] {
+      --bg-main: #f3f4f6;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #e5e7eb;
+
+      --border-main: #d1d5db;
+      --border-soft: #e5e7eb;
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+
+      --accent: #2563eb;
+    }
+
+    /* Midnight theme */
+    [data-theme="midnight"] {
+      --bg-main: #05060a;
+      --bg-secondary: #0b0d14;
+      --bg-tertiary: #141726;
+
+      --border-main: #0f1220;
+      --border-soft: #1c1f36;
+
+      --text-main: #e5e7eb;
+      --text-muted: #94a3b8;
+
+      --accent: #6366f1;
+    }
+
+    /* Solarized theme */
+    [data-theme="solarized"] {
+      --bg-main: #fdf6e3;
+      --bg-secondary: #eee8d5;
+      --bg-tertiary: #f5f1dc;
+
+      --border-main: #eee8d5;
+      --border-soft: #f5f1dc;
+
+      --text-main: #657b83;
+      --text-muted: #93a1a1;
+
+      --accent: #b58900;
+    }
+
+    /* Forest theme */
+    [data-theme="forest"] {
+      --bg-main: #0b1f0b;
+      --bg-secondary: #123212;
+      --bg-tertiary: #1b3a1b;
+
+      --border-main: #123212;
+      --border-soft: #1b3a1b;
+
+      --text-main: #cdeac0;
+      --text-muted: #8db68c;
+
+      --accent: #22c55e;
+    }
+
+    /* Neon theme */
+    [data-theme="neon"] {
+      --bg-main: #0f0f1a;         /* Very dark background to make neon pop */
+      --bg-secondary: #1a1a2e;
+      --bg-tertiary: #22223b;
+
+      --border-main: #ff00ff;     /* Neon magenta border */
+      --border-soft: #00ffff;     /* Neon cyan softer borders */
+
+      --text-main: #39ff14;       /* Bright neon green */
+      --text-muted: #ff4dff;      /* Neon pink for secondary text */
+
+      --accent: #00ffff;          /* Neon cyan for buttons, highlights */
+    }
+
     body {
-      background: radial-gradient(circle at top left, #1e1f26, #111217);
-      color: #e0e0e0;
+      background: radial-gradient(circle at top left, var(--bg-tertiary), var(--bg-main));
+      color: var(--text-main);
       font-family: 'Inter', sans-serif;
     }
 
@@ -52,163 +142,316 @@
     iframe {
       pointer-events: none;
     }
+
+    #cropContainer {
+      width: 220px;
+      height: 220px;
+      margin: auto;
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #111;
+      cursor: grab;
+    }
+
+    #cropContainer:active {
+      cursor: grabbing;
+    }
+
+    #previewImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+
+    .crop-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.8);
+      pointer-events: none;
+    }
+
+    .room-crop-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 10%;
+      border: 3px solid rgba(255,255,255,0.8);
+      pointer-events: none;
+    }
+
+    #roomCropContainer {
+      width: 220px;
+      height: 220px;
+      margin: auto;
+      position: relative;
+      border-radius: 10%;
+      overflow: hidden;
+      background: #111;
+      cursor: grab;
+    }
+
+    #roomCropContainer:active {
+      cursor: grabbing;
+    }
+
+    #roomPreviewImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      max-width: none;
+      max-height: none;
+    }
   </style>
 </head>
 <body class="h-screen flex flex-col">
-
 <!-- Header -->
-<div class="w-full h-12 bg-[#2a2b31] flex items-center border-b border-[#1e1f25]">
+<div class="w-full h-12 flex items-center border-b"
+     style="background: var(--bg-tertiary); border-color: var(--border-main);">
   <!-- Center group -->
   <div class="flex-1 flex justify-center items-center">
     <img src="assets/logo.png" class="w-7 mr-2">
-    <h1 class="text-white text-lg font-semibold">Quick Chat</h1>
+    <h1 class="text-lg font-semibold" style="color: var(--text-main);">Quick Chat</h1>
   </div>
 
   <!-- Right item -->
-  <div class="w-9 h-9 rounded-full bg-gray-600 ml-auto mr-2 usr-icon" onclick="document.getElementById('profilePopup').classList.toggle('hidden')" onmouseenter="showTooltip(event, 'Profile')" onmouseleave="hideTooltip()">
+  <div class="w-9 h-9 rounded-full ml-auto mr-2 usr-icon"
+       style="background: var(--bg-tertiary);"
+       onclick="document.getElementById('profilePopup').classList.toggle('hidden')"
+       onmouseenter="showTooltip(event, 'Profile')"
+       onmouseleave="hideTooltip()">
   </div>
 </div>
 
-<div id="profilePopup" class="absolute top-12 right-2 bg-[#2a2b31] border border-[#1e1f25] rounded-md shadow-lg p-4 hidden">
-  <button onclick="deleteCookie('token'); location.reload();">Logout</button>
+<div id="profilePopup"
+     class="absolute top-12 right-2 rounded-lg shadow-xl p-3 hidden flex flex-col space-y-2 border min-w-[140px]"
+     style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+  <button
+          onclick="openSettings()"
+          class="w-full text-left px-3 py-2 rounded-md hover:bg-[rgba(255,255,255,0.05)] transition-colors"
+          style="color: var(--text-main); font-weight: 500;">
+    Settings
+  </button>
+
+  <button
+          onclick="deleteCookie('token'); location.reload();"
+          class="w-full text-left px-3 py-2 rounded-md hover:bg-[rgba(255,0,0,0.1)] transition-colors"
+          style="color: var(--text-main); font-weight: 500;">
+    Logout
+  </button>
 </div>
 
 
 <!-- Rest of the layout -->
 <div class="flex flex-1" style="max-height: calc(100vh - 3rem);">
-  <!-- Left sidebars (servers/channels) -->
-  <div class="w-[88px] bg-[#1e1f25] flex flex-col border-r border-[#2a2b31]">
+
+  <!-- Left sidebars -->
+  <div class="w-[88px] flex flex-col border-r"
+       style="background: var(--bg-secondary); border-color: var(--border-soft);">
+
     <!-- Friends -->
     <div id="friendsSidebar" class="flex-1 overflow-y-auto flex flex-col items-center overflow-x-hidden">
-      <div class="p-3 text-gray-400 uppercase text-xs tracking-wider">Friends</div>
-      <div class="py-2 cursor-pointer rounded-full flex justify-center w-full" onclick="document.getElementById('find-friend-popup').classList.remove('hidden')">
-        <img class="rounded-full bg-gray-700 w-14 h-14 shrink-0" src="assets/CreateRoomButton.png" onmouseenter="showTooltip(event, 'Add Friend')" onmouseleave="hideTooltip()">
+      <div class="p-3 uppercase text-xs tracking-wider"
+           style="color: var(--text-muted);">Friends</div>
+
+      <div class="py-2 cursor-pointer rounded-full flex justify-center w-full"
+           onclick="document.getElementById('find-friend-popup').classList.remove('hidden')">
+        <img class="rounded-full w-14 h-14 shrink-0"
+             style="background: var(--bg-tertiary);"
+             src="assets/CreateRoomButton.png"
+             onmouseenter="showTooltip(event, 'Add Friend')"
+             onmouseleave="hideTooltip()">
       </div>
-
     </div>
-    <hr class="border-[#2a2b31]">
-    <!-- Rooms -->
-    <div
-            class="flex-1 overflow-y-auto flex flex-col items-center overflow-x-hidden"
-            id="rooms-sidebar"
-    >
-      <div class="p-3 text-gray-400 uppercase text-xs tracking-wider">Rooms</div>
 
-      <div
-              class="py-2 cursor-pointer rounded-full flex justify-center w-full"
-              onclick="document.getElementById('new-room-popup').classList.remove('hidden')"
-      >
-        <img
-                class="rounded-full bg-gray-700 w-14 h-14 shrink-0"
-                src="assets/CreateRoomButton.png"
-                onmouseenter="showTooltip(event, 'Create Room')"
-                onmouseleave="hideTooltip()"
-        >
+    <hr style="border-color: var(--border-soft);">
+
+    <!-- Rooms -->
+    <div class="flex-1 overflow-y-auto flex flex-col items-center overflow-x-hidden" id="rooms-sidebar">
+      <div class="p-3 uppercase text-xs tracking-wider"
+           style="color: var(--text-muted);">Rooms</div>
+
+      <div class="py-2 cursor-pointer rounded-full flex justify-center w-full"
+           onclick="document.getElementById('new-room-popup').classList.remove('hidden')">
+        <img class="rounded-full w-14 h-14 shrink-0"
+             style="background: var(--bg-tertiary);"
+             src="assets/CreateRoomButton.png"
+             onmouseenter="showTooltip(event, 'Create Room')"
+             onmouseleave="hideTooltip()">
       </div>
     </div>
   </div>
 
   <!-- Chat area -->
   <div class="flex-1 flex flex-col">
+
     <!-- Channel header -->
-    <div class="p-4 border-b border-[#2a2b31] flex justify-center items-center bg-[#1b1c21] text-center">
-      <h2 id="channel-header" class="text-lg font-semibold text-white text-center">-</h2>
+    <div class="p-4 border-b flex justify-center items-center text-center"
+         style="background: var(--bg-secondary); border-color: var(--border-soft);">
+      <h2 id="channel-header"
+          class="text-lg font-semibold text-center"
+          style="color: var(--text-main);">-</h2>
     </div>
 
     <!-- Messages -->
-    <div id="chat-messages" class="flex-1 overflow-y-auto p-5">
-    </div>
+    <div id="chat-messages" class="flex-1 overflow-y-auto p-5"></div>
 
     <!-- Input box -->
-    <div class="p-4 bg-[#1e1f25] border-t border-[#2a2b31] flex items-center space-x-3">
+    <div class="p-4 border-t flex items-center space-x-3"
+         style="background: var(--bg-secondary); border-color: var(--border-soft);">
+
       <input
               id="messageInput"
               type="text"
               placeholder="Message #general"
               onkeyup="if(event.key === 'Enter') sendMessage()"
-              class="flex-1 bg-[#2b2d31] text-gray-200 rounded-lg px-4 py-2 outline-none"
+              class="flex-1 rounded-lg px-4 py-2 outline-none"
+              style="background: var(--bg-tertiary); color: var(--text-main);"
       />
+
       <button
               onclick="sendMessage()"
-              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-      >
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--accent); color: white;">
         Send
       </button>
     </div>
   </div>
 </div>
 
-<!-- Tooltip element -->
-<div id="tooltip" class="fixed px-2 py-1 bg-[#2a2b31] text-gray-200 text-sm rounded-md shadow-lg opacity-0 pointer-events-none transition-opacity duration-150"></div>
+<!-- Tooltip -->
+<div id="tooltip"
+     class="fixed px-2 py-1 text-sm rounded-md shadow-lg opacity-0 pointer-events-none transition-opacity duration-150"
+     style="background: var(--bg-tertiary); color: var(--text-main);">
+</div>
 
-<div id="loading-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-br from-[#1e1f26] to-[#111217] flex flex-col items-center justify-center backdrop-blur-sm">
+<div id="loading-overlay"
+     class="fixed inset-0 z-[9999] flex flex-col items-center justify-center backdrop-blur-sm"
+     style="background: radial-gradient(circle at top left, var(--bg-tertiary), var(--bg-main));">
 
   <!-- Logo and Program Name -->
   <div class="absolute top-20 flex items-center space-x-6">
     <img src="assets/logo.png" alt="Quick Chat Logo" class="h-36 w-36 drop-shadow-lg">
-    <h1 class="text-white text-7xl font-extrabold tracking-tight">Quick Chat</h1>
+    <h1 class="text-7xl font-extrabold tracking-tight" style="color: var(--text-main);">
+      Quick Chat
+    </h1>
   </div>
 
   <!-- Loader Box -->
-  <div class="mt-48 bg-[#2a2b31] px-10 py-14 rounded-2xl flex flex-col items-center space-y-6 border border-[#1e1f25] shadow-2xl">
+  <div class="mt-48 px-10 py-14 rounded-2xl flex flex-col items-center space-y-6 border shadow-2xl"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
 
     <!-- Spinner -->
     <div class="relative h-16 w-16">
-      <div class="absolute inset-0 rounded-full border-4 border-gray-700"></div>
-      <div class="absolute inset-0 rounded-full border-4 border-gray-300 border-b-transparent border-l-transparent border-r-transparent animate-spin"></div>
+      <div class="absolute inset-0 rounded-full border-4"
+           style="border-color: var(--border-soft);"></div>
+      <div class="absolute inset-0 rounded-full border-4 border-b-transparent border-l-transparent border-r-transparent animate-spin"
+           style="border-top-color: var(--text-main);"></div>
     </div>
 
     <!-- Loading Text -->
-    <p class="text-gray-100 text-xl font-semibold tracking-wide">Loading, please wait...</p>
+    <p class="text-xl font-semibold tracking-wide" style="color: var(--text-main);">
+      Loading, please wait...
+    </p>
   </div>
-
 </div>
 
-<div id="new-room-popup" class="fixed inset-0 z-[10000] bg-black bg-opacity-50 flex items-center justify-center hidden">
-  <div class="bg-[#2a2b31] p-6 rounded-lg shadow-lg w-96">
-    <h2 class="text-white text-2xl font-semibold mb-4">Create New Room</h2>
+<!-- New Room Popup -->
+<div id="new-room-popup"
+     class="fixed inset-0 z-[10000] flex items-center justify-center hidden"
+     style="background: rgba(0,0,0,0.5);">
+
+  <div class="p-6 rounded-lg shadow-lg w-96"
+       style="background: var(--bg-tertiary);">
+
+    <h2 class="text-2xl font-semibold mb-4" style="color: var(--text-main);">
+      Create New Room
+    </h2>
+
     <input
-      id="roomNameInput"
-      type="text"
-      placeholder="Room Name"
-      class="w-full bg-[#1e1f25] text-gray-200 rounded-lg px-4 py-2 mb-4 outline-none"
+            id="roomNameInput"
+            type="text"
+            placeholder="Room Name"
+            class="w-full rounded-lg px-4 py-2 mb-4 outline-none"
+            style="background: var(--bg-secondary); color: var(--text-main);"
     />
+
+    <!-- Room Image (optional) -->
+    <div class="space-y-3 mb-4 text-center">
+
+      <p class="text-sm" style="color: var(--text-muted);">
+        Room Image (optional)
+      </p>
+
+      <div id="roomCropContainer">
+        <img id="roomPreviewImage" draggable="false" />
+        <div class="room-crop-border"></div>
+      </div>
+
+      <input type="file" accept="image/*" id="roomImageInput">
+
+      <input type="range" id="roomZoomSlider" min="1" max="3" step="0.01" value="1">
+
+    </div>
+
+
     <div class="flex justify-end space-x-4">
       <button
-        onclick="document.getElementById('new-room-popup').classList.add('hidden')"
-        class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
+              onclick="document.getElementById('new-room-popup').classList.add('hidden')"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);"
       >
         Cancel
       </button>
+
       <button
-        onclick="createRoom()"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+              onclick="createRoom()"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--accent); color: white;"
       >
         Create
       </button>
     </div>
-    </div>
+  </div>
 </div>
 
-<div id="find-friend-popup" class="fixed inset-0 z-[10000] bg-black bg-opacity-50 flex items-center justify-center hidden">
-  <div class="bg-[#2a2b31] p-6 rounded-lg shadow-lg w-96">
-    <h2 class="text-white text-2xl font-semibold mb-4">Find Friend</h2>
+<!-- Find Friend Popup -->
+<div id="find-friend-popup"
+     class="fixed inset-0 z-[10000] flex items-center justify-center hidden"
+     style="background: rgba(0,0,0,0.5);">
+
+  <div class="p-6 rounded-lg shadow-lg w-96"
+       style="background: var(--bg-tertiary);">
+
+    <h2 class="text-2xl font-semibold mb-4" style="color: var(--text-main);">
+      Find Friend
+    </h2>
+
     <input
             id="friendNameInput"
             type="text"
             placeholder="Friend Username"
-            class="w-full bg-[#1e1f25] text-gray-200 rounded-lg px-4 py-2 mb-4 outline-none"
+            class="w-full rounded-lg px-4 py-2 mb-4 outline-none"
+            style="background: var(--bg-secondary); color: var(--text-main);"
     />
+
     <div class="flex justify-end space-x-4">
       <button
               onclick="document.getElementById('find-friend-popup').classList.add('hidden')"
-              class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);"
       >
         Cancel
       </button>
+
       <button
               onclick="findFriend()"
-              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--accent); color: white;"
       >
         Find
       </button>
@@ -216,18 +459,554 @@
   </div>
 </div>
 
+<!-- Settings Popup -->
+<div id="SettingsPopup"
+     class="fixed inset-0 z-[10000] backdrop-blur-sm flex items-center justify-center hidden"
+     style="background: rgba(0,0,0,0.6);">
+
+  <div class="w-[520px] rounded-2xl shadow-2xl border overflow-hidden"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-4 border-b"
+         style="border-color: var(--border-main);">
+      <h2 class="text-xl font-semibold" style="color: var(--text-main);">Settings</h2>
+      <button
+              onclick="document.getElementById('SettingsPopup').classList.add('hidden')"
+              style="color: var(--text-muted);"
+      >✕</button>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 space-y-6">
+
+      <!-- Account Actions -->
+      <div class="space-y-4">
+
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-semibold" style="color: var(--text-main);">Email</h3>
+            <p class="text-sm" style="color: var(--text-muted);">
+              Change the email linked to your account
+            </p>
+          </div>
+          <button
+                  onclick="openEmailPopup()"
+                  class="px-4 py-2 rounded-lg border"
+                  style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
+          >
+            Change
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-semibold" style="color: var(--text-main);">Password</h3>
+            <p class="text-sm" style="color: var(--text-muted);">
+              Update your account password
+            </p>
+          </div>
+          <button
+                  onclick="openPasswordPopup()"
+                  class="px-4 py-2 rounded-lg border"
+                  style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
+          >
+            Change
+          </button>
+        </div>
+      </div>
+
+      <!-- Profile Image -->
+      <div>
+        <h3 class="font-semibold mb-2" style="color: var(--text-main);">Profile Image</h3>
+        <div class="flex items-center space-x-4">
+          <div class="w-9 h-9 rounded-full usr-icon"
+               style="background: var(--bg-tertiary);"></div>
+          <button
+                  onclick="openUploadProfilePopup()"
+                  class="px-4 py-2 rounded-lg border"
+                  style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
+          >
+            Upload New Image
+          </button>
+        </div>
+      </div>
+
+      <!-- Theme -->
+      <div>
+        <h3 class="font-semibold mb-2" style="color: var(--text-main);">Theme</h3>
+        <select
+                id="themeSelect"
+                onchange="enableSettingsSave()"
+                class="w-full rounded-lg px-4 py-2 outline-none border"
+                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
+        >
+          <option value="dark">Dark (Default)</option>
+          <option value="light">Light</option>
+          <option value="midnight">Midnight</option>
+          <option value="solarized">Solarized</option>
+          <option value="forest">Forest</option>
+          <option value="neon">Neon</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="px-6 py-4 border-t flex justify-end space-x-3"
+         style="border-color: var(--border-main);">
+      <button
+              onclick="document.getElementById('SettingsPopup').classList.add('hidden')"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);"
+      >
+        Close
+      </button>
+      <button
+              id="saveSettingsButton"
+              class="px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
+              style="background: var(--accent); color: white;"
+              onclick="saveSettings(); document.getElementById('SettingsPopup').classList.add('hidden')"
+              disabled
+      >
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Change Email Popup -->
+<div id="ChangeEmailPopup"
+     class="fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center hidden"
+     style="background: rgba(0,0,0,0.6);">
+
+  <div class="w-[420px] rounded-xl shadow-2xl border"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+    <div class="px-6 py-4 border-b" style="border-color: var(--border-main);">
+      <h2 class="text-lg font-semibold" style="color: var(--text-main);">Change Email</h2>
+    </div>
+
+    <div class="p-6 space-y-4">
+      <input class="w-full rounded-lg px-4 py-2 outline-none border"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+      <input class="w-full rounded-lg px-4 py-2 outline-none border"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+    </div>
+
+    <div class="px-6 py-4 border-t flex justify-end space-x-3"
+         style="border-color: var(--border-main);">
+      <button onclick="closeEmailPopup()" class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);">
+        Cancel
+      </button>
+      <button class="px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
+              style="background: var(--accent); color: white;">
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Popup -->
+<div id="ChangePasswordPopup"
+     class="fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center hidden"
+     style="background: rgba(0,0,0,0.6);">
+
+  <div class="w-[420px] rounded-xl shadow-2xl border"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+    <div class="px-6 py-4 border-b" style="border-color: var(--border-main);">
+      <h2 class="text-lg font-semibold" style="color: var(--text-main);">Change Password</h2>
+    </div>
+
+    <div class="p-6 space-y-3">
+      <input class="w-full rounded-lg px-4 py-2 outline-none border"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+      <input class="w-full rounded-lg px-4 py-2 outline-none border"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+      <input class="w-full rounded-lg px-4 py-2 outline-none border"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+    </div>
+
+    <div class="px-6 py-4 border-t flex justify-end space-x-3"
+         style="border-color: var(--border-main);">
+      <button onclick="closePasswordPopup()" class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);">
+        Cancel
+      </button>
+      <button class="px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
+              style="background: var(--accent); color: white;">
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Upload new profile image popup -->
+<div id="uploadProfileImagePopup"
+     class="fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center hidden text-center"
+     style="background: rgba(0,0,0,0.6);">
+
+  <div class="w-[420px] rounded-xl shadow-2xl border"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+    <div class="px-6 py-4 border-b" style="border-color: var(--border-main);">
+      <h2 class="text-lg font-semibold" style="color: var(--text-main);">
+        Upload New Profile Image
+      </h2>
+    </div>
+
+    <div class="p-6 space-y-4 text-center">
+
+      <!-- Circular crop area -->
+      <div id="cropContainer">
+        <div id="transformWrapper">
+        <img id="previewImage" draggable="false" />
+        <div class="crop-border"></div>
+        </div>
+      </div>
+
+
+      <!-- File input -->
+      <input type="file" accept="image/*" id="imageInput">
+
+      <!-- Zoom slider -->
+      <input type="range" id="zoomSlider" min="1" max="3" step="0.01" value="1">
+
+    </div>
+
+    <p>Changes may take a few minutes to an hour to take place</p>
+
+    <div class="px-6 py-4 border-t flex justify-end space-x-3"
+         style="border-color: var(--border-main);">
+
+      <button onclick="closeUploadProfileImagePopup()"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);">
+        Cancel
+      </button>
+
+      <button onclick="uploadCroppedImage()"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--accent); color: white;">
+        Upload
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CROP_SIZE = 220;
+  const RADIUS = CROP_SIZE / 2;
+
+  const crop  = document.getElementById("cropContainer");
+  const img   = document.getElementById("previewImage");
+  const input = document.getElementById("imageInput");
+  const zoom  = document.getElementById("zoomSlider");
+
+  let scale = 1;
+  let minScale = 1;
+
+  // offsets are TOP-LEFT in IMAGE SPACE (safe)
+  let offsetX = 0;
+  let offsetY = 0;
+
+  let dragging = false;
+  let startMouseX, startMouseY;
+  let startOffsetX, startOffsetY;
+
+  /* ================= LOAD ================= */
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      img.src = reader.result;
+      img.onload = init;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  /* ================= INIT ================= */
+  function init() {
+    img.style.position = "absolute";
+    img.style.transformOrigin = "top left";
+
+    img.style.maxWidth = "none";
+    img.style.maxHeight = "none";
+
+    minScale = Math.max(
+            CROP_SIZE / img.naturalWidth,
+            CROP_SIZE / img.naturalHeight
+    );
+
+    scale = minScale;
+
+    zoom.min = minScale;
+    zoom.max = minScale * 3;
+    zoom.step = 0.001;
+    zoom.value = scale;
+
+    // center image
+    offsetX = (CROP_SIZE - img.naturalWidth * scale) / 2;
+    offsetY = (CROP_SIZE - img.naturalHeight * scale) / 2;
+
+    apply();
+  }
+
+  /* ================= CLAMP ================= */
+  function clamp() {
+    const w = img.naturalWidth * scale;
+    const h = img.naturalHeight * scale;
+
+    const minX = CROP_SIZE - w;
+    const minY = CROP_SIZE - h;
+
+    offsetX = Math.min(0, Math.max(minX, offsetX));
+    offsetY = Math.min(0, Math.max(minY, offsetY));
+  }
+
+  /* ================= APPLY ================= */
+  function apply() {
+    img.style.width = img.naturalWidth * scale + "px";
+    img.style.height = img.naturalHeight * scale + "px";
+    img.style.left = offsetX + "px";
+    img.style.top = offsetY + "px";
+  }
+
+  /* ================= DRAG ================= */
+  crop.addEventListener("mousedown", e => {
+    dragging = true;
+    startMouseX = e.clientX;
+    startMouseY = e.clientY;
+    startOffsetX = offsetX;
+    startOffsetY = offsetY;
+  });
+
+  window.addEventListener("mouseup", () => dragging = false);
+
+  window.addEventListener("mousemove", e => {
+    if (!dragging) return;
+
+    offsetX = startOffsetX + (e.clientX - startMouseX);
+    offsetY = startOffsetY + (e.clientY - startMouseY);
+
+    clamp();
+    apply();
+  });
+
+  /* ================= ZOOM ================= */
+  zoom.addEventListener("input", () => {
+    const prevScale = scale;
+    scale = Math.max(+zoom.value, minScale);
+
+    // Crop center in container space
+    const cx = CROP_SIZE / 2;
+    const cy = CROP_SIZE / 2;
+
+    // Image pixel currently at crop center
+    const imgCenterX = (cx - offsetX) / prevScale;
+    const imgCenterY = (cy - offsetY) / prevScale;
+
+    // Reposition so same pixel stays centered
+    offsetX = cx - imgCenterX * scale;
+    offsetY = cy - imgCenterY * scale;
+
+    clamp();
+    apply();
+  });
+
+  function uploadCroppedImage() {
+    const canvas = document.createElement("canvas");
+    canvas.width = CROP_SIZE;
+    canvas.height = CROP_SIZE;
+    const ctx = canvas.getContext("2d");
+
+    // Calculate source rectangle in image space
+    const sx = -offsetX / scale;
+    const sy = -offsetY / scale;
+    const sSize = CROP_SIZE / scale;
+
+    ctx.drawImage(
+            img,
+            sx, sy, sSize, sSize,
+            0, 0, CROP_SIZE, CROP_SIZE
+    );
+
+    // Convert to data URL (you can also use canvas.toBlob for better performance)
+    const dataURL = canvas.toDataURL("image/png");
+
+    // Send dataURL to server or use it as needed
+    console.log("Cropped Image Data URL:", dataURL);
+
+    ws.send(
+        JSON.stringify({
+            type: "upload_profile_image",
+            image_data: dataURL
+        }
+    ));
+  }
+
+  function closeUploadProfileImagePopup() {
+    document.getElementById('uploadProfileImagePopup').classList.add('hidden');
+
+    document.getElementById('SettingsPopup').classList.remove('hidden');
+  }
+
+  function openUploadProfilePopup() {
+    document.getElementById('SettingsPopup').classList.add('hidden');
+
+    document.getElementById('uploadProfileImagePopup').classList.remove('hidden');
+  }
+</script>
+
+<script>
+  /* ================= ROOM IMAGE CROP ================= */
+  const ROOM_CROP_SIZE = 220;
+
+  const roomCrop  = document.getElementById("roomCropContainer");
+  const roomImg   = document.getElementById("roomPreviewImage");
+  const roomInput = document.getElementById("roomImageInput");
+  const roomZoom  = document.getElementById("roomZoomSlider");
+
+  let roomScale = 1;
+  let roomMinScale = 1;
+  let roomOffsetX = 0;
+  let roomOffsetY = 0;
+  let roomDragging = false;
+
+  let roomStartX, roomStartY;
+  let roomStartOffsetX, roomStartOffsetY;
+
+  let roomImageDataURL = null; // <-- final cropped image
+
+  roomInput.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      roomImg.src = reader.result;
+      roomImg.onload = initRoomCrop;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  function initRoomCrop() {
+    roomMinScale = Math.max(
+            ROOM_CROP_SIZE / roomImg.naturalWidth,
+            ROOM_CROP_SIZE / roomImg.naturalHeight
+    );
+
+    roomScale = roomMinScale;
+    roomZoom.min = roomMinScale;
+    roomZoom.max = roomMinScale * 3;
+    roomZoom.value = roomScale;
+
+    roomOffsetX = (ROOM_CROP_SIZE - roomImg.naturalWidth * roomScale) / 2;
+    roomOffsetY = (ROOM_CROP_SIZE - roomImg.naturalHeight * roomScale) / 2;
+
+    applyRoomTransform();
+  }
+
+  function clampRoom() {
+    const w = roomImg.naturalWidth * roomScale;
+    const h = roomImg.naturalHeight * roomScale;
+
+    roomOffsetX = Math.min(0, Math.max(ROOM_CROP_SIZE - w, roomOffsetX));
+    roomOffsetY = Math.min(0, Math.max(ROOM_CROP_SIZE - h, roomOffsetY));
+  }
+
+  function applyRoomTransform() {
+    roomImg.style.width = roomImg.naturalWidth * roomScale + "px";
+    roomImg.style.height = roomImg.naturalHeight * roomScale + "px";
+    roomImg.style.left = roomOffsetX + "px";
+    roomImg.style.top = roomOffsetY + "px";
+  }
+
+  roomCrop.addEventListener("mousedown", e => {
+    roomDragging = true;
+    roomStartX = e.clientX;
+    roomStartY = e.clientY;
+    roomStartOffsetX = roomOffsetX;
+    roomStartOffsetY = roomOffsetY;
+  });
+
+  window.addEventListener("mouseup", () => roomDragging = false);
+
+  window.addEventListener("mousemove", e => {
+    if (!roomDragging) return;
+
+    roomOffsetX = roomStartOffsetX + (e.clientX - roomStartX);
+    roomOffsetY = roomStartOffsetY + (e.clientY - roomStartY);
+
+    clampRoom();
+    applyRoomTransform();
+  });
+
+  roomZoom.addEventListener("input", () => {
+    const prev = roomScale;
+    roomScale = Math.max(+roomZoom.value, roomMinScale);
+
+    const cx = ROOM_CROP_SIZE / 2;
+    const cy = ROOM_CROP_SIZE / 2;
+
+    const imgX = (cx - roomOffsetX) / prev;
+    const imgY = (cy - roomOffsetY) / prev;
+
+    roomOffsetX = cx - imgX * roomScale;
+    roomOffsetY = cy - imgY * roomScale;
+
+    clampRoom();
+    applyRoomTransform();
+  });
+
+  function getRoomCroppedImage() {
+    if (!roomImg.src) return null;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = ROOM_CROP_SIZE;
+    canvas.height = ROOM_CROP_SIZE;
+    const ctx = canvas.getContext("2d");
+
+    const sx = -roomOffsetX / roomScale;
+    const sy = -roomOffsetY / roomScale;
+    const sSize = ROOM_CROP_SIZE / roomScale;
+
+    ctx.drawImage(
+            roomImg,
+            sx, sy, sSize, sSize,
+            0, 0, ROOM_CROP_SIZE, ROOM_CROP_SIZE
+    );
+
+    return canvas.toDataURL("image/png");
+  }
+</script>
+
+
 <script>
   function createRoom() {
     const roomName = document.getElementById('roomNameInput').value.trim();
-    if (roomName) {
-      ws.send(JSON.stringify({
-        type: "create_room",
-        room_name: roomName
-      }));
-      document.getElementById('roomNameInput').value = '';
-      document.getElementById('new-room-popup').classList.add('hidden');
+    if (!roomName) return;
+
+    const imageData = getRoomCroppedImage(); // returns null if no image
+
+    const payload = {
+      type: "create_room",
+      room_name: roomName
+    };
+
+    if (imageData) {
+      payload.image_data = imageData;
     }
+
+    ws.send(JSON.stringify(payload));
+
+    document.getElementById('roomNameInput').value = '';
+    document.getElementById('new-room-popup').classList.add('hidden');
   }
+
 
   function findFriend() {
     const friendName = document.getElementById('friendNameInput').value.trim();
@@ -302,6 +1081,10 @@
       type: "auth",
       token: getCookie('token')
     }));
+
+    ws.send(JSON.stringify({
+      type: "get_theme"
+    }))
   };
 
   ws.onmessage = event => {
@@ -367,10 +1150,10 @@
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <span class="font-semibold text-white">${data.from}</span>
-              <span class="text-xs text-gray-400">${time}</span>
+              <span class="font-semibold" style="color: var(--text-main)">${data.from}</span>
+              <span class="text-xs" style="color: var(--text-muted)">${time}</span>
             </div>
-            <p class="text-gray-300">${data.message}</p>
+            <p style="color: var(--text-main)">${data.message}</p>
           </div>
          `;
       chat.appendChild(div);
@@ -393,10 +1176,10 @@
               </div>
               <div>
                 <div class="flex items-center space-x-2">
-                  <span class="font-semibold text-white">${msg[0]}</span>
-                  <span class="text-xs text-gray-400">${time}</span>
+                  <span class="font-semibold" style="color: var(--text-main)">${msg[0]}</span>
+                  <span class="text-xs" style="color: var(--text-muted)">${time}</span>
                 </div>
-                <p class="text-gray-300">${msg[2]}</p>
+                <p style="color: var(--text-main)">${msg[2]}</p>
               </div>
             `;
         chat.appendChild(div);
@@ -423,9 +1206,21 @@
       document.getElementById('find-friend-popup').classList.add('hidden');
     } else if (data.type === "user_not_found") {
       document.getElementById('friendNameInput').classList.add('border', 'border-red-500');
+    } else if (data.type === "theme") {
+      const saved = data.theme;
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+        const select = document.getElementById('themeSelect');
+        if (select) select.value = saved;
+      }
+    } else if (data.type === "upload_failed") {
+      alert("Profile image upload failed: " + data.reason);
+    } else if (data.type === "upload_success") {
+        // Close the upload popup
+        closeUploadProfileImagePopup();
     }
 
-    console.log("Received:", data);
+            console.log("Received:", data);
   }
 
   function getRoom(room_id) {
@@ -674,10 +1469,10 @@
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <span class="font-semibold text-white">${sender}</span>
-            <span class="text-xs text-gray-400">${time}</span>
+            <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
+            <span class="text-xs" style="color: var(--text-muted)">${time}</span>
           </div>
-          <p class="text-gray-300">${text}</p>
+          <p style="color: var(--text-main)">${text}</p>
         </div>
       `;
     chat.appendChild(div);
@@ -699,6 +1494,71 @@
     return isToday
             ? inputDate.toLocaleTimeString(undefined, optionsTime)
             : `${inputDate.toLocaleDateString(undefined, optionsDate)} ${inputDate.toLocaleTimeString(undefined, optionsTime)}`;
+  }
+
+  function openSettings() {
+    document.getElementById('SettingsPopup').classList.remove('hidden');
+  }
+
+  function openEmailPopup() {
+    document.getElementById('ChangeEmailPopup').classList.remove('hidden');
+  }
+
+  function closeEmailPopup() {
+    document.getElementById('ChangeEmailPopup').classList.add('hidden');
+  }
+
+  function openPasswordPopup() {
+    document.getElementById('ChangePasswordPopup').classList.remove('hidden');
+  }
+
+  function closePasswordPopup() {
+    document.getElementById('ChangePasswordPopup').classList.add('hidden');
+  }
+
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    ws.send(JSON.stringify({
+      type: "set_theme",
+      theme: theme
+    }));
+  }
+
+  // Load saved theme on startup
+  (function loadTheme() {
+    ws.send(JSON.stringify({
+      type: "get_theme"
+    }))
+  })();
+
+  function enableSettingsSave() {
+    const saveButton = document.getElementById('saveSettingsButton');
+    if (saveButton) {
+      saveButton.classList.remove('opacity-50', 'cursor-not-allowed');
+      saveButton.disabled = false;
+    }
+  }
+
+  function disableSettingsSave() {
+    const saveButton = document.getElementById('saveSettingsButton');
+    if (saveButton) {
+      saveButton.classList.add('opacity-50', 'cursor-not-allowed');
+      saveButton.disabled = true;
+    }
+  }
+
+  function saveSettings() {
+    const themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) {
+        setTheme(themeSelect.value);
+    }
+
+    disableSettingsSave();
   }
 </script>
 

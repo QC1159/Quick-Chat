@@ -111,16 +111,51 @@
             pointer-events: none; /* prevents interaction after fading */
             transition: opacity 350ms ease; /* controls the fade duration */
         }
+
+        .resetPasswordInput {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: black !important;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+            height: 48px;
+        }
+
+        .banner {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10000;
+            font-weight: 500;
+
+            transform: translateY(-100%);      /* start off-screen */
+            transition: transform 0.35s ease-out;
+        }
+
+        /* visible state */
+        .banner.show {
+            transform: translateY(0);
+        }
+
+
+
+
     </style>
 </head>
 <body>
-<h1 id="closeBtn" class="text-gray-400">×</h1>
+<div id="banner" class="banner"></div>
 <div class="glass w-[90%] max-w-md p-8 text-center">
+    <div id="forms-header">
     <h1 class="text-3xl font-semibold text-white mb-6">Quick Chat</h1>
 
     <div class="flex justify-center mb-6">
         <span id="loginTab" class="tab text-gray-400 px-4 py-2 active">Login</span>
         <span id="signupTab" class="tab text-gray-400 px-4 py-2">Sign Up</span>
+    </div>
     </div>
 
     <!-- Login Form -->
@@ -141,9 +176,9 @@
         <div class="input-container">
             <input type="text" placeholder="Username" id="signupUsername" class="w-full p-3 rounded-md" />
         </div>
-        <!--div class="input-container">
+        <div class="input-container">
             <input type="email" placeholder="Email (optional)" id="signupEmail" class="w-full p-3 rounded-md" />
-        </div-->
+        </div>
         <div class="input-container">
             <input type="password" placeholder="Password" id="signupPassword" class="w-full p-3 rounded-md" />
         </div>
@@ -158,6 +193,38 @@
         </div>
         <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-md mt-4 transition-all">Sign Up</button>
     </form>
+
+    <form id="forgotPasswordForm" class="space-y-4 hidden">
+        <h2 class="text-white text-2xl font-semibold mb-4">Forgot Password</h2>
+
+        <!-- Instructions -->
+        <p class="text-white">Enter your username below, and if it exists, a password reset link will be sent to your registered email address.</p>
+
+        <div class="input-container">
+            <input type="text" id="forgotEmail" placeholder="Enter your username" class="w-full p-3 rounded-md" />
+        </div>
+        <button type="submit" id="sendResetBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-md mt-4 transition-all">Send Reset Link</button>
+        <button id="closeForgotBtn" class="mt-4 text-gray-500 hover:text-gray-700">Close</button>
+    </form>
+
+    <form id="forgotPasswordTokenInputForm" class="space-y-4 hidden">
+        <h2 class="text-white text-2xl font-semibold mb-4">Reset Password</h2>
+
+        <p class="text-white">Please enter the reset token you received via email along with your new password.</p>
+
+        <div class="input-container">
+            <input type="text" id="resetTokenInput" placeholder="Enter reset token" class="w-full p-3 rounded-md mb-4" />
+        </div>
+        <div class="input-container">
+            <input type="password" id="newPasswordInput" placeholder="Enter new password" class="w-full p-3 rounded-md mb-4" />
+        </div>
+        <div class="input-container">
+            <input type="password" id="confirmNewPasswordInput" placeholder="Confirm new password" class="w-full p-3 rounded-md mb-4" />
+        </div>
+        <button type="submit" id="resetPasswordBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-md mt-4 transition-all">Reset Password</button>
+        <button id="closeResetBtn" class="mt-4 text-gray-500 hover:text-gray-700">Close</button>
+    </form>
+
 </div>
 
 <div id="loading-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-br from-[#1e1f26] to-[#111217] flex flex-col items-center justify-center backdrop-blur-sm">
@@ -188,13 +255,19 @@
     const signupTab = document.getElementById('signupTab');
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
+    const formsHeader = document.getElementById('forms-header');
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    const forgotPasswordTokenInputForm = document.getElementById('forgotPasswordTokenInputForm');
     const forgotBtn = document.getElementById('forgotBtn');
+    const closeForgotBtn = document.getElementById('closeForgotBtn');
+    const closeResetBtn = document.getElementById('closeResetBtn');
 
     loginTab.onclick = () => {
         loginTab.classList.add('active');
         signupTab.classList.remove('active');
         loginForm.classList.remove('hidden');
         signupForm.classList.add('hidden');
+        forgotPasswordForm.classList.add('hidden');
     };
 
     signupTab.onclick = () => {
@@ -202,12 +275,36 @@
         loginTab.classList.remove('active');
         signupForm.classList.remove('hidden');
         loginForm.classList.add('hidden');
+        forgotPasswordForm.classList.add('hidden');
     };
 
     forgotBtn.addEventListener('click', function (e) {
         e.preventDefault();
 
-        alert('To reset your password, please contact Jackson Haney at jackhaney22@gmail.com. Auto reset functionality will be added in a future update.');
+        signupTab.classList.remove('active');
+        loginTab.classList.remove('active');
+        formsHeader.classList.add('hidden');
+        signupForm.classList.add('hidden');
+        loginForm.classList.add('hidden');
+        forgotPasswordForm.classList.remove('hidden');
+    });
+
+    closeForgotBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        formsHeader.classList.remove('hidden');
+        forgotPasswordForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        loginTab.classList.add('active');
+    });
+
+    closeResetBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        formsHeader.classList.remove('hidden');
+        forgotPasswordTokenInputForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        loginTab.classList.add('active');
     });
 
     const ws = new WebSocket("wss://skirtless-ernesto-prescientific.ngrok-free.dev/ws");
@@ -248,8 +345,6 @@
         } else if (data.type === "signup_failed") {
             showErrorPopup('signupUsername', data.reason);
         } else if (data.type === "signup_success") {
-            alert('Account created successfully! You can now log in.');
-
             if (data.token) {
                 const expiryDate = new Date();
                 expiryDate.setDate(expiryDate.getDate() + 30);
@@ -259,10 +354,43 @@
             }
 
             window.location.href = "./";
+        } else if (data.type === "password_reset_success") {
+            forgotPasswordTokenInputForm.classList.add('hidden');
+            formsHeader.classList.remove('hidden');
+            loginForm.classList.remove('hidden');
+            loginTab.classList.add('active');
+
+            const username = document.getElementById('forgotEmail').value;
+            const newPassword = document.getElementById('newPasswordInput').value;
+            loginUser(username, newPassword);
+        } else if (data.type === "password_reset_failed") {
+            showErrorPopup('resetTokenInput', data.reason);
         }
 
         console.log("Received:", data);
     }
+
+    function showBanner(msg) {
+        const b = document.getElementById("banner");
+        b.textContent = msg;
+
+        // ensure starting position is off-screen
+        b.classList.remove("show");
+
+        // force a reflow so the browser registers the starting transform
+        void b.offsetHeight;
+
+        // now add .show → triggers transition
+        b.classList.add("show");
+
+        // optional auto-hide
+        setTimeout(() => {
+            b.classList.remove("show");
+        }, 6000);
+    }
+
+
+
 
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -283,6 +411,7 @@
         }
 
         const username = e.target.querySelector('#signupUsername').value;
+        const email = e.target.querySelector('#signupEmail').value;
         const password = e.target.querySelector('#signupPassword').value;
 
         if (!username) {
@@ -300,8 +429,63 @@
             return;
         }
 
-        signupUser(username, password);
+        signupUser(username, password, email);
     });
+
+    document.getElementById("forgotPasswordForm").addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById('forgotEmail').value;
+        if (!username) {
+            showErrorPopup('forgotEmail', 'Username cannot be empty');
+            return;
+        }
+        ws.send(JSON.stringify({
+            type: "forgot_password",
+            username: username
+        }));
+        showBanner('If the username exists, a password reset link has been sent.');
+
+        document.getElementById('forgotPasswordForm').classList.add('hidden');
+        document.getElementById('forgotPasswordTokenInputForm').classList.remove('hidden');
+    })
+
+    document.getElementById('forgotPasswordTokenInputForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const token = document.getElementById('resetTokenInput').value;
+        const newPassword = document.getElementById('newPasswordInput').value;
+        const confirmNewPassword = document.getElementById('confirmNewPasswordInput').value;
+
+        if (!token) {
+            showErrorPopup('resetTokenInput', 'Token cannot be empty');
+            return;
+        }
+
+        if (!newPassword) {
+            showErrorPopup('newPasswordInput', 'New password cannot be empty');
+            return;
+        }
+
+        if (!confirmNewPassword) {
+            showErrorPopup('confirmNewPasswordInput', 'Please confirm your new password');
+            return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            showErrorPopup('confirmNewPasswordInput', 'Passwords do not match');
+            return;
+        }
+
+        const username = document.getElementById('forgotEmail').value;
+
+        ws.send(JSON.stringify({
+            type: "reset_password",
+            token: token,
+            username: username,
+            new_password: newPassword
+        }));
+    })
 
     function loginUser(username, password) {
         if (!username || !password) {
@@ -324,12 +508,19 @@
         }
     }
 
-    function signupUser(username, password) {
-        if (ws.readyState === WebSocket.OPEN) {
+    function signupUser(username, password, email) {
+        if (ws.readyState === WebSocket.OPEN && !email) {
             ws.send(JSON.stringify({
                 type: "create_account",
                 username: username,
                 password: password
+            }));
+        } else if (ws.readyState === WebSocket.OPEN && email) {
+            ws.send(JSON.stringify({
+                type: "create_account",
+                username: username,
+                password: password,
+                email: email
             }));
         } else {
             showErrorPopup('signupUsername', 'Connection not established. Please try again.');
