@@ -112,6 +112,8 @@
 
     html, body {
       overflow-x: hidden;
+      height: 100%;
+      margin: 0;
     }
 
     body {
@@ -211,7 +213,8 @@
     }
   </style>
 </head>
-<body class="h-screen flex flex-col">
+<body class="flex flex-col">
+
 <!-- Header -->
 <div class="w-full h-12 flex items-center border-b"
      style="background: var(--bg-tertiary); border-color: var(--border-main);">
@@ -251,7 +254,7 @@
 
 
 <!-- Rest of the layout -->
-<div class="flex flex-1" style="max-height: calc(100vh - 3rem);">
+<div class="flex flex-1 h-[calc(100%-48px)]">
 
   <!-- Left sidebars -->
   <div class="w-[88px] flex flex-col border-r"
@@ -863,9 +866,7 @@
 
     document.getElementById('uploadProfileImagePopup').classList.remove('hidden');
   }
-</script>
 
-<script>
   /* ================= ROOM IMAGE CROP ================= */
   const ROOM_CROP_SIZE = 220;
 
@@ -986,10 +987,7 @@
 
     return canvas.toDataURL("image/png");
   }
-</script>
 
-
-<script>
   function createRoom() {
     const roomName = document.getElementById('roomNameInput').value.trim();
     if (!roomName) return;
@@ -1456,10 +1454,14 @@
 
   function addMessage(sender, receiver, text, time) {
     const privateChatId = sender === username ? receiver : sender;
-
     const chat = document.getElementById(`chat-messages-private-${privateChatId}`);
-    const div = document.createElement('div');
 
+    // Are we currently at (or very near) the bottom?
+    const threshold = 5; // px tolerance
+    const isAtBottom =
+            chat.scrollTop + chat.clientHeight >= chat.scrollHeight - threshold;
+
+    const div = document.createElement('div');
     time = formatDateTime(time);
 
     div.className = 'message flex items-start space-x-3';
@@ -1472,16 +1474,22 @@
             </iframe>
         </div>
         <div>
-          <div class="flex items-center space-x-2">
-            <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
-            <span class="text-xs" style="color: var(--text-muted)">${time}</span>
-          </div>
-          <p style="color: var(--text-main)">${text}</p>
+            <div class="flex items-center space-x-2">
+                <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
+                <span class="text-xs" style="color: var(--text-muted)">${time}</span>
+            </div>
+            <p style="color: var(--text-main)">${text}</p>
         </div>
-      `;
+    `;
+
     chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
+
+    // Only auto-scroll if the user was already at the bottom
+    if (isAtBottom) {
+      chat.scrollTop = chat.scrollHeight;
+    }
   }
+
 
   function formatDateTime(isoString) {
     const inputDate = new Date(isoString);
@@ -1533,12 +1541,6 @@
     }));
   }
 
-  // Load saved theme on startup
-  (function loadTheme() {
-    ws.send(JSON.stringify({
-      type: "get_theme"
-    }))
-  })();
 
   function enableSettingsSave() {
     const saveButton = document.getElementById('saveSettingsButton');
