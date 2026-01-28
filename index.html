@@ -18,6 +18,19 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
   <link rel="manifest" href="./site.webmanifest">
+  <script>
+    // Fetch the emoji JSON from the CDN
+    let emojiData;
+
+    fetch("http://cdn.jsdelivr.net/npm/@emoji-mart/data")
+            .then(res => res.json())
+            .then(data => {
+              emojiData = data; // assign it to a variable
+              console.log("Emoji data loaded:", emojiData.categories.length);
+            })
+            .catch(err => console.error("Failed to load emoji data:", err));
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -211,6 +224,27 @@
       max-width: none;
       max-height: none;
     }
+
+    #gifResults {
+        position: relative;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .gif-item {
+        position: absolute;
+        width: 120px; /* column width */
+        margin-bottom: 10px;
+    }
+
+    .gif-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+        cursor: pointer;
+    }
   </style>
 </head>
 <body class="flex flex-col">
@@ -307,26 +341,129 @@
     <!-- Messages -->
     <div id="chat-messages" class="flex-1 overflow-y-auto p-5"></div>
 
-    <!-- Input box -->
-    <div class="p-4 border-t flex items-center space-x-3"
-         style="background: var(--bg-secondary); border-color: var(--border-soft);">
 
+      <!-- Image preview -->
+      <div id="imagePreviewContainer" style="display:none; padding: 8px;">
+        <div style="position: relative; display: inline-block;">
+          <img id="imagePreview" style="max-height:120px; border-radius:8px;">
+          <button
+                  onclick="removeImage()"
+                  style="position:absolute; top:4px; right:4px; background:black; color:white; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <div class="p-4 border-t flex items-center space-x-3"
+           style="background: var(--bg-secondary); border-color: var(--border-soft);">
+
+        <!-- Input wrapper -->
+        <div class="relative flex-1">
+          <input
+                  id="messageInput"
+                  type="text"
+                  placeholder="Message #general"
+                  onkeyup="if(event.key === 'Enter') sendMessage()"
+                  class="w-full rounded-lg px-4 py-2 pr-28 outline-none"
+                  style="background: var(--bg-tertiary); color: var(--text-main);"
+          />
+
+          <!-- Buttons -->
+          <div class="absolute right-2 top-1/2 -translate-y-1/2 flex space-x-2">
+
+            <!-- Emoji -->
+            <button onclick="toggleEmojiPicker()">😊</button>
+
+            <!-- Image -->
+            <button onclick="document.getElementById('imageUpload').click()">📷</button>
+            <input id="imageUpload" type="file" accept="image/*" hidden>
+
+            <!-- GIF -->
+            <button onclick="openGifPicker()">🎞️</button>
+          </div>
+        </div>
+
+        <button
+                onclick="sendMessage()"
+                class="px-4 py-2 rounded-lg"
+                style="background: var(--accent); color: white;">
+          Send
+        </button>
+      </div>
+
+      <!-- Emoji Picker -->
+    <div id="emojiPicker"
+         style="
+       display:none;
+       position:absolute;
+       bottom:90px;
+       right:80px;
+       width:320px;
+       max-height:350px;
+       background:var(--bg-secondary);
+       border-radius:10px;
+       padding:8px;
+       overflow:hidden;
+       z-index:1000;
+     ">
+
+      <!-- Search -->
       <input
-              id="messageInput"
-              type="text"
-              placeholder="Message #general"
-              onkeyup="if(event.key === 'Enter') sendMessage()"
-              class="flex-1 rounded-lg px-4 py-2 outline-none"
-              style="background: var(--bg-tertiary); color: var(--text-main);"
+              id="emojiSearch"
+              placeholder="Search emojis"
+              style="
+      width:100%;
+      padding:6px;
+      border-radius:6px;
+      border:none;
+      outline:none;
+      margin-bottom:6px;
+      color: black;
+    "
       />
 
-      <button
-              onclick="sendMessage()"
-              class="px-4 py-2 rounded-lg"
-              style="background: var(--accent); color: white;">
-        Send
-      </button>
+      <!-- Categories -->
+      <div id="emojiCategories"
+           style="overflow-y:auto; max-height:280px;">
+      </div>
     </div>
+
+
+    <!-- GIF Picker -->
+    <div id="gifPicker"
+         class="hidden fixed inset-0 z-[10000] flex items-center justify-center"
+         style="background: rgba(0,0,0,0.6);">
+
+        <div class="h-[450px] w-[435px] text-align-center rounded-xl shadow-2xl border p-4 flex flex-col overflow-hidden"
+             style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-semibold" style="color: var(--text-main);">
+            Search GIFs
+          </h2>
+          <button onclick="closeGifPicker()" style="color: var(--text-muted)">✕</button>
+        </div>
+
+        <!-- Search -->
+        <input
+                id="gifSearch"
+                placeholder="Search GIFs"
+                class="w-full rounded-lg px-3 py-2 mb-3 outline-none"
+                style="background: var(--bg-secondary); color: var(--text-main);"
+        />
+
+        <!-- Results -->
+        <div id="gifResults">
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+
   </div>
 </div>
 
@@ -701,6 +838,275 @@
     </div>
   </div>
 </div>
+
+<script>
+  const gifPicker = document.getElementById("gifPicker");
+  const gifResults = document.getElementById("gifResults");
+  const gifSearch = document.getElementById("gifSearch");
+
+  let gifQuery = "";
+  let gifPage = 1;
+  let gifLoading = false;
+  let gifHasMore = true;
+  let gifPreloadPage = 2; // always stay one page ahead
+  let requestedPages = new Set();
+
+  function requestGifPage(page) {
+    if (!gifHasMore) return;
+    if (requestedPages.has(page)) return;
+
+    gifLoading = true;
+    requestedPages.add(page);
+
+    if (gifQuery) {
+      ws.send(JSON.stringify({
+        type: "gif_search",
+        query: gifQuery,
+        page: page
+      }));
+    } else {
+      ws.send(JSON.stringify({
+        type: "trending_gifs",
+        page: page
+      }));
+    }
+
+    if (page === 1) {
+      if (!requestedPages.has(2)) {
+        requestedPages.add(2);
+        if (gifQuery) {
+          ws.send(JSON.stringify({
+            type: "gif_search",
+            query: gifQuery,
+            page: 2
+          }));
+        } else {
+          ws.send(JSON.stringify({
+            type: "trending_gifs",
+            page: 2
+          }));
+        }
+      }
+      if (!requestedPages.has(3)) {
+        requestedPages.add(3);
+        if (gifQuery) {
+          ws.send(JSON.stringify({
+            type: "gif_search",
+            query: gifQuery,
+            page: 3
+          }));
+        } else {
+          ws.send(JSON.stringify({
+            type: "trending_gifs",
+            page: 3
+          }));
+        }
+      }
+    }
+  }
+
+
+
+  function openGifPicker() {
+    gifPicker.classList.remove("hidden");
+    gifSearch.value = "";
+    gifResults.innerHTML = "";
+    gifSearch.focus();
+    requestGifPage(1)
+  }
+
+  function closeGifPicker() {
+    gifPicker.classList.add("hidden");
+  }
+
+  let searchTimeout;
+  gifSearch.addEventListener("input", () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      gifQuery = gifSearch.value.trim();
+
+      gifResults.innerHTML = "";
+      gifPage = 1;
+      gifHasMore = true;
+      requestedPages.clear();
+
+      requestGifPage(1);
+    }, 500);
+  });
+
+
+  gifResults.addEventListener("scroll", () => {
+    const nearBottom =
+            gifResults.scrollTop + gifResults.clientHeight >= gifResults.scrollHeight - 200;
+
+    if (nearBottom && !gifLoading && gifHasMore) {
+      gifPage++;
+      requestGifPage(gifPage);
+    }
+  });
+
+  function selectGif(url) {
+    uploadedImageDataURL = url; // reuse your existing image system
+    previewImage.src = url;
+    previewContainer.style.display = "block";
+    closeGifPicker();
+  }
+</script>
+
+
+<script>
+  /* ---------------- GLOBAL STATE ---------------- */
+  let uploadedImageDataURL = null;
+  const inputM = document.getElementById("messageInput");
+
+  /* ---------------- IMAGE UPLOAD ---------------- */
+  const imageUpload = document.getElementById("imageUpload");
+  const previewContainer = document.getElementById("imagePreviewContainer");
+  const previewImage = document.getElementById("imagePreview");
+
+  imageUpload.addEventListener("change", () => {
+    const file = imageUpload.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      uploadedImageDataURL = reader.result; // ✅ STORE DATA URL
+      previewImage.src = uploadedImageDataURL;
+      previewContainer.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function removeImage() {
+    uploadedImageDataURL = null;
+    previewImage.src = "";
+    imageUpload.value = "";
+    previewContainer.style.display = "none";
+  }
+
+  /* ---------------- SEND MESSAGE ---------------- */
+  /*function sendMessage() {
+    console.log("Message:", inputM.value);
+    console.log("Image Data URL:", uploadedImageDataURL);
+
+    // Reset input & preview
+    inputM.value = "";
+    removeImage();
+  }*/
+
+  /* ---------------- EMOJI PICKER ---------------- */
+  //const emojiData = window.EmojiMartData;
+  const picker = document.getElementById("emojiPicker");
+  const categoriesDiv = document.getElementById("emojiCategories");
+  const searchInput = document.getElementById("emojiSearch");
+
+  function insertEmoji(emoji) {
+    const start = inputM.selectionStart;
+    const end = inputM.selectionEnd;
+
+    inputM.value =
+            inputM.value.substring(0, start) +
+            emoji +
+            input.value.substring(end);
+
+    inputM.focus();
+    inputM.selectionStart = inputM.selectionEnd = start + emoji.length;
+  }
+
+  function toggleEmojiPicker() {
+    picker.style.display =
+            picker.style.display === "none" ? "block" : "none";
+  }
+
+  /* Build emoji index for searching */
+  let allEmojis = [];
+  emojiData.categories.forEach(cat => {
+    cat.emojis.forEach(id => {
+      const e = emojiData.emojis[id];
+      if (e) allEmojis.push(e);
+    });
+  });
+
+  /* Render categories & emojis */
+  function renderCategories(filter = "") {
+    categoriesDiv.innerHTML = "";
+
+    emojiData.categories.forEach(cat => {
+      const section = document.createElement("div");
+
+      const title = document.createElement("div");
+      title.textContent = cat.id.toUpperCase();
+      title.style.color = "#aaa";
+      title.style.fontSize = "12px";
+      title.style.margin = "6px 0";
+      section.appendChild(title);
+
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(8, 1fr)";
+      grid.style.gap = "4px";
+
+      cat.emojis.forEach(id => {
+        const emoji = emojiData.emojis[id];
+        if (!emoji) return;
+
+        if (filter) {
+          const text = (emoji.name + " " + (emoji.keywords || []).join(" ")).toLowerCase();
+          if (!text.includes(filter)) return;
+        }
+
+        const btn = document.createElement("button");
+        btn.textContent = emoji.skins[0].native;
+        btn.style.fontSize = "20px";
+        btn.style.background = "none";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.onclick = () => insertEmoji(emoji.skins[0].native);
+        grid.appendChild(btn);
+      });
+
+      if (grid.children.length > 0) {
+        section.appendChild(grid);
+        categoriesDiv.appendChild(section);
+      }
+    });
+  }
+
+  /* Search filter */
+  searchInput.addEventListener("input", () => {
+    renderCategories(searchInput.value.toLowerCase());
+  });
+
+  /* Initial render */
+  renderCategories();
+
+  function layoutMasonry() {
+      const container = gifResults;
+      const items = [...container.children];
+
+      const columnWidth = 120;
+      const gap = 10;
+
+      const containerWidth = container.clientWidth;
+      const columns = Math.floor(containerWidth / (columnWidth + gap));
+
+      const colHeights = new Array(columns).fill(0);
+
+      items.forEach(item => {
+          const shortestCol = colHeights.indexOf(Math.min(...colHeights));
+
+          const x = shortestCol * (columnWidth + gap);
+          const y = colHeights[shortestCol];
+
+          item.style.transform = `translate(${x}px, ${y}px)`;
+
+          colHeights[shortestCol] += item.offsetHeight + gap;
+      });
+
+      container.style.height = Math.max(...colHeights) + "px";
+  }
+</script>
+
 
 <script>
   const CROP_SIZE = 220;
@@ -1122,14 +1528,14 @@
       data.messages.forEach(msg => {
         addToPrivateChats(msg[1]);
         addToPrivateChats(msg[0]);
-        addMessage(msg[0], msg[1], msg[2], msg[3]);
+        addMessage(msg[0], msg[1], msg[2], msg[3], msg[4] ? msg[4] : null);
       });
     } else if (data.type === "private_message") {
       addToPrivateChats(data.from);
-      addMessage(data.from, data.to, data.message, data.time);
+      addMessage(data.from, data.to, data.message, data.time, data.image_url ? data.image_url : null);
     } else if (data.type === "sent_private_message") {
       addToPrivateChats(data.to);
-      addMessage(username, data.to, data.message, data.time);
+      addMessage(username, data.to, data.message, data.time, data.image_url ? data.image_url : null);
     } else if (data.type === "rooms") {
       data.rooms.forEach(msg => {
         addToRoomChats(msg);
@@ -1220,6 +1626,76 @@
     } else if (data.type === "upload_success") {
         // Close the upload popup
         closeUploadProfileImagePopup();
+    } else if (data.type === "gif_search_results") {
+      if (data.query === document.getElementById("gifSearch").value) {
+          const urls = data.results;
+
+          // If no results, stop infinite scroll
+          if (!urls || urls.length === 0) {
+              gifHasMore = false;
+              gifLoading = false;
+              return;
+          }
+
+          // Render the GIFs
+          urls.forEach(url => {
+              const div = document.createElement("div");
+              div.className = "gif-item";
+
+              const img = document.createElement("img");
+              img.src = url;
+
+              img.onload = layoutMasonry;
+
+              div.onclick = () => selectGif(url);
+              div.appendChild(img);
+              gifResults.appendChild(div);
+          });
+
+          // Preload next page automatically
+          if (gifPreloadPage === gifPage + 1) {
+              requestGifPage(gifPreloadPage);
+              gifPreloadPage++;
+          }
+      }
+
+        gifLoading = false;
+    } else if (data.type === "gif_search_failed") {
+      gifLoading = false;
+      gifHasMore = false;
+    } else if (data.type === "trending_gif_results") {
+      if (!document.getElementById("gifSearch").value) {
+        const urls = data.results;
+
+        // If no results, stop infinite scroll
+        if (!urls || urls.length === 0) {
+          gifHasMore = false;
+          gifLoading = false;
+          return;
+        }
+
+        // Render the GIFs
+        urls.forEach(url => {
+          const div = document.createElement("div");
+          div.className = "gif-item";
+
+          const img = document.createElement("img");
+          img.src = url;
+
+          img.onload = layoutMasonry;
+
+          div.onclick = () => selectGif(url);
+          div.appendChild(img);
+          gifResults.appendChild(div);
+        });
+
+        // Preload next page automatically
+        if (gifPreloadPage === gifPage + 1) {
+          requestGifPage(gifPreloadPage);
+          gifPreloadPage++;
+        }
+      }
+      gifLoading = false;
     }
 
             console.log("Received:", data);
@@ -1411,21 +1887,42 @@
 
   function sendMessage() {
     const input = document.getElementById('messageInput');
-    const text = input.value.trim();
-    if (!text) return;
 
-    if (room) {
-      ws.send(JSON.stringify({
+    const text = input.value.trim();
+    if (!text && !uploadedImageDataURL) return;
+
+    if (uploadedImageDataURL) {
+      if (room) {
+        ws.send(JSON.stringify({
+          type: "send_room_message",
+          room_id: connectedChat,
+          image_url: uploadedImageDataURL,
+          message: text
+        }))
+      } else {
+        ws.send(JSON.stringify({
+          type: "send_private_message",
+          to: connectedChat,
+          image_url: uploadedImageDataURL,
+          message: text
+        }))
+      }
+
+      removeImage()
+    } else {
+      if (room) {
+        ws.send(JSON.stringify({
           type: "send_room_message",
           room_id: connectedChat,
           message: text
-      }))
-    } else {
-      ws.send(JSON.stringify({
-        type: "send_private_message",
-        to: connectedChat,
-        message: text
-      }))
+        }))
+      } else {
+        ws.send(JSON.stringify({
+          type: "send_private_message",
+          to: connectedChat,
+          message: text
+        }))
+      }
     }
 
     /*const chat = document.getElementById('chat-messages');
@@ -1452,7 +1949,7 @@
     /*chat.scrollTop = chat.scrollHeight;*/
   }
 
-  function addMessage(sender, receiver, text, time) {
+  function addMessage(sender, receiver, text, time, imageSRC=null) {
     const privateChatId = sender === username ? receiver : sender;
     const chat = document.getElementById(`chat-messages-private-${privateChatId}`);
 
@@ -1465,22 +1962,42 @@
     time = formatDateTime(time);
 
     div.className = 'message flex items-start space-x-3';
-    div.innerHTML = `
-        <div class="w-10 h-10 rounded-full bg-gray-600">
-            <iframe
-                src="avatar.html?u=${sender}&v=${imageCacheBust}"
-                class="w-10 h-10 rounded-full border-0"
-                sandbox="allow-scripts">
-            </iframe>
-        </div>
-        <div>
-            <div class="flex items-center space-x-2">
-                <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
-                <span class="text-xs" style="color: var(--text-muted)">${time}</span>
+    if (imageSRC == null) {
+      div.innerHTML = `
+          <div class="w-10 h-10 rounded-full bg-gray-600">
+              <iframe
+                  src="avatar.html?u=${sender}&v=${imageCacheBust}"
+                  class="w-10 h-10 rounded-full border-0"
+                  sandbox="allow-scripts">
+              </iframe>
+          </div>
+          <div>
+              <div class="flex items-center space-x-2">
+                  <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
+                  <span class="text-xs" style="color: var(--text-muted)">${time}</span>
+              </div>
+              <p style="color: var(--text-main)">${text}</p>
+          </div>
+        `;
+    } else {
+        div.innerHTML = `
+            <div class="w-10 h-10 rounded-full bg-gray-600">
+                <iframe
+                    src="avatar.html?u=${sender}&v=${imageCacheBust}"
+                    class="w-10 h-10 rounded-full border-0"
+                    sandbox="allow-scripts">
+                </iframe>
             </div>
-            <p style="color: var(--text-main)">${text}</p>
-        </div>
-    `;
+            <div>
+                <div class="flex items center space-x-2">
+                    <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
+                    <span class="text-xs" style="color: var(--text-muted)">${time}</span>
+                </div>
+                <p style="color: var(--text-main)">${text}</p>
+                <img src="${imageSRC}" class="mt-2 rounded-lg max-w-md"/>
+            </div>
+          `;
+    }
 
     chat.appendChild(div);
 
@@ -1566,6 +2083,8 @@
 
     disableSettingsSave();
   }
+
+  window.addEventListener("resize", layoutMasonry);
 </script>
 
 </body>
