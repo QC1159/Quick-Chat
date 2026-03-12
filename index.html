@@ -2,250 +2,278 @@
 <html lang="en">
 <head>
   <script>
-    // Redirect immediately if token is present
-    (function() {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; token=`);
-      if (parts.length !== 2) {
-        window.location.replace('./login.html'); // replace() avoids adding to history
+      // Redirect immediately if token is present
+      (function () {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; token=`);
+          if (parts.length !== 2) {
+              window.location.replace('./login.html'); // replace() avoids adding to history
+          }
+      })();
+  </script>
+
+  <!-- Add mobile-detection script (minimal, fast) -->
+  <script>
+    (function detectMobile() {
+      try {
+        const ua = navigator.userAgent || '';
+        const isUserAgentMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(ua);
+        const isTouch = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+        const smallScreen = Math.min(window.screen.width || Infinity, window.screen.height || Infinity) <= 700;
+        const urlParamMobile = new URLSearchParams(window.location.search).get('mobile') === "1";
+        if (isUserAgentMobile || isTouch || smallScreen || urlParamMobile) {
+          document.documentElement.classList.add('mobile'); // apply to <html> for broader selectors
+          document.body.classList.add('mobile'); // ensure body also has class
+          document.documentElement.setAttribute('data-is-mobile', 'true');
+        }
+        console.log("Mobile: " + isUserAgentMobile);
+      } catch (e) {
+        // silent fallback
       }
     })();
   </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quick Chat</title>
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
   <link rel="manifest" href="./site.webmanifest">
-  <script>
-    // Fetch the emoji JSON from the CDN
-    let emojiData;
-
-    fetch("http://cdn.jsdelivr.net/npm/@emoji-mart/data")
-            .then(res => res.json())
-            .then(data => {
-              emojiData = data; // assign it to a variable
-              console.log("Emoji data loaded:", emojiData.categories.length);
-            })
-            .catch(err => console.error("Failed to load emoji data:", err));
-  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    :root {
-      --bg-main: #111217;
-      --bg-secondary: #1e1f25;
-      --bg-tertiary: #2a2b31;
+      :root {
+          --bg-main: #111217;
+          --bg-secondary: #1e1f25;
+          --bg-tertiary: #2a2b31;
 
-      --border-main: #1e1f25;
-      --border-soft: #2a2b31;
+          --border-main: #1e1f25;
+          --border-soft: #2a2b31;
 
-      --text-main: #e0e0e0;
-      --text-muted: #9ca3af;
+          --text-main: #e0e0e0;
+          --text-muted: #9ca3af;
 
-      --accent: #2563eb;
-    }
+          --accent: #2563eb;
+      }
 
-    /* Light theme */
-    [data-theme="light"] {
-      --bg-main: #f3f4f6;
-      --bg-secondary: #ffffff;
-      --bg-tertiary: #e5e7eb;
+      /* Light theme */
+      [data-theme="light"] {
+          --bg-main: #f3f4f6;
+          --bg-secondary: #ffffff;
+          --bg-tertiary: #e5e7eb;
 
-      --border-main: #d1d5db;
-      --border-soft: #e5e7eb;
+          --border-main: #d1d5db;
+          --border-soft: #e5e7eb;
 
-      --text-main: #111827;
-      --text-muted: #4b5563;
+          --text-main: #111827;
+          --text-muted: #4b5563;
 
-      --accent: #2563eb;
-    }
+          --accent: #2563eb;
+      }
 
-    /* Midnight theme */
-    [data-theme="midnight"] {
-      --bg-main: #05060a;
-      --bg-secondary: #0b0d14;
-      --bg-tertiary: #141726;
+      /* Midnight theme */
+      [data-theme="midnight"] {
+          --bg-main: #05060a;
+          --bg-secondary: #0b0d14;
+          --bg-tertiary: #141726;
 
-      --border-main: #0f1220;
-      --border-soft: #1c1f36;
+          --border-main: #0f1220;
+          --border-soft: #1c1f36;
 
-      --text-main: #e5e7eb;
-      --text-muted: #94a3b8;
+          --text-main: #e5e7eb;
+          --text-muted: #94a3b8;
 
-      --accent: #6366f1;
-    }
+          --accent: #6366f1;
+      }
 
-    /* Solarized theme */
-    [data-theme="solarized"] {
-      --bg-main: #fdf6e3;
-      --bg-secondary: #eee8d5;
-      --bg-tertiary: #f5f1dc;
+      /* Solarized theme */
+      [data-theme="solarized"] {
+          --bg-main: #fdf6e3;
+          --bg-secondary: #eee8d5;
+          --bg-tertiary: #f5f1dc;
 
-      --border-main: #eee8d5;
-      --border-soft: #f5f1dc;
+          --border-main: #eee8d5;
+          --border-soft: #f5f1dc;
 
-      --text-main: #657b83;
-      --text-muted: #93a1a1;
+          --text-main: #657b83;
+          --text-muted: #93a1a1;
 
-      --accent: #b58900;
-    }
+          --accent: #b58900;
+      }
 
-    /* Forest theme */
-    [data-theme="forest"] {
-      --bg-main: #0b1f0b;
-      --bg-secondary: #123212;
-      --bg-tertiary: #1b3a1b;
+      /* Forest theme */
+      [data-theme="forest"] {
+          --bg-main: #0b1f0b;
+          --bg-secondary: #123212;
+          --bg-tertiary: #1b3a1b;
 
-      --border-main: #123212;
-      --border-soft: #1b3a1b;
+          --border-main: #123212;
+          --border-soft: #1b3a1b;
 
-      --text-main: #cdeac0;
-      --text-muted: #8db68c;
+          --text-main: #cdeac0;
+          --text-muted: #8db68c;
 
-      --accent: #22c55e;
-    }
+          --accent: #22c55e;
+      }
 
-    /* Neon theme */
-    [data-theme="neon"] {
-      --bg-main: #0f0f1a;         /* Very dark background to make neon pop */
-      --bg-secondary: #1a1a2e;
-      --bg-tertiary: #22223b;
+      /* Neon theme */
+      [data-theme="neon"] {
+          --bg-main: #0f0f1a; /* Very dark background to make neon pop */
+          --bg-secondary: #1a1a2e;
+          --bg-tertiary: #22223b;
 
-      --border-main: #ff00ff;     /* Neon magenta border */
-      --border-soft: #00ffff;     /* Neon cyan softer borders */
+          --border-main: #ff00ff; /* Neon magenta border */
+          --border-soft: #00ffff; /* Neon cyan softer borders */
 
-      --text-main: #39ff14;       /* Bright neon green */
-      --text-muted: #ff4dff;      /* Neon pink for secondary text */
+          --text-main: #39ff14; /* Bright neon green */
+          --text-muted: #ff4dff; /* Neon pink for secondary text */
 
-      --accent: #00ffff;          /* Neon cyan for buttons, highlights */
-    }
+          --accent: #00ffff; /* Neon cyan for buttons, highlights */
+      }
 
-    html, body {
-      overflow-x: hidden;
-      height: 100%;
-      margin: 0;
-    }
+      html, body {
+          overflow-x: hidden;
+          height: 100%;
+          margin: 0;
+      }
 
-    body {
-      background: radial-gradient(circle at top left, var(--bg-tertiary), var(--bg-main));
-      color: var(--text-main);
-      font-family: 'Inter', sans-serif;
-    }
+      body {
+          background: radial-gradient(circle at top left, var(--bg-tertiary), var(--bg-main));
+          color: var(--text-main);
+          font-family: 'Inter', sans-serif;
+      }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #2f3136;
-      border-radius: 8px;
-    }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+          width: 8px;
+      }
 
-    /* Chat message bubble */
-    .message {
-      transition: background-color 0.2s;
-    }
-    .message:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
+      ::-webkit-scrollbar-thumb {
+          background: #2f3136;
+          border-radius: 8px;
+      }
 
-    .fade-out {
-      opacity: 0;
-      pointer-events: none; /* prevents interaction after fading */
-      transition: opacity 350ms ease; /* controls the fade duration */
-    }
+      /* Chat message bubble */
+      .message {
+          transition: background-color 0.2s;
+      }
 
-    iframe {
-      pointer-events: none;
-    }
+      .message:hover {
+          background-color: rgba(255, 255, 255, 0.05);
+      }
 
-    #cropContainer {
-      width: 220px;
-      height: 220px;
-      margin: auto;
-      position: relative;
-      border-radius: 50%;
-      overflow: hidden;
-      background: #111;
-      cursor: grab;
-    }
+      .fade-out {
+          opacity: 0;
+          pointer-events: none; /* prevents interaction after fading */
+          transition: opacity 350ms ease; /* controls the fade duration */
+      }
 
-    #cropContainer:active {
-      cursor: grabbing;
-    }
+      iframe {
+          pointer-events: none;
+      }
 
-    #previewImage {
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform-origin: 0 0;
-      will-change: transform;
-    }
+      #cropContainer {
+          max-width: 100%;
+          max-height: calc(100% - 100px);
+          aspect-ratio: 1;
+          margin: auto;
+          position: relative;
+          border-radius: 50%;
+          overflow: hidden;
+          background: #111;
+          cursor: grab;
+      }
+
+      #cropContainer:active {
+          cursor: grabbing;
+      }
+
+      #previewImage {
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform-origin: 0 0;
+          will-change: transform;
+      }
 
 
-    .crop-border {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.8);
-      pointer-events: none;
-    }
+      .crop-border {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          border: 3px solid rgba(255, 255, 255, 0.8);
+          pointer-events: none;
+      }
 
-    .room-crop-border {
-      position: absolute;
-      inset: 0;
-      border-radius: 10%;
-      border: 3px solid rgba(255,255,255,0.8);
-      pointer-events: none;
-    }
+      .room-crop-border {
+          position: absolute;
+          inset: 0;
+          border-radius: 10%;
+          border: 3px solid rgba(255, 255, 255, 0.8);
+          pointer-events: none;
+      }
 
-    #roomCropContainer {
-      width: 220px;
-      height: 220px;
-      margin: auto;
-      position: relative;
-      border-radius: 10%;
-      overflow: hidden;
-      background: #111;
-      cursor: grab;
-    }
+      #roomCropContainer {
+          width: 220px;
+          height: 220px;
+          margin: auto;
+          position: relative;
+          border-radius: 10%;
+          overflow: hidden;
+          background: #111;
+          cursor: grab;
+      }
 
-    #roomCropContainer:active {
-      cursor: grabbing;
-    }
+      #roomCropContainer:active {
+          cursor: grabbing;
+      }
 
-    #roomPreviewImage {
-      position: absolute;
-      top: 0;
-      left: 0;
-      max-width: none;
-      max-height: none;
-    }
+      #roomPreviewImage {
+          position: absolute;
+          top: 0;
+          left: 0;
+          max-width: none;
+          max-height: none;
+      }
 
-    #gifResults {
-        position: relative;
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+      .message .delete-btn {
+          opacity: 0;
+          transition: opacity 0.15s ease;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+      }
 
-    .gif-item {
-        position: absolute;
-        width: 120px; /* column width */
-        margin-bottom: 10px;
-    }
+      .message:hover .delete-btn {
+          opacity: 1;
+      }
 
-    .gif-item img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 8px;
-        cursor: pointer;
-    }
+
+      #gifResults {
+          position: relative;
+          flex: 1;
+          overflow-y: auto;
+          overflow-x: hidden;
+      }
+
+      .gif-item {
+          position: absolute;
+          width: 120px; /* column width */
+          margin-bottom: 10px;
+      }
+
+      .gif-item img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 8px;
+          cursor: pointer;
+      }
   </style>
+  <link href="./css/mobile.css" rel="stylesheet">
 </head>
 <body class="flex flex-col">
 
@@ -253,9 +281,9 @@
 <div class="w-full h-12 flex items-center border-b"
      style="background: var(--bg-tertiary); border-color: var(--border-main);">
   <!-- Center group -->
-  <div class="flex-1 flex justify-center items-center">
+  <div class="header-center-group flex-1 flex justify-center items-center">
     <img src="assets/logo.png" class="w-7 mr-2">
-    <h1 class="text-lg font-semibold" style="color: var(--text-main);">Quick Chat</h1>
+    <h1 class="mobile-hidden text-lg font-semibold" style="color: var(--text-main);">Quick Chat</h1>
   </div>
 
   <!-- Right item -->
@@ -269,39 +297,40 @@
 
 <div id="profilePopup"
      class="absolute top-12 right-2 rounded-lg shadow-xl p-3 hidden flex flex-col space-y-2 border min-w-[140px]"
-     style="background: var(--bg-tertiary); border-color: var(--border-main);">
+     style="background: var(--bg-tertiary); border-color: var(--border-main); z-index: 999;">
 
   <button
-          onclick="openSettings()"
-          class="w-full text-left px-3 py-2 rounded-md hover:bg-[rgba(255,255,255,0.05)] transition-colors"
-          style="color: var(--text-main); font-weight: 500;">
+      onclick="openSettingsPopup()"
+      class="w-full text-left px-3 py-2 rounded-md hover:bg-[rgba(255,255,255,0.05)] transition-colors"
+      style="color: var(--text-main); font-weight: 500;">
     Settings
   </button>
 
   <button
-          onclick="deleteCookie('token'); location.reload();"
-          class="w-full text-left px-3 py-2 rounded-md hover:bg-[rgba(255,0,0,0.1)] transition-colors"
-          style="color: var(--text-main); font-weight: 500;">
+      onclick="deleteCookie('token'); location.reload();"
+      class="w-full text-left px-3 py-2 rounded-md hover:bg-[rgba(255,0,0,0.1)] transition-colors"
+      style="color: var(--text-main); font-weight: 500;">
     Logout
   </button>
 </div>
 
 
 <!-- Rest of the layout -->
-<div class="flex flex-1 h-[calc(100%-48px)]">
+<div class="flex flex-1 h-[calc(100%-48px)] min-w-0">
 
   <!-- Left sidebars -->
-  <div class="w-[88px] flex flex-col border-r"
+  <div id="leftSidebars" class="w-[88px] flex flex-col border-r shrink-0"
        style="background: var(--bg-secondary); border-color: var(--border-soft);">
 
     <!-- Friends -->
     <div id="friendsSidebar" class="flex-1 overflow-y-auto flex flex-col items-center overflow-x-hidden">
-      <div class="p-3 uppercase text-xs tracking-wider"
-           style="color: var(--text-muted);">Friends</div>
+      <div class="sidebar-title p-3 uppercase text-xs tracking-wider"
+           style="color: var(--text-muted);">Friends
+      </div>
 
-      <div class="py-2 cursor-pointer rounded-full flex justify-center w-full"
-           onclick="document.getElementById('find-friend-popup').classList.remove('hidden')">
-        <img class="rounded-full w-14 h-14 shrink-0"
+      <div class="sidebar-button py-2 cursor-pointer rounded-full flex justify-center w-full"
+           onclick="openFindFriendPopup()">
+        <img class="sidebar-button-img rounded-full w-14 h-14 shrink-0"
              style="background: var(--bg-tertiary);"
              src="assets/CreateRoomButton.png"
              onmouseenter="showTooltip(event, 'Add Friend')"
@@ -313,12 +342,13 @@
 
     <!-- Rooms -->
     <div class="flex-1 overflow-y-auto flex flex-col items-center overflow-x-hidden" id="rooms-sidebar">
-      <div class="p-3 uppercase text-xs tracking-wider"
-           style="color: var(--text-muted);">Rooms</div>
+      <div class="sidebar-title p-3 uppercase text-xs tracking-wider"
+           style="color: var(--text-muted);">Rooms
+      </div>
 
-      <div class="py-2 cursor-pointer rounded-full flex justify-center w-full"
-           onclick="document.getElementById('new-room-popup').classList.remove('hidden')">
-        <img class="rounded-full w-14 h-14 shrink-0"
+      <div class="sidebar-button py-2 cursor-pointer rounded-full flex justify-center w-full"
+           onclick="openCreateRoomPopup()">
+        <img class="sidebar-button-img rounded-full w-14 h-14 shrink-0"
              style="background: var(--bg-tertiary);"
              src="assets/CreateRoomButton.png"
              onmouseenter="showTooltip(event, 'Create Room')"
@@ -331,7 +361,7 @@
   <div class="flex-1 flex flex-col">
 
     <!-- Channel header -->
-    <div class="p-4 border-b flex justify-center items-center text-center"
+    <div id="channel-header-container" class="p-4 border-b flex justify-center items-center text-center"
          style="background: var(--bg-secondary); border-color: var(--border-soft);">
       <h2 id="channel-header"
           class="text-lg font-semibold text-center"
@@ -339,59 +369,122 @@
     </div>
 
     <!-- Messages -->
-    <div id="chat-messages" class="flex-1 overflow-y-auto p-5"></div>
+    <div id="chat-messages" class="flex-1 overflow-y-auto py-0 px-5"></div>
 
 
-      <!-- Image preview -->
-      <div id="imagePreviewContainer" style="display:none; padding: 8px;">
-        <div style="position: relative; display: inline-block;">
-          <img id="imagePreview" style="max-height:120px; border-radius:8px;">
-          <button
-                  onclick="removeImage()"
-                  style="position:absolute; top:4px; right:4px; background:black; color:white; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">
-            ✕
-          </button>
-        </div>
-      </div>
-
-      <div class="p-4 border-t flex items-center space-x-3"
-           style="background: var(--bg-secondary); border-color: var(--border-soft);">
-
-        <!-- Input wrapper -->
-        <div class="relative flex-1">
-          <input
-                  id="messageInput"
-                  type="text"
-                  placeholder="Message #general"
-                  onkeyup="if(event.key === 'Enter') sendMessage()"
-                  class="w-full rounded-lg px-4 py-2 pr-28 outline-none"
-                  style="background: var(--bg-tertiary); color: var(--text-main);"
-          />
-
-          <!-- Buttons -->
-          <div class="absolute right-2 top-1/2 -translate-y-1/2 flex space-x-2">
-
-            <!-- Emoji -->
-            <button onclick="toggleEmojiPicker()">😊</button>
-
-            <!-- Image -->
-            <button onclick="document.getElementById('imageUpload').click()">📷</button>
-            <input id="imageUpload" type="file" accept="image/*" hidden>
-
-            <!-- GIF -->
-            <button onclick="openGifPicker()">🎞️</button>
-          </div>
-        </div>
-
+    <!-- Image preview -->
+    <div id="imagePreviewContainer"
+         style="display:none; padding: 8px; background-color: var(--bg-secondary); border-top: 1px solid var(--border-soft);">
+      <div style="position: relative; display: inline-block;">
+        <img id="imagePreview" style="max-height:120px; border-radius:8px;">
         <button
-                onclick="sendMessage()"
-                class="px-4 py-2 rounded-lg"
-                style="background: var(--accent); color: white;">
-          Send
+            onclick="removeImage()"
+            style="position:absolute; top:4px; right:4px; background:black; color:white; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">
+          ✕
         </button>
       </div>
+    </div>
 
-      <!-- Emoji Picker -->
+    <div class="p-4 border-t flex items-center space-x-3 min-w-0"
+         style="background: var(--bg-secondary); border-color: var(--border-soft);">
+
+      <div id="mobileMenu"
+           class="hidden absolute bottom-14 left-2 space-x-3 p-2 rounded-lg shadow-lg"
+           style="background: var(--bg-secondary);">
+
+        <!-- Emoji -->
+        <button onclick="toggleEmojiPicker()" class="icon-btn">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="9" cy="10" r="1.2"/>
+            <circle cx="15" cy="10" r="1.2"/>
+            <path d="M8 14c1.2 1.5 2.6 2 4 2s2.8-.5 4-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <!-- Image Upload -->
+        <button onclick="document.getElementById('imageUpload').click()" class="icon-btn">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <rect x="3" y="5" width="18" height="14" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="8.5" cy="10" r="1.5"/>
+            <path d="M21 16l-5-5-4 4-2-2-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <!-- GIF -->
+        <button onclick="openGifPicker()" class="icon-btn">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <rect x="3" y="6" width="18" height="12" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <text x="7" y="15" font-size="6" font-family="Arial, sans-serif" fill="currentColor">GIF</text>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- Input wrapper -->
+      <div class="relative flex flex-1 items-center min-w-0">
+        <button
+            onclick="toggleMobileMenu()"
+            class="mobile-shown hidden icon-btn absolute left-[-18px] top-1/2 -translate-y-1/2 flex space-x-2">
+
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+
+        </button>
+
+        <textarea
+            id="messageInput"
+            rows="1"
+            placeholder="Message"
+            class="w-full rounded-lg px-4 py-2 pr-0 sm:pr-28 outline-none resize-none overflow-hidden leading-normal"
+            style="background: var(--bg-tertiary); color: var(--text-main);"
+            oninput="autoResize(this)"
+        ></textarea>
+
+        <div class="mobile-hidden absolute right-2 top-1/2 -translate-y-1/2 flex space-x-2">
+
+          <!-- Emoji -->
+          <button onclick="toggleEmojiPicker()" class="icon-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="9" cy="10" r="1.2"/>
+              <circle cx="15" cy="10" r="1.2"/>
+              <path d="M8 14c1.2 1.5 2.6 2 4 2s2.8-.5 4-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+          <!-- Image Upload -->
+          <button onclick="document.getElementById('imageUpload').click()" class="icon-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <rect x="3" y="5" width="18" height="14" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="8.5" cy="10" r="1.5"/>
+              <path d="M21 16l-5-5-4 4-2-2-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+          <input id="imageUpload" type="file" accept="image/*" hidden>
+
+          <!-- GIF -->
+          <button onclick="openGifPicker()" class="icon-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <rect x="3" y="6" width="18" height="12" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
+              <text x="7" y="15" font-size="6" font-family="Arial, sans-serif" fill="currentColor">GIF</text>
+            </svg>
+          </button>
+
+        </div>
+      </div>
+
+      <button
+          onclick="sendMessage()"
+          class="px-4 py-2 rounded-lg"
+          style="background: var(--accent); color: white;">
+        Send
+      </button>
+    </div>
+
+    <!-- Emoji Picker -->
     <div id="emojiPicker"
          style="
        display:none;
@@ -409,9 +502,9 @@
 
       <!-- Search -->
       <input
-              id="emojiSearch"
-              placeholder="Search emojis"
-              style="
+          id="emojiSearch"
+          placeholder="Search emojis"
+          style="
       width:100%;
       padding:6px;
       border-radius:6px;
@@ -434,8 +527,8 @@
          class="hidden fixed inset-0 z-[10000] flex items-center justify-center"
          style="background: rgba(0,0,0,0.6);">
 
-        <div class="h-[450px] w-[435px] text-align-center rounded-xl shadow-2xl border p-4 flex flex-col overflow-hidden"
-             style="background: var(--bg-tertiary); border-color: var(--border-main);">
+      <div id="gifPickerMain" class="h-[450px] w-[435px] text-align-center rounded-xl shadow-2xl border p-4 flex flex-col overflow-hidden"
+           style="background: var(--bg-tertiary); border-color: var(--border-main);">
 
         <!-- Header -->
         <div class="flex items-center justify-between mb-3">
@@ -447,23 +540,20 @@
 
         <!-- Search -->
         <input
-                id="gifSearch"
-                placeholder="Search GIFs"
-                class="w-full rounded-lg px-3 py-2 mb-3 outline-none"
-                style="background: var(--bg-secondary); color: var(--text-main);"
+            id="gifSearch"
+            placeholder="Search KLIPY"
+            class="w-full rounded-lg px-3 py-2 mb-3 outline-none"
+            style="background: var(--bg-secondary); color: var(--text-main);"
         />
 
         <!-- Results -->
         <div id="gifResults">
         </div>
 
-
-
+        <img id="poweredByKlipy" src="assets/Powered_by_KLIPY.png" alt="Powered by KLIPY" class="mt-3 ml-auto h-6"
+             onerror="this.src='assets/Powered_by_Klipy.png'">
       </div>
     </div>
-
-
-
   </div>
 </div>
 
@@ -480,7 +570,7 @@
   <!-- Logo and Program Name -->
   <div class="absolute top-20 flex items-center space-x-6">
     <img src="assets/logo.png" alt="Quick Chat Logo" class="h-36 w-36 drop-shadow-lg">
-    <h1 class="text-7xl font-extrabold tracking-tight" style="color: var(--text-main);">
+    <h1 class="mobile-hidden text-7xl font-extrabold tracking-tight" style="color: var(--text-main);">
       Quick Chat
     </h1>
   </div>
@@ -493,8 +583,9 @@
     <div class="relative h-16 w-16">
       <div class="absolute inset-0 rounded-full border-4"
            style="border-color: var(--border-soft);"></div>
-      <div class="absolute inset-0 rounded-full border-4 border-b-transparent border-l-transparent border-r-transparent animate-spin"
-           style="border-top-color: var(--text-main);"></div>
+      <div
+          class="absolute inset-0 rounded-full border-4 border-b-transparent border-l-transparent border-r-transparent animate-spin"
+          style="border-top-color: var(--text-main);"></div>
     </div>
 
     <!-- Loading Text -->
@@ -505,187 +596,150 @@
 </div>
 
 <!-- New Room Popup -->
-<div id="new-room-popup"
-     class="fixed inset-0 z-[10000] flex items-center justify-center hidden"
-     style="background: rgba(0,0,0,0.5);">
+<!--div id="new-room-popup"
+     class="hidden fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center"
+     style="background: rgba(0,0,0,0.6);">
 
-  <div class="p-6 rounded-lg shadow-lg w-96"
-       style="background: var(--bg-tertiary);">
+  <div class="w-[90%] h-[90%] rounded-xl shadow-2xl border flex flex-col"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
 
-    <h2 class="text-2xl font-semibold mb-4" style="color: var(--text-main);">
-      Create New Room
-    </h2>
+    <div class="px-6 py-4 border-b" style="border-color: var(--border-main);">
+      <h2 class="text-lg font-semibold" style="color: var(--text-main);">
+        Create New Room
+      </h2>
+    </div>
 
-    <input
-            id="roomNameInput"
-            type="text"
-            placeholder="Room Name"
-            class="w-full rounded-lg px-4 py-2 mb-4 outline-none"
-            style="background: var(--bg-secondary); color: var(--text-main);"
-    />
+    <div class="flex-1 overflow-y-auto p-6 space-y-4">
 
-    <!-- Room Image (optional) -->
-    <div class="space-y-3 mb-4 text-center">
+      <input id="roomNameInput" type="text"
+             placeholder="Room Name"
+             class="w-full rounded-lg px-4 py-2 outline-none"
+             style="background: var(--bg-secondary); color: var(--text-main);">
 
-      <p class="text-sm" style="color: var(--text-muted);">
-        Room Image (optional)
-      </p>
+      <p style="color: var(--text-muted);">Room Image (optional)</p>
 
       <div id="roomCropContainer">
-        <img id="roomPreviewImage" draggable="false" />
+        <img id="roomPreviewImage" draggable="false"/>
         <div class="room-crop-border"></div>
       </div>
 
       <input type="file" accept="image/*" id="roomImageInput">
-
       <input type="range" id="roomZoomSlider" min="1" max="3" step="0.01" value="1">
 
     </div>
 
+    <div class="px-6 py-4 border-t flex justify-between"
+         style="border-color: var(--border-main);">
 
-    <div class="flex justify-end space-x-4">
-      <button
-              onclick="document.getElementById('new-room-popup').classList.add('hidden')"
+      <button onclick="document.getElementById('new-room-popup').classList.add('hidden')"
               class="px-4 py-2 rounded-lg"
-              style="background: var(--border-soft); color: var(--text-main);"
-      >
+              style="background: var(--border-soft); color: var(--text-main);">
         Cancel
       </button>
 
-      <button
-              onclick="createRoom()"
+      <button onclick="createRoom()"
               class="px-4 py-2 rounded-lg"
-              style="background: var(--accent); color: white;"
-      >
+              style="background: var(--accent); color: white;">
         Create
       </button>
+
     </div>
   </div>
-</div>
+</div -->
 
 <!-- Find Friend Popup -->
-<div id="find-friend-popup"
-     class="fixed inset-0 z-[10000] flex items-center justify-center hidden"
-     style="background: rgba(0,0,0,0.5);">
+<!--div id="find-friend-popup"
+     class="hidden fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center"
+     style="background: rgba(0,0,0,0.6);">
 
-  <div class="p-6 rounded-lg shadow-lg w-96"
-       style="background: var(--bg-tertiary);">
+  <div class="w-[90%] h-[90%] rounded-xl shadow-2xl border flex flex-col"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
 
-    <h2 class="text-2xl font-semibold mb-4" style="color: var(--text-main);">
-      Find Friend
-    </h2>
+    <div class="px-6 py-4 border-b" style="border-color: var(--border-main);">
+      <h2 class="text-lg font-semibold" style="color: var(--text-main);">Find Friend</h2>
+    </div>
 
-    <input
-            id="friendNameInput"
-            type="text"
-            placeholder="Friend Username"
-            class="w-full rounded-lg px-4 py-2 mb-4 outline-none"
-            style="background: var(--bg-secondary); color: var(--text-main);"
-    />
+    <div class="flex-1 overflow-y-auto p-6">
+      <input id="friendNameInput" type="text"
+             placeholder="Friend Username"
+             class="w-full rounded-lg px-4 py-2 outline-none"
+             style="background: var(--bg-secondary); color: var(--text-main);">
+    </div>
 
-    <div class="flex justify-end space-x-4">
-      <button
-              onclick="document.getElementById('find-friend-popup').classList.add('hidden')"
+    <div class="px-6 py-4 border-t flex justify-between"
+         style="border-color: var(--border-main);">
+
+      <button onclick="document.getElementById('find-friend-popup').classList.add('hidden')"
               class="px-4 py-2 rounded-lg"
-              style="background: var(--border-soft); color: var(--text-main);"
-      >
+              style="background: var(--border-soft); color: var(--text-main);">
         Cancel
       </button>
 
-      <button
-              onclick="findFriend()"
+      <button onclick="findFriend()"
               class="px-4 py-2 rounded-lg"
-              style="background: var(--accent); color: white;"
-      >
+              style="background: var(--accent); color: white;">
         Find
       </button>
+
     </div>
   </div>
-</div>
+</div-->
 
 <!-- Settings Popup -->
-<div id="SettingsPopup"
-     class="fixed inset-0 z-[10000] backdrop-blur-sm flex items-center justify-center hidden"
+<!--div id="SettingsPopup"
+     class="hidden fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center"
      style="background: rgba(0,0,0,0.6);">
 
-  <div class="w-[520px] rounded-2xl shadow-2xl border overflow-hidden"
+  <div class="w-[90%] h-[90%] rounded-xl shadow-2xl border flex flex-col"
        style="background: var(--bg-tertiary); border-color: var(--border-main);">
 
-    <!-- Header -->
-    <div class="flex items-center justify-between px-6 py-4 border-b"
+    <div class="px-6 py-4 border-b flex justify-between"
          style="border-color: var(--border-main);">
-      <h2 class="text-xl font-semibold" style="color: var(--text-main);">Settings</h2>
-      <button
-              onclick="document.getElementById('SettingsPopup').classList.add('hidden')"
-              style="color: var(--text-muted);"
-      >✕</button>
+      <h2 class="text-lg font-semibold" style="color: var(--text-main);">Settings</h2>
+      <button onclick="document.getElementById('SettingsPopup').classList.add('hidden')"
+              style="color: var(--text-muted);">✕</button>
     </div>
 
-    <!-- Content -->
-    <div class="p-6 space-y-6">
+    <div class="flex-1 overflow-y-auto p-6 space-y-6">
 
-      <!-- Account Actions -->
-      <div class="space-y-4">
-
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="font-semibold" style="color: var(--text-main);">Email</h3>
-            <p class="text-sm" style="color: var(--text-muted);">
-              Change the email linked to your account
-            </p>
-          </div>
-          <button
-                  onclick="openEmailPopup()"
-                  class="px-4 py-2 rounded-lg border"
-                  style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
-          >
-            Change
-          </button>
+      <div class="flex justify-between">
+        <div>
+          <h3 style="color: var(--text-main);">Email</h3>
+          <p style="color: var(--text-muted);">Change your email</p>
         </div>
-
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="font-semibold" style="color: var(--text-main);">Password</h3>
-            <p class="text-sm" style="color: var(--text-muted);">
-              Update your account password
-            </p>
-          </div>
-          <button
-                  onclick="openPasswordPopup()"
-                  class="px-4 py-2 rounded-lg border"
-                  style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
-          >
-            Change
-          </button>
-        </div>
+        <button onclick="openEmailPopup()" class="px-4 py-2 rounded-lg border"
+                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);">
+          Change
+        </button>
       </div>
 
-      <!-- Profile Image -->
+      <div class="flex justify-between">
+        <div>
+          <h3 style="color: var(--text-main);">Password</h3>
+          <p style="color: var(--text-muted);">Update password</p>
+        </div>
+        <button onclick="openPasswordPopup()" class="px-4 py-2 rounded-lg border"
+                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);">
+          Change
+        </button>
+      </div>
+
       <div>
         <h3 class="font-semibold mb-2" style="color: var(--text-main);">Profile Image</h3>
-        <div class="flex items-center space-x-4">
-          <div class="w-9 h-9 rounded-full usr-icon"
-               style="background: var(--bg-tertiary);"></div>
-          <button
-                  onclick="openUploadProfilePopup()"
-                  class="px-4 py-2 rounded-lg border"
-                  style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
-          >
+        <div class="flex items-center space-x-4"> <div class="w-9 h-9 rounded-full usr-icon" style="background: var(--bg-tertiary);">
+
+        </div>
+          <button onclick="openUploadProfilePopup()" class="px-4 py-2 rounded-lg border" style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" >
             Upload New Image
           </button>
         </div>
       </div>
 
-      <!-- Theme -->
       <div>
-        <h3 class="font-semibold mb-2" style="color: var(--text-main);">Theme</h3>
-        <select
-                id="themeSelect"
-                onchange="enableSettingsSave()"
-                class="w-full rounded-lg px-4 py-2 outline-none border"
-                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"
-        >
-          <option value="dark">Dark (Default)</option>
+        <h3 style="color: var(--text-main);">Theme</h3>
+        <select id="themeSelect" class="w-full rounded-lg px-4 py-2 border"
+                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);">
+          <option value="dark">Dark</option>
           <option value="light">Light</option>
           <option value="midnight">Midnight</option>
           <option value="solarized">Solarized</option>
@@ -693,28 +747,112 @@
           <option value="neon">Neon</option>
         </select>
       </div>
+
     </div>
 
-    <!-- Footer -->
-    <div class="px-6 py-4 border-t flex justify-end space-x-3"
+    <div class="px-6 py-4 border-t flex justify-between"
          style="border-color: var(--border-main);">
-      <button
-              onclick="document.getElementById('SettingsPopup').classList.add('hidden')"
+
+      <button onclick="document.getElementById('SettingsPopup').classList.add('hidden')"
               class="px-4 py-2 rounded-lg"
-              style="background: var(--border-soft); color: var(--text-main);"
-      >
+              style="background: var(--border-soft); color: var(--text-main);">
         Close
       </button>
-      <button
-              id="saveSettingsButton"
-              class="px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
-              style="background: var(--accent); color: white;"
-              onclick="saveSettings(); document.getElementById('SettingsPopup').classList.add('hidden')"
-              disabled
-      >
+
+      <button onclick="saveSettings()"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--accent); color: white;">
         Save Changes
       </button>
+
     </div>
+  </div>
+</div-->
+
+<!-- Upload new profile image popup -->
+<!--div id="uploadProfileImagePopup"
+     class="hidden fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center text-center"
+     style="background: rgba(0,0,0,0.6);">
+
+  <div class="w-[90%] h-[90%] rounded-xl shadow-2xl border flex flex-col"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+    <div class="px-6 py-4 border-b" style="border-color: var(--border-main);">
+      <h2 class="text-lg font-semibold" style="color: var(--text-main);">
+        Upload New Profile Image
+      </h2>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-6 space-y-4">
+
+      <div id="cropContainer">
+        <div id="transformWrapper">
+          <img id="previewImage" draggable="false"/>
+          <div class="crop-border"></div>
+        </div>
+      </div>
+
+      <input type="file" accept="image/*" id="imageInput">
+      <input type="range" id="zoomSlider" min="1" max="3" step="0.01" value="1">
+
+      <p style="color: var(--text-muted);">
+        Changes may take a few minutes to an hour to take place
+      </p>
+    </div>
+
+    <div class="px-6 py-4 border-t flex justify-between"
+         style="border-color: var(--border-main);">
+
+      <button onclick="closeUploadProfileImagePopup()"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);">
+        Cancel
+      </button>
+
+      <button onclick="uploadCroppedImage()"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--accent); color: white;">
+        Upload
+      </button>
+
+    </div>
+  </div>
+</div-->
+
+<!-- UNIVERSAL POPUP TEMPLATE -->
+<div id="universalPopup"
+     class="hidden fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center"
+     style="background: rgba(0,0,0,0.6);">
+
+  <div class="popup-container w-[90%] h-[90%] rounded-xl shadow-2xl border flex flex-col"
+       style="background: var(--bg-tertiary); border-color: var(--border-main);">
+
+    <!-- Header -->
+    <div class="popup-header px-6 py-4 border-b flex justify-between"
+         style="border-color: var(--border-main);">
+      <h2 id="popupTitle" class="text-lg font-semibold" style="color: var(--text-main);"></h2>
+      <button onclick="closePopup()" style="color: var(--text-muted);">✕</button>
+    </div>
+
+    <!-- Dynamic Content -->
+    <div id="popupBody" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+
+    <!-- Footer Buttons -->
+    <div class="popup-footer px-6 py-4 border-t flex justify-between"
+         style="border-color: var(--border-main);">
+      <button id="popupCancelBtn"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--border-soft); color: var(--text-main);">
+        Cancel
+      </button>
+
+      <button id="popupConfirmBtn"
+              class="px-4 py-2 rounded-lg"
+              style="background: var(--accent); color: white;">
+        Confirm
+      </button>
+    </div>
+
   </div>
 </div>
 
@@ -732,9 +870,9 @@
 
     <div class="p-6 space-y-4">
       <input class="w-full rounded-lg px-4 py-2 outline-none border"
-             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
-      <input class="w-full rounded-lg px-4 py-2 outline-none border"
-             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+             id="ChangeEmailInput"
+             placeholder="Enter New Email"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"/>
     </div>
 
     <div class="px-6 py-4 border-t flex justify-end space-x-3"
@@ -744,6 +882,7 @@
         Cancel
       </button>
       <button class="px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
+              onclick="changeEmail()"
               style="background: var(--accent); color: white;">
         Save
       </button>
@@ -765,11 +904,17 @@
 
     <div class="p-6 space-y-3">
       <input class="w-full rounded-lg px-4 py-2 outline-none border"
-             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+             placeholder="Current Password"
+             id="ChangePasswordCurrentPassword"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"/>
       <input class="w-full rounded-lg px-4 py-2 outline-none border"
-             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+             placeholder="New Password"
+             id="ChangePasswordNewPassword"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"/>
       <input class="w-full rounded-lg px-4 py-2 outline-none border"
-             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);" />
+             placeholder="Confirm New Password"
+             id="ChangePasswordConfirmNewPassword"
+             style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);"/>
     </div>
 
     <div class="px-6 py-4 border-t flex justify-end space-x-3"
@@ -779,6 +924,7 @@
         Cancel
       </button>
       <button class="px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
+              onclick="changePassword()"
               style="background: var(--accent); color: white;">
         Save
       </button>
@@ -786,1201 +932,1530 @@
   </div>
 </div>
 
-<!-- Upload new profile image popup -->
-<div id="uploadProfileImagePopup"
-     class="fixed inset-0 z-[11000] backdrop-blur-sm flex items-center justify-center hidden text-center"
-     style="background: rgba(0,0,0,0.6);">
+<div id="serverDown" class="hidden fixed inset-0 z-[12000] flex items-center justify-center">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
 
-  <div class="w-[420px] rounded-xl shadow-2xl border"
-       style="background: var(--bg-tertiary); border-color: var(--border-main);">
+  <!-- Modal -->
+  <div class="relative w-full max-w-md p-8 rounded-2xl shadow-2xl text-center"
+       style="background: var(--bg-tertiary); color: var(--text-main);">
 
-    <div class="px-6 py-4 border-b" style="border-color: var(--border-main);">
-      <h2 class="text-lg font-semibold" style="color: var(--text-main);">
-        Upload New Profile Image
-      </h2>
-    </div>
+    <!-- Spinner -->
+    <div
+        class="mx-auto mb-4 w-12 h-12 border-4 border-transparent border-t-[var(--accent)] rounded-full animate-spin"></div>
 
-    <div class="p-6 space-y-4 text-center">
+    <h2 class="text-2xl font-bold mb-2">
+      Server Temporarily Offline
+    </h2>
 
-      <!-- Circular crop area -->
-      <div id="cropContainer">
-        <div id="transformWrapper">
-        <img id="previewImage" draggable="false" />
-        <div class="crop-border"></div>
-        </div>
-      </div>
+    <p class="mb-6 text-sm" style="color: var(--text-muted);">
+      We're doing some quick maintenance.
+      Please try again in a moment.
+    </p>
 
+    <button
+        onclick="location.reload()"
+        class="px-6 py-2 rounded-xl font-semibold transition-transform hover:scale-105 active:scale-95"
+        style="background: var(--accent); color: white;"
+    >
+      Retry Connection
+    </button>
 
-      <!-- File input -->
-      <input type="file" accept="image/*" id="imageInput">
-
-      <!-- Zoom slider -->
-      <input type="range" id="zoomSlider" min="1" max="3" step="0.01" value="1">
-
-    </div>
-
-    <p>Changes may take a few minutes to an hour to take place</p>
-
-    <div class="px-6 py-4 border-t flex justify-end space-x-3"
-         style="border-color: var(--border-main);">
-
-      <button onclick="closeUploadProfileImagePopup()"
-              class="px-4 py-2 rounded-lg"
-              style="background: var(--border-soft); color: var(--text-main);">
-        Cancel
-      </button>
-
-      <button onclick="uploadCroppedImage()"
-              class="px-4 py-2 rounded-lg"
-              style="background: var(--accent); color: white;">
-        Upload
-      </button>
-    </div>
   </div>
 </div>
 
-<script>
-  const gifPicker = document.getElementById("gifPicker");
-  const gifResults = document.getElementById("gifResults");
-  const gifSearch = document.getElementById("gifSearch");
+<div id="room-context-menu"
+     class="fixed bg-gray-800 text-white rounded shadow-lg hidden z-50">
+  <div id="ctx-leave" class="px-4 py-2 hover:bg-red-600 cursor-pointer">Leave Room</div>
+  <div id="ctx-invite" class="px-4 py-2 hover:bg-blue-600 cursor-pointer">Add Invite</div>
+</div>
 
-  let gifQuery = "";
-  let gifPage = 1;
-  let gifLoading = false;
-  let gifHasMore = true;
-  let gifPreloadPage = 2; // always stay one page ahead
-  let requestedPages = new Set();
-
-  function requestGifPage(page) {
-    if (!gifHasMore) return;
-    if (requestedPages.has(page)) return;
-
-    gifLoading = true;
-    requestedPages.add(page);
-
-    if (gifQuery) {
-      ws.send(JSON.stringify({
-        type: "gif_search",
-        query: gifQuery,
-        page: page
-      }));
-    } else {
-      ws.send(JSON.stringify({
-        type: "trending_gifs",
-        page: page
-      }));
-    }
-
-    if (page === 1) {
-      if (!requestedPages.has(2)) {
-        requestedPages.add(2);
-        if (gifQuery) {
-          ws.send(JSON.stringify({
-            type: "gif_search",
-            query: gifQuery,
-            page: 2
-          }));
-        } else {
-          ws.send(JSON.stringify({
-            type: "trending_gifs",
-            page: 2
-          }));
-        }
-      }
-      if (!requestedPages.has(3)) {
-        requestedPages.add(3);
-        if (gifQuery) {
-          ws.send(JSON.stringify({
-            type: "gif_search",
-            query: gifQuery,
-            page: 3
-          }));
-        } else {
-          ws.send(JSON.stringify({
-            type: "trending_gifs",
-            page: 3
-          }));
-        }
-      }
-    }
-  }
-
-
-
-  function openGifPicker() {
-    gifPicker.classList.remove("hidden");
-    gifSearch.value = "";
-    gifResults.innerHTML = "";
-    gifSearch.focus();
-    requestGifPage(1)
-  }
-
-  function closeGifPicker() {
-    gifPicker.classList.add("hidden");
-  }
-
-  let searchTimeout;
-  gifSearch.addEventListener("input", () => {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-      gifQuery = gifSearch.value.trim();
-
-      gifResults.innerHTML = "";
-      gifPage = 1;
-      gifHasMore = true;
-      requestedPages.clear();
-
-      requestGifPage(1);
-    }, 500);
-  });
-
-
-  gifResults.addEventListener("scroll", () => {
-    const nearBottom =
-            gifResults.scrollTop + gifResults.clientHeight >= gifResults.scrollHeight - 200;
-
-    if (nearBottom && !gifLoading && gifHasMore) {
-      gifPage++;
-      requestGifPage(gifPage);
-    }
-  });
-
-  function selectGif(url) {
-    uploadedImageDataURL = url; // reuse your existing image system
-    previewImage.src = url;
-    previewContainer.style.display = "block";
-    closeGifPicker();
-  }
-</script>
 
 
 <script>
-  /* ---------------- GLOBAL STATE ---------------- */
-  let uploadedImageDataURL = null;
-  const inputM = document.getElementById("messageInput");
+    function openPopup({ title, bodyHTML, confirmText = "Confirm", onConfirm }) {
+        document.getElementById("popupTitle").textContent = title;
+        document.getElementById("popupBody").innerHTML = bodyHTML;
 
-  /* ---------------- IMAGE UPLOAD ---------------- */
-  const imageUpload = document.getElementById("imageUpload");
-  const previewContainer = document.getElementById("imagePreviewContainer");
-  const previewImage = document.getElementById("imagePreview");
+        const confirmBtn = document.getElementById("popupConfirmBtn");
+        confirmBtn.textContent = confirmText;
 
-  imageUpload.addEventListener("change", () => {
-    const file = imageUpload.files[0];
-    if (!file) return;
+        // Remove old click handlers
+        const newBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      uploadedImageDataURL = reader.result; // ✅ STORE DATA URL
-      previewImage.src = uploadedImageDataURL;
-      previewContainer.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  });
+        // Add new handler
+        newBtn.onclick = onConfirm;
 
-  function removeImage() {
-    uploadedImageDataURL = null;
-    previewImage.src = "";
-    imageUpload.value = "";
-    previewContainer.style.display = "none";
-  }
+        // Cancel button always closes
+        document.getElementById("popupCancelBtn").onclick = closePopup;
 
-  /* ---------------- SEND MESSAGE ---------------- */
-  /*function sendMessage() {
-    console.log("Message:", inputM.value);
-    console.log("Image Data URL:", uploadedImageDataURL);
+        document.getElementById("universalPopup").classList.remove("hidden");
 
-    // Reset input & preview
-    inputM.value = "";
-    removeImage();
-  }*/
+        const popup = document.getElementById("universalPopup");
+        const popupContainer = document.querySelector(".popup-container");
 
-  /* ---------------- EMOJI PICKER ---------------- */
-  //const emojiData = window.EmojiMartData;
-  const picker = document.getElementById("emojiPicker");
-  const categoriesDiv = document.getElementById("emojiCategories");
-  const searchInput = document.getElementById("emojiSearch");
-
-  function insertEmoji(emoji) {
-    const start = inputM.selectionStart;
-    const end = inputM.selectionEnd;
-
-    inputM.value =
-            inputM.value.substring(0, start) +
-            emoji +
-            input.value.substring(end);
-
-    inputM.focus();
-    inputM.selectionStart = inputM.selectionEnd = start + emoji.length;
-  }
-
-  function toggleEmojiPicker() {
-    picker.style.display =
-            picker.style.display === "none" ? "block" : "none";
-  }
-
-  /* Build emoji index for searching */
-  let allEmojis = [];
-  emojiData.categories.forEach(cat => {
-    cat.emojis.forEach(id => {
-      const e = emojiData.emojis[id];
-      if (e) allEmojis.push(e);
-    });
-  });
-
-  /* Render categories & emojis */
-  function renderCategories(filter = "") {
-    categoriesDiv.innerHTML = "";
-
-    emojiData.categories.forEach(cat => {
-      const section = document.createElement("div");
-
-      const title = document.createElement("div");
-      title.textContent = cat.id.toUpperCase();
-      title.style.color = "#aaa";
-      title.style.fontSize = "12px";
-      title.style.margin = "6px 0";
-      section.appendChild(title);
-
-      const grid = document.createElement("div");
-      grid.style.display = "grid";
-      grid.style.gridTemplateColumns = "repeat(8, 1fr)";
-      grid.style.gap = "4px";
-
-      cat.emojis.forEach(id => {
-        const emoji = emojiData.emojis[id];
-        if (!emoji) return;
-
-        if (filter) {
-          const text = (emoji.name + " " + (emoji.keywords || []).join(" ")).toLowerCase();
-          if (!text.includes(filter)) return;
-        }
-
-        const btn = document.createElement("button");
-        btn.textContent = emoji.skins[0].native;
-        btn.style.fontSize = "20px";
-        btn.style.background = "none";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.onclick = () => insertEmoji(emoji.skins[0].native);
-        grid.appendChild(btn);
-      });
-
-      if (grid.children.length > 0) {
-        section.appendChild(grid);
-        categoriesDiv.appendChild(section);
-      }
-    });
-  }
-
-  /* Search filter */
-  searchInput.addEventListener("input", () => {
-    renderCategories(searchInput.value.toLowerCase());
-  });
-
-  /* Initial render */
-  renderCategories();
-
-  function layoutMasonry() {
-      const container = gifResults;
-      const items = [...container.children];
-
-      const columnWidth = 120;
-      const gap = 10;
-
-      const containerWidth = container.clientWidth;
-      const columns = Math.floor(containerWidth / (columnWidth + gap));
-
-      const colHeights = new Array(columns).fill(0);
-
-      items.forEach(item => {
-          const shortestCol = colHeights.indexOf(Math.min(...colHeights));
-
-          const x = shortestCol * (columnWidth + gap);
-          const y = colHeights[shortestCol];
-
-          item.style.transform = `translate(${x}px, ${y}px)`;
-
-          colHeights[shortestCol] += item.offsetHeight + gap;
-      });
-
-      container.style.height = Math.max(...colHeights) + "px";
-  }
-</script>
-
-
-<script>
-  const CROP_SIZE = 220;
-  const RADIUS = CROP_SIZE / 2;
-
-  const crop  = document.getElementById("cropContainer");
-  const img   = document.getElementById("previewImage");
-  const input = document.getElementById("imageInput");
-  const zoom  = document.getElementById("zoomSlider");
-
-  let scale = 1;
-  let minScale = 1;
-
-  // offsets are TOP-LEFT in IMAGE SPACE (safe)
-  let offsetX = 0;
-  let offsetY = 0;
-
-  let dragging = false;
-  let startMouseX, startMouseY;
-  let startOffsetX, startOffsetY;
-
-  /* ================= LOAD ================= */
-  input.onchange = e => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      img.src = reader.result;
-      img.onload = init;
-    };
-    reader.readAsDataURL(file);
-  };
-
-  /* ================= INIT ================= */
-  function init() {
-    img.style.position = "absolute";
-    img.style.transformOrigin = "top left";
-
-    img.style.maxWidth = "none";
-    img.style.maxHeight = "none";
-
-    minScale = Math.max(
-            CROP_SIZE / img.naturalWidth,
-            CROP_SIZE / img.naturalHeight
-    );
-
-    scale = minScale;
-
-    zoom.min = minScale;
-    zoom.max = minScale * 3;
-    zoom.step = 0.001;
-    zoom.value = scale;
-
-    // center image
-    offsetX = (CROP_SIZE - img.naturalWidth * scale) / 2;
-    offsetY = (CROP_SIZE - img.naturalHeight * scale) / 2;
-
-    apply();
-  }
-
-  /* ================= CLAMP ================= */
-  function clamp() {
-    const w = img.naturalWidth * scale;
-    const h = img.naturalHeight * scale;
-
-    const minX = CROP_SIZE - w;
-    const minY = CROP_SIZE - h;
-
-    offsetX = Math.min(0, Math.max(minX, offsetX));
-    offsetY = Math.min(0, Math.max(minY, offsetY));
-  }
-
-  /* ================= APPLY ================= */
-  function apply() {
-    img.style.width = img.naturalWidth * scale + "px";
-    img.style.height = img.naturalHeight * scale + "px";
-    img.style.left = offsetX + "px";
-    img.style.top = offsetY + "px";
-  }
-
-  /* ================= DRAG ================= */
-  crop.addEventListener("mousedown", e => {
-    dragging = true;
-    startMouseX = e.clientX;
-    startMouseY = e.clientY;
-    startOffsetX = offsetX;
-    startOffsetY = offsetY;
-  });
-
-  window.addEventListener("mouseup", () => dragging = false);
-
-  window.addEventListener("mousemove", e => {
-    if (!dragging) return;
-
-    offsetX = startOffsetX + (e.clientX - startMouseX);
-    offsetY = startOffsetY + (e.clientY - startMouseY);
-
-    clamp();
-    apply();
-  });
-
-  /* ================= ZOOM ================= */
-  zoom.addEventListener("input", () => {
-    const prevScale = scale;
-    scale = Math.max(+zoom.value, minScale);
-
-    // Crop center in container space
-    const cx = CROP_SIZE / 2;
-    const cy = CROP_SIZE / 2;
-
-    // Image pixel currently at crop center
-    const imgCenterX = (cx - offsetX) / prevScale;
-    const imgCenterY = (cy - offsetY) / prevScale;
-
-    // Reposition so same pixel stays centered
-    offsetX = cx - imgCenterX * scale;
-    offsetY = cy - imgCenterY * scale;
-
-    clamp();
-    apply();
-  });
-
-  function uploadCroppedImage() {
-    const canvas = document.createElement("canvas");
-    canvas.width = CROP_SIZE;
-    canvas.height = CROP_SIZE;
-    const ctx = canvas.getContext("2d");
-
-    // Calculate source rectangle in image space
-    const sx = -offsetX / scale;
-    const sy = -offsetY / scale;
-    const sSize = CROP_SIZE / scale;
-
-    ctx.drawImage(
-            img,
-            sx, sy, sSize, sSize,
-            0, 0, CROP_SIZE, CROP_SIZE
-    );
-
-    // Convert to data URL (you can also use canvas.toBlob for better performance)
-    const dataURL = canvas.toDataURL("image/png");
-
-    // Send dataURL to server or use it as needed
-    console.log("Cropped Image Data URL:", dataURL);
-
-    ws.send(
-        JSON.stringify({
-            type: "upload_profile_image",
-            image_data: dataURL
-        }
-    ));
-  }
-
-  function closeUploadProfileImagePopup() {
-    document.getElementById('uploadProfileImagePopup').classList.add('hidden');
-
-    document.getElementById('SettingsPopup').classList.remove('hidden');
-  }
-
-  function openUploadProfilePopup() {
-    document.getElementById('SettingsPopup').classList.add('hidden');
-
-    document.getElementById('uploadProfileImagePopup').classList.remove('hidden');
-  }
-
-  /* ================= ROOM IMAGE CROP ================= */
-  const ROOM_CROP_SIZE = 220;
-
-  const roomCrop  = document.getElementById("roomCropContainer");
-  const roomImg   = document.getElementById("roomPreviewImage");
-  const roomInput = document.getElementById("roomImageInput");
-  const roomZoom  = document.getElementById("roomZoomSlider");
-
-  let roomScale = 1;
-  let roomMinScale = 1;
-  let roomOffsetX = 0;
-  let roomOffsetY = 0;
-  let roomDragging = false;
-
-  let roomStartX, roomStartY;
-  let roomStartOffsetX, roomStartOffsetY;
-
-  let roomImageDataURL = null; // <-- final cropped image
-
-  roomInput.onchange = e => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      roomImg.src = reader.result;
-      roomImg.onload = initRoomCrop;
-    };
-    reader.readAsDataURL(file);
-  };
-
-  function initRoomCrop() {
-    roomMinScale = Math.max(
-            ROOM_CROP_SIZE / roomImg.naturalWidth,
-            ROOM_CROP_SIZE / roomImg.naturalHeight
-    );
-
-    roomScale = roomMinScale;
-    roomZoom.min = roomMinScale;
-    roomZoom.max = roomMinScale * 3;
-    roomZoom.value = roomScale;
-
-    roomOffsetX = (ROOM_CROP_SIZE - roomImg.naturalWidth * roomScale) / 2;
-    roomOffsetY = (ROOM_CROP_SIZE - roomImg.naturalHeight * roomScale) / 2;
-
-    applyRoomTransform();
-  }
-
-  function clampRoom() {
-    const w = roomImg.naturalWidth * roomScale;
-    const h = roomImg.naturalHeight * roomScale;
-
-    roomOffsetX = Math.min(0, Math.max(ROOM_CROP_SIZE - w, roomOffsetX));
-    roomOffsetY = Math.min(0, Math.max(ROOM_CROP_SIZE - h, roomOffsetY));
-  }
-
-  function applyRoomTransform() {
-    roomImg.style.width = roomImg.naturalWidth * roomScale + "px";
-    roomImg.style.height = roomImg.naturalHeight * roomScale + "px";
-    roomImg.style.left = roomOffsetX + "px";
-    roomImg.style.top = roomOffsetY + "px";
-  }
-
-  roomCrop.addEventListener("mousedown", e => {
-    roomDragging = true;
-    roomStartX = e.clientX;
-    roomStartY = e.clientY;
-    roomStartOffsetX = roomOffsetX;
-    roomStartOffsetY = roomOffsetY;
-  });
-
-  window.addEventListener("mouseup", () => roomDragging = false);
-
-  window.addEventListener("mousemove", e => {
-    if (!roomDragging) return;
-
-    roomOffsetX = roomStartOffsetX + (e.clientX - roomStartX);
-    roomOffsetY = roomStartOffsetY + (e.clientY - roomStartY);
-
-    clampRoom();
-    applyRoomTransform();
-  });
-
-  roomZoom.addEventListener("input", () => {
-    const prev = roomScale;
-    roomScale = Math.max(+roomZoom.value, roomMinScale);
-
-    const cx = ROOM_CROP_SIZE / 2;
-    const cy = ROOM_CROP_SIZE / 2;
-
-    const imgX = (cx - roomOffsetX) / prev;
-    const imgY = (cy - roomOffsetY) / prev;
-
-    roomOffsetX = cx - imgX * roomScale;
-    roomOffsetY = cy - imgY * roomScale;
-
-    clampRoom();
-    applyRoomTransform();
-  });
-
-  function getRoomCroppedImage() {
-    if (!roomImg.src) return null;
-
-    const canvas = document.createElement("canvas");
-    canvas.width = ROOM_CROP_SIZE;
-    canvas.height = ROOM_CROP_SIZE;
-    const ctx = canvas.getContext("2d");
-
-    const sx = -roomOffsetX / roomScale;
-    const sy = -roomOffsetY / roomScale;
-    const sSize = ROOM_CROP_SIZE / roomScale;
-
-    ctx.drawImage(
-            roomImg,
-            sx, sy, sSize, sSize,
-            0, 0, ROOM_CROP_SIZE, ROOM_CROP_SIZE
-    );
-
-    return canvas.toDataURL("image/png");
-  }
-
-  function createRoom() {
-    const roomName = document.getElementById('roomNameInput').value.trim();
-    if (!roomName) return;
-
-    const imageData = getRoomCroppedImage(); // returns null if no image
-
-    const payload = {
-      type: "create_room",
-      room_name: roomName
-    };
-
-    if (imageData) {
-      payload.image_data = imageData;
+        popup.onmousedown = (e) => {
+            if (!popupContainer.contains(e.target)) {
+                closePopup();
+            }
+        };
     }
 
-    ws.send(JSON.stringify(payload));
-
-    document.getElementById('roomNameInput').value = '';
-    document.getElementById('new-room-popup').classList.add('hidden');
-  }
-
-
-  function findFriend() {
-    const friendName = document.getElementById('friendNameInput').value.trim();
-    if (friendName) {
-      //openChat(friendName);
-      //document.getElementById('friendNameInput').value = '';
-      //document.getElementById('find-friend-popup').classList.add('hidden');
-
-        ws.send(JSON.stringify({
-          type: "check_if_user_exists",
-          username: friendName
-        })
-      );
-    }
-  }
-
-  let username = null;
-  let privateChats = [];
-  let rooms = [];
-  let roomNames = [];
-  let loadedRooms = [];
-  let connectedChat = null;
-  let room = false;
-
-  const chatContainer = document.getElementById('chat-container');
-
-  function openChat(targetUser) {
-    room = false
-
-    connectedChat = targetUser;
-
-    document.querySelectorAll('#chat-messages > div').forEach(div => {
-      div.classList.add('hidden');
-    });
-
-    // Show the selected chat message div
-    const chatDiv = document.getElementById('chat-messages-private-' + targetUser);
-    if (chatDiv) {
-      chatDiv.classList.remove('hidden');
+    function closePopup() {
+        document.getElementById("universalPopup").classList.add("hidden");
     }
 
-    const channelHeader = document.getElementById('channel-header');
-    channelHeader.textContent = targetUser;
+    function openCreateRoomPopup() {
+        openPopup({
+            title: "Create New Room",
+            confirmText: "Create",
+            bodyHTML: `
+      <input id="roomNameInput" type="text" placeholder="Room Name"
+             class="w-full rounded-lg px-4 py-2 outline-none"
+             style="background: var(--bg-secondary); color: var(--text-main);">
 
-    const messageInput = document.getElementById('messageInput');
-    messageInput.placeholder = `Message ${targetUser}`;
-  }
+      <p style="color: var(--text-muted);">Room Image (optional)</p>
 
+      <div id="roomCropContainer">
+        <img id="roomPreviewImage" draggable="false"/>
+        <div class="room-crop-border"></div>
+      </div>
 
-  const imageCacheBust = Date.now();
+      <input type="file" accept="image/*" id="roomImageInput">
+      <input type="range" id="roomZoomSlider" min="1" max="3" step="0.01" value="1">
+    `,
+            onConfirm: createRoom
+        });
 
-  // Get the value of a cookie by name
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-      return parts.pop().split(';').shift();
+        roomCrop = document.getElementById("roomCropContainer");
+        roomImg = document.getElementById("roomPreviewImage");
+        roomInput = document.getElementById("roomImageInput");
+        roomZoom = document.getElementById("roomZoomSlider");
+
+        roomInput.onchange = e => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                roomImg.src = reader.result;
+                roomImg.onload = initRoomCrop;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        roomCrop.addEventListener("mousedown", e => {
+            roomDragging = true;
+            roomStartX = e.clientX;
+            roomStartY = e.clientY;
+            roomStartOffsetX = roomOffsetX;
+            roomStartOffsetY = roomOffsetY;
+        });
+
+        roomZoom.addEventListener("input", () => {
+            const prev = roomScale;
+            roomScale = Math.max(+roomZoom.value, roomMinScale);
+
+            const cx = ROOM_CROP_SIZE / 2;
+            const cy = ROOM_CROP_SIZE / 2;
+
+            const imgX = (cx - roomOffsetX) / prev;
+            const imgY = (cy - roomOffsetY) / prev;
+
+            roomOffsetX = cx - imgX * roomScale;
+            roomOffsetY = cy - imgY * roomScale;
+
+            clampRoom();
+            applyRoomTransform();
+        });
     }
-    return null;
-  }
 
-  // Delete a cookie by setting its expiration to the past
-  function deleteCookie(name) {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  }
+    function openFindFriendPopup() {
+        openPopup({
+            title: "Find Friend",
+            confirmText: "Find",
+            bodyHTML: `
+      <input id="friendNameInput" type="text"
+             placeholder="Friend Username"
+             class="w-full rounded-lg px-4 py-2 outline-none"
+             style="background: var(--bg-secondary); color: var(--text-main);">
+    `,
+            onConfirm: findFriend
+        });
+    }
 
+    function openSettingsPopup() {
+        openPopup({
+            title: "Settings",
+            confirmText: "Save Changes",
+            bodyHTML: `
+      <div class="flex justify-between">
+        <div>
+          <h3 style="color: var(--text-main);">Email</h3>
+          <p style="color: var(--text-muted);">Change your email</p>
+        </div>
+        <button onclick="openEmailPopup()" class="px-4 py-2 rounded-lg border"
+                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);">
+          Change
+        </button>
+      </div>
 
-  const ws = new WebSocket("wss://skirtless-ernesto-prescientific.ngrok-free.dev/ws");
+      <div class="flex justify-between">
+        <div>
+          <h3 style="color: var(--text-main);">Password</h3>
+          <p style="color: var(--text-muted);">Update password</p>
+        </div>
+        <button onclick="openPasswordPopup()" class="px-4 py-2 rounded-lg border"
+                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);">
+          Change
+        </button>
+      </div>
 
-  ws.onopen = () => {
-    ws.send(JSON.stringify({
-      type: "auth",
-      token: getCookie('token')
-    }));
+      <div>
+        <h3 class="font-semibold mb-2" style="color: var(--text-main);">Profile Image</h3>
+        <div class="flex items-center space-x-4">
+          <div class="w-9 h-9 rounded-full usr-icon" id="settings-usr-icon" style="background: var(--bg-tertiary);">
+          </div>
+          <button onclick="openUploadProfilePopup()" class="px-4 py-2 rounded-lg border"
+                  style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);">
+            Upload New Image
+          </button>
+        </div>
+      </div>
 
-    ws.send(JSON.stringify({
-      type: "get_theme"
-    }))
-  };
+      <div>
+        <h3 style="color: var(--text-main);">Theme</h3>
+        <select id="themeSelect" class="w-full rounded-lg px-4 py-2 border"
+                style="background: var(--bg-secondary); color: var(--text-main); border-color: var(--border-soft);">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+          <option value="midnight">Midnight</option>
+          <option value="solarized">Solarized</option>
+          <option value="forest">Forest</option>
+          <option value="neon">Neon</option>
+        </select>
+      </div>
+    `,
+            onConfirm: saveSettings
+        });
 
-  ws.onmessage = event => {
-    const data = JSON.parse(event.data);
-    if (data.type === "auth_success") {
-      console.log("Signed in successfully.");
-      username = data.username;
-      ws.send(JSON.stringify({
-        type: "get_private_messages"
-      }));
-      ws.send(JSON.stringify({
-        type: "get_rooms"
-      }));
-      overlay = document.getElementById('loading-overlay');
-      overlay.classList.add('fade-out');
-      overlay.addEventListener('transitionend', () => {
-        overlay.classList.add('hidden');
-      });
-      let elements = document.getElementsByClassName("usr-icon");
-
-      for (let i = 0; i < elements.length; i++) {
         let iframe = document.createElement("iframe");
         iframe.src = `avatar.html?u=${username}&v=${imageCacheBust}`;
         iframe.classList.add("w-9", "h-9", "rounded-full", "border-0");
         iframe.setAttribute("sandbox", "allow-scripts");
 
-        elements[i].appendChild(iframe);
-      }
-    } else if (data.type === "auth_failed") {
-      deleteCookie('token');
-      window.location.replace('./login.html');
-    } else if (data.type === "private_messages") {
-      data.messages.forEach(msg => {
-        addToPrivateChats(msg[1]);
-        addToPrivateChats(msg[0]);
-        addMessage(msg[0], msg[1], msg[2], msg[3], msg[4] ? msg[4] : null);
-      });
-    } else if (data.type === "private_message") {
-      addToPrivateChats(data.from);
-      addMessage(data.from, data.to, data.message, data.time, data.image_url ? data.image_url : null);
-    } else if (data.type === "sent_private_message") {
-      addToPrivateChats(data.to);
-      addMessage(username, data.to, data.message, data.time, data.image_url ? data.image_url : null);
-    } else if (data.type === "rooms") {
-      data.rooms.forEach(msg => {
-        addToRoomChats(msg);
-      });
-    } else if (data.type === "room_message") {
-      if (!loadedRooms.includes(data.room_id)) return
-      const chat = document.getElementById(`chat-messages-room-${data.room_id}`);
-      const div = document.createElement('div');
+        document.getElementById("settings-usr-icon").appendChild(iframe);
 
-      const time = formatDateTime(data.time);
-
-      div.className = 'message flex items-start space-x-3';
-      div.innerHTML = `
-          <div class="w-10 h-10 rounded-full bg-gray-600">
-              <iframe
-                  src="avatar.html?u=${data.from}&v=${imageCacheBust}"
-                  class="w-10 h-10 rounded-full border-0"
-                  sandbox="allow-scripts">
-              </iframe>
-          </div>
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="font-semibold" style="color: var(--text-main)">${data.from}</span>
-              <span class="text-xs" style="color: var(--text-muted)">${time}</span>
-            </div>
-            <p style="color: var(--text-main)">${data.message}</p>
-          </div>
-         `;
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-    } else if (data.type === "room_messages") {
-      data.messages.forEach(msg => {
-        const chat = document.getElementById(`chat-messages-room-${data.room_id}`);
-        const div = document.createElement('div');
-
-        const time = formatDateTime(msg[3]);
-
-        div.className = 'message flex items-start space-x-3';
-        div.innerHTML = `
-              <div class="w-10 h-10 rounded-full bg-gray-600">
-                  <iframe
-                      src="avatar.html?u=${msg[0]}&v=${imageCacheBust}"
-                      class="w-10 h-10 rounded-full border-0"
-                      sandbox="allow-scripts">
-                  </iframe>
-              </div>
-              <div>
-                <div class="flex items-center space-x-2">
-                  <span class="font-semibold" style="color: var(--text-main)">${msg[0]}</span>
-                  <span class="text-xs" style="color: var(--text-muted)">${time}</span>
-                </div>
-                <p style="color: var(--text-main)">${msg[2]}</p>
-              </div>
-            `;
-        chat.appendChild(div);
-        chat.scrollTop = chat.scrollHeight;
-      }
-      );
-    } else if (data.type === "private_room") {
-      // Switch to a different chat if currently connected to the deleted room
-      if (connectedChat === data.room_id) {
-        connectedChat = null;
-        document.getElementById('channel-header').textContent = '-';
-        document.getElementById('messageInput').placeholder = 'Select a chat to start messaging';
-      }
-
-      // Removes the room from the room list and chat area
-      removeFromRoomChats(data.room_id);
-    } else if (data.type === "room_created") {
-      addToRoomChats([data.room_id, data.room_name]);
-    } else if (data.type === "user_exists") {
-      document.getElementById('friendNameInput').classList.remove('border', 'border-red-500');
-      addToPrivateChats(data.username);
-      openChat(data.username);
-      document.getElementById('friendNameInput').value = '';
-      document.getElementById('find-friend-popup').classList.add('hidden');
-    } else if (data.type === "user_not_found") {
-      document.getElementById('friendNameInput').classList.add('border', 'border-red-500');
-    } else if (data.type === "theme") {
-      const saved = data.theme;
-      if (saved) {
-        document.documentElement.setAttribute('data-theme', saved);
         const select = document.getElementById('themeSelect');
-        if (select) select.value = saved;
-      }
-    } else if (data.type === "upload_failed") {
-      alert("Profile image upload failed: " + data.reason);
-    } else if (data.type === "upload_success") {
-        // Close the upload popup
-        closeUploadProfileImagePopup();
-    } else if (data.type === "gif_search_results") {
-      if (data.query === document.getElementById("gifSearch").value) {
-          const urls = data.results;
+        if (select) select.value = theme;
+    }
 
-          // If no results, stop infinite scroll
-          if (!urls || urls.length === 0) {
-              gifHasMore = false;
-              gifLoading = false;
-              return;
-          }
 
-          // Render the GIFs
-          urls.forEach(url => {
-              const div = document.createElement("div");
-              div.className = "gif-item";
+    function openUploadProfilePopup() {
+        openPopup({
+            title: "Upload New Profile Image",
+            confirmText: "Upload",
+            bodyHTML: `
+      <div id="cropContainer">
+        <div id="transformWrapper">
+          <img id="previewImage" draggable="false"/>
+          <div class="crop-border"></div>
+        </div>
+      </div>
 
-              const img = document.createElement("img");
-              img.src = url;
+      <input type="file" accept="image/*" id="imageInput">
+      <input type="range" id="zoomSlider" min="1" max="3" step="0.01" value="1">
 
-              img.onload = layoutMasonry;
-
-              div.onclick = () => selectGif(url);
-              div.appendChild(img);
-              gifResults.appendChild(div);
-          });
-
-          // Preload next page automatically
-          if (gifPreloadPage === gifPage + 1) {
-              requestGifPage(gifPreloadPage);
-              gifPreloadPage++;
-          }
-      }
-
-        gifLoading = false;
-    } else if (data.type === "gif_search_failed") {
-      gifLoading = false;
-      gifHasMore = false;
-    } else if (data.type === "trending_gif_results") {
-      if (!document.getElementById("gifSearch").value) {
-        const urls = data.results;
-
-        // If no results, stop infinite scroll
-        if (!urls || urls.length === 0) {
-          gifHasMore = false;
-          gifLoading = false;
-          return;
-        }
-
-        // Render the GIFs
-        urls.forEach(url => {
-          const div = document.createElement("div");
-          div.className = "gif-item";
-
-          const img = document.createElement("img");
-          img.src = url;
-
-          img.onload = layoutMasonry;
-
-          div.onclick = () => selectGif(url);
-          div.appendChild(img);
-          gifResults.appendChild(div);
+      <p style="color: var(--text-muted);">
+        Changes may take a few minutes to an hour to take place
+      </p>
+    `,
+            onConfirm: uploadCroppedImage
         });
 
-        // Preload next page automatically
-        if (gifPreloadPage === gifPage + 1) {
-          requestGifPage(gifPreloadPage);
-          gifPreloadPage++;
-        }
-      }
-      gifLoading = false;
+        crop = document.getElementById("cropContainer");
+        img = document.getElementById("previewImage");
+        input = document.getElementById("imageInput");
+        zoom = document.getElementById("zoomSlider");
+
+        input.onchange = e => {
+            CROP_SIZE = crop.clientWidth;
+
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                img.src = reader.result;
+                img.onload = init;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        crop.addEventListener("mousedown", e => {
+            dragging = true;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            startOffsetX = offsetX;
+            startOffsetY = offsetY;
+        });
+
+        zoom.addEventListener("input", () => {
+            const prevScale = scale;
+            scale = Math.max(+zoom.value, minScale);
+
+            // Crop center in container space
+            const cx = CROP_SIZE / 2;
+            const cy = CROP_SIZE / 2;
+
+            // Image pixel currently at crop center
+            const imgCenterX = (cx - offsetX) / prevScale;
+            const imgCenterY = (cy - offsetY) / prevScale;
+
+            // Reposition so same pixel stays centered
+            offsetX = cx - imgCenterX * scale;
+            offsetY = cy - imgCenterY * scale;
+
+            clamp();
+            apply();
+        });
     }
+
+    function openCreateInvitePopup() {
+        openPopup({
+            title: "Room Invites",
+            confirmText: "Add Invite",
+            bodyHTML: `<div class="flex-1 overflow-y-auto p-6 space-y-2" id="inviteList">
+
+    </div>`,
+            onConfirm: createInvite
+        });
+    }
+
+    function openSendInviteToFriendPopup(inviteCode) {
+        openPopup({
+            title: "Send Invite To Friend",
+            confirmText: "OK",
+            bodyHTML: `
+      <div class="flex-1 overflow-y-auto p-6 space-y-2" id="friendList">
+
+    </div>
+    `,
+            onConfirm: closePopup
+        });
+
+        for (const chatId in privateChats) {
+            const row = document.createElement("div");
+            row.className = "group flex items-center justify-between rounded-lg px-4 py-2 transition";
+            row.style.background = "var(--bg-secondary)";
+
+            const friend = privateChats[chatId];
+
+            row.innerHTML = `
+                <span class="text-sm flex items-center space-x-2"><iframe
+                        src="avatar.html?u=${friend}&v=${imageCacheBust}"
+                        class="sidebar-private-avatar w-6 h-6 rounded-full border-0 mr-2"
+                        sandbox="allow-scripts">
+                    </iframe>${friend}</span>
+
+
+
+                <div class="invite-row-button-group flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button class="invite-row-button px-2 py-1 text-xs rounded"
+                            style="background: var(--accent); color: white;"
+                            onclick="sendInviteToFriend('${friend}', '${inviteCode}')">
+                        Send Invite
+                    </button>
+                </div>
+
+            `;
+
+            friendList.appendChild(row);
+        }
+    }
+</script>
+<script>
+    let contextRoomId = null;
+
+    document.addEventListener("click", () => {
+        document.getElementById("room-context-menu").classList.add("hidden");
+    });
+
+    document.getElementById("ctx-leave").onclick = () => {
+        if (contextRoomId !== null) {
+            leaveRoom(contextRoomId);
+        }
+    };
+
+    document.getElementById("ctx-invite").onclick = () => {
+        if (contextRoomId !== null) {
+            addInvite(contextRoomId);
+        }
+    };
+
+    function showRoomContextMenu(e, roomId) {
+        e.preventDefault();
+        contextRoomId = roomId;
+
+        const menu = document.getElementById("room-context-menu");
+        menu.style.left = `${e.pageX}px`;
+        menu.style.top = `${e.pageY}px`;
+        menu.classList.remove("hidden");
+    }
+
+    function leaveRoom(roomId) {
+        if (confirm("Are you sure you want to leave this room?")) {
+            ws.send(JSON.stringify({type: "leave_room", room_id: roomId}));
+
+            // Optimistically remove the room from the sidebar
+            const roomElem = document.getElementById("room-" + roomId);
+            if (roomElem) {
+                roomElem.remove();
+            }
+        }
+    }
+
+    function addInvite(roomId) {
+        getInvites(roomId);
+        openCreateInvitePopup()
+    }
+
+    function copyInvite(id) {
+        const text = document.getElementById("invite-link-" + id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const button = document.getElementById("invite-button-" + id);
+            button.innerText = "Copied!";
+
+            setTimeout(() => {
+                button.innerText = "Copy";
+            }, 2000);
+        }).catch(() => {
+            alert("Failed to copy invite link.");
+        });
+    }
+
+    function getInvites(roomId) {
+        ws.send(JSON.stringify({type: "get_invites", room_id: roomId}));
+    }
+
+    function createInvite() {
+        ws.send(JSON.stringify({type: "create_invite", room_id: contextRoomId}));
+    }
+</script>
+<script>
+    const gifPicker = document.getElementById("gifPicker");
+    const gifResults = document.getElementById("gifResults");
+    const gifSearch = document.getElementById("gifSearch");
+
+    let gifQuery = "";
+    let gifPage = 1;
+    let gifLoading = false;
+    let gifHasMore = true;
+    let gifPreloadPage = 2; // always stay one page ahead
+    let requestedPages = new Set();
+
+    function requestGifPage(page) {
+        if (!gifHasMore) return;
+        if (requestedPages.has(page)) return;
+
+        gifLoading = true;
+        requestedPages.add(page);
+
+        if (gifQuery) {
+            ws.send(JSON.stringify({
+                type: "gif_search",
+                query: gifQuery,
+                page: page
+            }));
+        } else {
+            ws.send(JSON.stringify({
+                type: "trending_gifs",
+                page: page
+            }));
+        }
+
+        if (page === 1) {
+            if (!requestedPages.has(2)) {
+                requestedPages.add(2);
+                if (gifQuery) {
+                    ws.send(JSON.stringify({
+                        type: "gif_search",
+                        query: gifQuery,
+                        page: 2
+                    }));
+                } else {
+                    ws.send(JSON.stringify({
+                        type: "trending_gifs",
+                        page: 2
+                    }));
+                }
+            }
+            if (!requestedPages.has(3)) {
+                requestedPages.add(3);
+                if (gifQuery) {
+                    ws.send(JSON.stringify({
+                        type: "gif_search",
+                        query: gifQuery,
+                        page: 3
+                    }));
+                } else {
+                    ws.send(JSON.stringify({
+                        type: "trending_gifs",
+                        page: 3
+                    }));
+                }
+            }
+        }
+    }
+
+
+    function openGifPicker() {
+        requestedPages.clear()
+        gifQuery = ""
+        gifPage = 1
+        gifLoading = false;
+        gifHasMore = true;
+        gifPicker.classList.remove("hidden");
+        gifSearch.value = "";
+        gifResults.innerHTML = "";
+        gifSearch.focus();
+        requestGifPage(1)
+    }
+
+    function closeGifPicker() {
+        gifPicker.classList.add("hidden");
+    }
+
+    let searchTimeout;
+    gifSearch.addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            gifQuery = gifSearch.value.trim();
+
+            gifResults.innerHTML = "";
+            gifPage = 1;
+            gifHasMore = true;
+            requestedPages.clear();
+
+            requestGifPage(1);
+        }, 500);
+    });
+
+
+    gifResults.addEventListener("scroll", () => {
+        const nearBottom =
+            gifResults.scrollTop + gifResults.clientHeight >= gifResults.scrollHeight - 200;
+
+        if (nearBottom && !gifLoading && gifHasMore) {
+            gifPage++;
+            requestGifPage(gifPage);
+        }
+    });
+
+    function selectGif(url) {
+        uploadedImageDataURL = url; // reuse your existing image system
+        previewImage.src = url;
+        previewContainer.style.display = "block";
+        closeGifPicker();
+    }
+</script>
+<script>
+    /* ---------------- GLOBAL STATE ---------------- */
+    let uploadedImageDataURL = null;
+    const inputM = document.getElementById("messageInput");
+
+    /* ---------------- IMAGE UPLOAD ---------------- */
+    const imageUpload = document.getElementById("imageUpload");
+    const previewContainer = document.getElementById("imagePreviewContainer");
+    const previewImage = document.getElementById("imagePreview");
+
+    imageUpload.addEventListener("change", () => {
+        const file = imageUpload.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            uploadedImageDataURL = reader.result; // ✅ STORE DATA URL
+            previewImage.src = uploadedImageDataURL;
+            previewContainer.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function removeImage() {
+        uploadedImageDataURL = null;
+        previewImage.src = "";
+        imageUpload.value = "";
+        previewContainer.style.display = "none";
+    }
+
+    /* ---------------- SEND MESSAGE ---------------- */
+    /*function sendMessage() {
+      console.log("Message:", inputM.value);
+      console.log("Image Data URL:", uploadedImageDataURL);
+
+      // Reset input & preview
+      inputM.value = "";
+      removeImage();
+    }*/
+
+    /* ---------------- EMOJI PICKER ---------------- */
+    //const emojiData = window.EmojiMartData;
+    const picker = document.getElementById("emojiPicker");
+    const categoriesDiv = document.getElementById("emojiCategories");
+    const searchInput = document.getElementById("emojiSearch");
+
+    function insertEmoji(emoji) {
+        const start = inputM.selectionStart;
+        const end = inputM.selectionEnd;
+
+        inputM.value =
+            inputM.value.substring(0, start) +
+            emoji +
+            input.value.substring(end);
+
+        inputM.focus();
+        inputM.selectionStart = inputM.selectionEnd = start + emoji.length;
+    }
+
+    function toggleEmojiPicker() {
+        picker.style.display =
+            picker.style.display === "none" ? "block" : "none";
+    }
+
+    /* Render categories & emojis */
+    function renderCategories(filter = "") {
+        categoriesDiv.innerHTML = "";
+
+        emojiData.categories.forEach(cat => {
+            const section = document.createElement("div");
+
+            const title = document.createElement("div");
+            title.textContent = cat.id.toUpperCase();
+            title.style.color = "#aaa";
+            title.style.fontSize = "12px";
+            title.style.margin = "6px 0";
+            section.appendChild(title);
+
+            const grid = document.createElement("div");
+            grid.style.display = "grid";
+            grid.style.gridTemplateColumns = "repeat(8, 1fr)";
+            grid.style.gap = "4px";
+
+            cat.emojis.forEach(id => {
+                const emoji = emojiData.emojis[id];
+                if (!emoji) return;
+
+                if (filter) {
+                    const text = (emoji.name + " " + (emoji.keywords || []).join(" ")).toLowerCase();
+                    if (!text.includes(filter)) return;
+                }
+
+                const btn = document.createElement("button");
+                btn.textContent = emoji.skins[0].native;
+                btn.style.fontSize = "20px";
+                btn.style.background = "none";
+                btn.style.border = "none";
+                btn.style.cursor = "pointer";
+                btn.onclick = () => insertEmoji(emoji.skins[0].native);
+                grid.appendChild(btn);
+            });
+
+            if (grid.children.length > 0) {
+                section.appendChild(grid);
+                categoriesDiv.appendChild(section);
+            }
+        });
+    }
+
+    /* Search filter */
+    searchInput.addEventListener("input", () => {
+        renderCategories(searchInput.value.toLowerCase());
+    });
+
+
+    function layoutMasonry() {
+        const container = gifResults;
+        const items = [...container.children];
+
+        // Use fewer columns on mobile for better fit
+        const columns = (document.documentElement.classList.contains('mobile') || document.body.classList.contains('mobile')) ? 2 : 3;
+        const gap = 10;
+
+        const containerWidth = container.clientWidth;
+        const columnWidth = (containerWidth - gap * (columns - 1)) / columns;
+
+        const colHeights = new Array(columns).fill(0);
+
+        items.forEach(item => {
+            // allow CSS fallback width but prefer computed columnWidth
+            item.style.width = columnWidth + "px";
+
+            const shortestCol = colHeights.indexOf(Math.min(...colHeights));
+
+            const x = shortestCol * (columnWidth + gap);
+            const y = colHeights[shortestCol];
+
+            item.style.transform = `translate(${x}px, ${y}px)`;
+
+            colHeights[shortestCol] += item.offsetHeight + gap;
+        });
+
+        container.style.height = Math.max(...colHeights) + "px";
+    }
+</script>
+<script>
+    let CROP_SIZE = 0;
+
+    let crop = document.getElementById("cropContainer");
+    let img = document.getElementById("previewImage");
+    let input = document.getElementById("imageInput");
+    let zoom = document.getElementById("zoomSlider");
+
+    let scale = 1;
+    let minScale = 1;
+
+    // offsets are TOP-LEFT in IMAGE SPACE (safe)
+    let offsetX = 0;
+    let offsetY = 0;
+
+    let dragging = false;
+    let startMouseX, startMouseY;
+    let startOffsetX, startOffsetY;
+
+    /* ================= INIT ================= */
+    function init() {
+        img.style.position = "absolute";
+        img.style.transformOrigin = "top left";
+
+        img.style.maxWidth = "none";
+        img.style.maxHeight = "none";
+
+        minScale = Math.max(
+            CROP_SIZE / img.naturalWidth,
+            CROP_SIZE / img.naturalHeight
+        );
+
+        scale = minScale;
+
+        zoom.min = minScale;
+        zoom.max = minScale * 3;
+        zoom.step = 0.001;
+        zoom.value = scale;
+
+        // center image
+        offsetX = (CROP_SIZE - img.naturalWidth * scale) / 2;
+        offsetY = (CROP_SIZE - img.naturalHeight * scale) / 2;
+
+        apply();
+    }
+
+    /* ================= CLAMP ================= */
+    function clamp() {
+        const w = img.naturalWidth * scale;
+        const h = img.naturalHeight * scale;
+
+        const minX = CROP_SIZE - w;
+        const minY = CROP_SIZE - h;
+
+        offsetX = Math.min(0, Math.max(minX, offsetX));
+        offsetY = Math.min(0, Math.max(minY, offsetY));
+    }
+
+    /* ================= APPLY ================= */
+    function apply() {
+        img.style.width = img.naturalWidth * scale + "px";
+        img.style.height = img.naturalHeight * scale + "px";
+        img.style.left = offsetX + "px";
+        img.style.top = offsetY + "px";
+    }
+
+    /* ================= DRAG ================= */
+
+    window.addEventListener("mouseup", () => dragging = false);
+
+    window.addEventListener("mousemove", e => {
+        if (!dragging) return;
+
+        offsetX = startOffsetX + (e.clientX - startMouseX);
+        offsetY = startOffsetY + (e.clientY - startMouseY);
+
+        clamp();
+        apply();
+    });
+
+    function uploadCroppedImage() {
+        const canvas = document.createElement("canvas");
+        canvas.width = CROP_SIZE;
+        canvas.height = CROP_SIZE;
+        const ctx = canvas.getContext("2d");
+
+        // Calculate source rectangle in image space
+        const sx = -offsetX / scale;
+        const sy = -offsetY / scale;
+        const sSize = CROP_SIZE / scale;
+
+        ctx.drawImage(
+            img,
+            sx, sy, sSize, sSize,
+            0, 0, CROP_SIZE, CROP_SIZE
+        );
+
+        // Convert to data URL (you can also use canvas.toBlob for better performance)
+        const dataURL = canvas.toDataURL("image/png");
+
+        // Send dataURL to server or use it as needed
+        console.log("Cropped Image Data URL:", dataURL);
+
+        ws.send(
+            JSON.stringify({
+                    type: "upload_profile_image",
+                    image_data: dataURL
+                }
+            ));
+    }
+
+    function closeUploadProfileImagePopup() {
+        openSettingsPopup()
+    }
+
+    /* ================= ROOM IMAGE CROP ================= */
+    const ROOM_CROP_SIZE = 220;
+
+    let roomCrop = document.getElementById("roomCropContainer");
+    let roomImg = document.getElementById("roomPreviewImage");
+    let roomInput = document.getElementById("roomImageInput");
+    let roomZoom = document.getElementById("roomZoomSlider");
+
+    let roomScale = 1;
+    let roomMinScale = 1;
+    let roomOffsetX = 0;
+    let roomOffsetY = 0;
+    let roomDragging = false;
+
+    let roomStartX, roomStartY;
+    let roomStartOffsetX, roomStartOffsetY;
+
+    let roomImageDataURL = null; // <-- final cropped image
+
+    function initRoomCrop() {
+        roomMinScale = Math.max(
+            ROOM_CROP_SIZE / roomImg.naturalWidth,
+            ROOM_CROP_SIZE / roomImg.naturalHeight
+        );
+
+        roomScale = roomMinScale;
+        roomZoom.min = roomMinScale;
+        roomZoom.max = roomMinScale * 3;
+        roomZoom.value = roomScale;
+
+        roomOffsetX = (ROOM_CROP_SIZE - roomImg.naturalWidth * roomScale) / 2;
+        roomOffsetY = (ROOM_CROP_SIZE - roomImg.naturalHeight * roomScale) / 2;
+
+        applyRoomTransform();
+    }
+
+    function clampRoom() {
+        const w = roomImg.naturalWidth * roomScale;
+        const h = roomImg.naturalHeight * roomScale;
+
+        roomOffsetX = Math.min(0, Math.max(ROOM_CROP_SIZE - w, roomOffsetX));
+        roomOffsetY = Math.min(0, Math.max(ROOM_CROP_SIZE - h, roomOffsetY));
+    }
+
+    function applyRoomTransform() {
+        roomImg.style.width = roomImg.naturalWidth * roomScale + "px";
+        roomImg.style.height = roomImg.naturalHeight * roomScale + "px";
+        roomImg.style.left = roomOffsetX + "px";
+        roomImg.style.top = roomOffsetY + "px";
+    }
+
+    window.addEventListener("mouseup", () => roomDragging = false);
+
+    window.addEventListener("mousemove", e => {
+        if (!roomDragging) return;
+
+        roomOffsetX = roomStartOffsetX + (e.clientX - roomStartX);
+        roomOffsetY = roomStartOffsetY + (e.clientY - roomStartY);
+
+        clampRoom();
+        applyRoomTransform();
+    });
+
+    function getRoomCroppedImage() {
+        if (!roomImg.src) return null;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = ROOM_CROP_SIZE;
+        canvas.height = ROOM_CROP_SIZE;
+        const ctx = canvas.getContext("2d");
+
+        const sx = -roomOffsetX / roomScale;
+        const sy = -roomOffsetY / roomScale;
+        const sSize = ROOM_CROP_SIZE / roomScale;
+
+        ctx.drawImage(
+            roomImg,
+            sx, sy, sSize, sSize,
+            0, 0, ROOM_CROP_SIZE, ROOM_CROP_SIZE
+        );
+
+        return canvas.toDataURL("image/png");
+    }
+
+    function createRoom() {
+        const roomName = document.getElementById('roomNameInput').value.trim();
+        if (!roomName) return;
+
+        const imageData = getRoomCroppedImage(); // returns null if no image
+
+        const payload = {
+            type: "create_room",
+            room_name: roomName
+        };
+
+        if (imageData) {
+            payload.image_data = imageData;
+        }
+
+        ws.send(JSON.stringify(payload));
+
+        document.getElementById('roomNameInput').value = '';
+        closePopup()
+    }
+
+
+    function findFriend() {
+        const friendName = document.getElementById('friendNameInput').value.trim();
+        if (friendName) {
+            //openChat(friendName);
+            //document.getElementById('friendNameInput').value = '';
+            //document.getElementById('find-friend-popup').classList.add('hidden');
+
+            ws.send(JSON.stringify({
+                    type: "check_if_user_exists",
+                    username: friendName
+                })
+            );
+        }
+    }
+
+    let username = null;
+    let privateChats = [];
+    let rooms = [];
+    let roomNames = [];
+    let loadedRooms = [];
+    let connectedChat = null;
+    let room = false;
+    let theme = "dark";
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+    }
+
+    function autoResize(el) {
+        el.style.height = "auto";
+        el.style.height = Math.min(el.scrollHeight, 150) + "px";
+    }
+    document.getElementById("messageInput").addEventListener("keydown", function(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+        autoResize(document.getElementById("messageInput"))
+    });
+
+    const chatContainer = document.getElementById('chat-container');
+
+    function openChat(targetUser) {
+        room = false
+
+        connectedChat = targetUser;
+
+        document.querySelectorAll('#chat-messages > div').forEach(div => {
+            div.classList.add('hidden');
+        });
+
+        // Show the selected chat message div
+        const chatDiv = document.getElementById('chat-messages-private-' + targetUser);
+        if (chatDiv) {
+            chatDiv.classList.remove('hidden');
+        }
+
+        const channelHeader = document.getElementById('channel-header');
+        channelHeader.textContent = targetUser;
+
+        const messageInput = document.getElementById('messageInput');
+        messageInput.placeholder = `Message ${targetUser}`;
+    }
+
+
+    const imageCacheBust = Date.now();
+
+    // Get the value of a cookie by name
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+            return parts.pop().split(';').shift();
+        }
+        return null;
+    }
+
+    // Delete a cookie by setting its expiration to the past
+    function deleteCookie(name) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+
+    let wsHasConnected = false;
+    let attemptedReconnects = 0;
+    let wsURL = "wss://skirtless-ernesto-prescientific.ngrok-free.dev/ws";
+    let ws;
+
+    function connectWS() {
+        ws = new WebSocket(wsURL);
+
+        ws.onopen = () => {
+            wsHasConnected = true;
+            attemptedReconnects = 0;
+
+            ws.send(JSON.stringify({
+                type: "auth",
+                token: getCookie('token')
+            }));
+
+            ws.send(JSON.stringify({
+                type: "get_theme"
+            }));
+        };
+
+        ws.onclose = () => {
+            if (wsHasConnected) {
+                alert("Connection to server lost. The page will now reload.");
+                window.location.reload();
+            } else {
+                if (attemptedReconnects >= 5) {
+                    document.getElementById("serverDown").classList.remove("hidden");
+                    return;
+                }
+
+                attemptedReconnects++;
+                setTimeout(connectWS, 1000); // small delay is important
+            }
+        };
+
+        ws.onerror = () => {
+            ws.close();
+        };
+
+        ws.onmessage = event => {
+            const data = JSON.parse(event.data);
+            if (data.type === "auth_success") {
+                console.log("Signed in successfully.");
+                username = data.username;
+                ws.send(JSON.stringify({
+                    type: "get_private_messages"
+                }));
+                ws.send(JSON.stringify({
+                    type: "get_rooms"
+                }));
+                let overlay = document.getElementById('loading-overlay');
+                overlay.classList.add('fade-out');
+                overlay.addEventListener('transitionend', () => {
+                    overlay.classList.add('hidden');
+                });
+                let elements = document.getElementsByClassName("usr-icon");
+
+                for (let i = 0; i < elements.length; i++) {
+                    let iframe = document.createElement("iframe");
+                    iframe.src = `avatar.html?u=${username}&v=${imageCacheBust}`;
+                    iframe.classList.add("w-9", "h-9", "rounded-full", "border-0");
+                    iframe.setAttribute("sandbox", "allow-scripts");
+
+                    elements[i].appendChild(iframe);
+                }
+            } else if (data.type === "auth_failed") {
+                deleteCookie('token');
+                window.location.replace('./login.html');
+            } else if (data.type === "private_messages") {
+                data.messages.forEach((msg, i) => {
+                    const isLast = i === data.messages.length - 1;
+
+                    if (isLast) {
+                        setTimeout(() => {
+                            addToPrivateChats(msg[1]);
+                            addToPrivateChats(msg[0]);
+                            addMessage(msg[0], msg[1], msg[2], msg[3], msg[5], msg[4] ?? null, true);
+                        }, 200);
+                    } else {
+                        addToPrivateChats(msg[1]);
+                        addToPrivateChats(msg[0]);
+                        addMessage(msg[0], msg[1], msg[2], msg[3], msg[5], msg[4] ?? null, true);
+                    }
+                });
+
+            } else if (data.type === "private_message") {
+                addToPrivateChats(data.from);
+                addMessage(data.from, data.to, data.message, data.time, data.id, data.image_url ? data.image_url : null);
+            } else if (data.type === "sent_private_message") {
+                addToPrivateChats(data.to);
+                addMessage(username, data.to, data.message, data.time, data.id, data.image_url ? data.image_url : null);
+            } else if (data.type === "rooms") {
+                data.rooms.forEach(msg => {
+                    addToRoomChats(msg);
+                });
+            } else if (data.type === "room_message") {
+                if (!loadedRooms.includes(data.room_id)) return
+                addRoomMessage(data.from, data.room_id, data.message, data.time, data.id, data.image_url ? data.image_url : null);
+            } else if (data.type === "room_messages") {
+                data.messages.forEach((msg, i) => {
+                    const isLast = i === data.messages.length - 1;
+
+                    if (isLast) {
+                        setTimeout(() => {
+                            addRoomMessage(msg[0], data.room_id, msg[2], msg[3], msg[5], msg[4] ? msg[4] : null, true)
+                        }, 200);
+                    } else {
+                        addRoomMessage(msg[0], data.room_id, msg[2], msg[3], msg[5], msg[4] ? msg[4] : null, true)
+                    }
+                })
+            } else if (data.type === "private_room") {
+                // Switch to a different chat if currently connected to the deleted room
+                if (connectedChat === data.room_id) {
+                    connectedChat = null;
+                    document.getElementById('channel-header').textContent = '-';
+                    document.getElementById('messageInput').placeholder = 'Select a chat to start messaging';
+                }
+
+                // Removes the room from the room list and chat area
+                removeFromRoomChats(data.room_id);
+            } else if (data.type === "room_created") {
+                addToRoomChats([data.room_id, data.room_name]);
+            } else if (data.type === "user_exists") {
+                document.getElementById('friendNameInput').classList.remove('border', 'border-red-500');
+                addToPrivateChats(data.username);
+                openChat(data.username);
+                document.getElementById('friendNameInput').value = '';
+                closePopup()
+            } else if (data.type === "user_not_found") {
+                document.getElementById('friendNameInput').classList.add('border', 'border-red-500');
+            } else if (data.type === "theme") {
+                const saved = data.theme;
+                theme = saved;
+                if (saved) {
+                    document.documentElement.setAttribute('data-theme', saved);
+                    document.getElementById('poweredByKlipy').src = `assets/powered_by_klipy_${saved}.png`;
+                }
+            } else if (data.type === "upload_failed") {
+                alert("Profile image upload failed: " + data.reason);
+            } else if (data.type === "upload_success") {
+                // Close the upload popup
+                closeUploadProfileImagePopup();
+            } else if (data.type === "gif_search_results") {
+                if (data.query === document.getElementById("gifSearch").value) {
+                    const urls = data.results;
+
+                    // If no results, stop infinite scroll
+                    if (!urls || urls.length === 0) {
+                        gifHasMore = false;
+                        gifLoading = false;
+                        return;
+                    }
+
+                    // Render the GIFs
+                    urls.forEach(url => {
+                        const div = document.createElement("div");
+                        div.className = "gif-item";
+
+                        const img = document.createElement("img");
+                        img.src = url;
+
+                        img.onload = layoutMasonry;
+
+                        div.onclick = () => selectGif(url);
+                        div.appendChild(img);
+                        gifResults.appendChild(div);
+                    });
+
+                    // Preload next page automatically
+                    if (gifPreloadPage === gifPage + 1) {
+                        requestGifPage(gifPreloadPage);
+                        gifPreloadPage++;
+                    }
+                }
+
+                gifLoading = false;
+            } else if (data.type === "gif_search_failed") {
+                gifLoading = false;
+                gifHasMore = false;
+            } else if (data.type === "trending_gif_results") {
+                if (!document.getElementById("gifSearch").value) {
+                    const urls = data.results;
+
+                    // If no results, stop infinite scroll
+                    if (!urls || urls.length === 0) {
+                        gifHasMore = false;
+                        gifLoading = false;
+                        return;
+                    }
+
+                    // Render the GIFs
+                    urls.forEach(url => {
+                        const div = document.createElement("div");
+                        div.className = "gif-item";
+
+                        const img = document.createElement("img");
+                        img.src = url;
+
+                        img.onload = layoutMasonry;
+
+                        div.onclick = () => selectGif(url);
+                        div.appendChild(img);
+                        gifResults.appendChild(div);
+                    });
+
+                    // Preload next page automatically
+                    if (gifPreloadPage === gifPage + 1) {
+                        requestGifPage(gifPreloadPage);
+                        gifPreloadPage++;
+                    }
+                }
+                gifLoading = false;
+            } else if (data.type === "message_deleted") {
+                const messageId = data.message_id;
+                const messageDiv = document.getElementById(messageId);
+                if (messageDiv) {
+                    messageDiv.remove();
+                }
+            } else if (data.type === "invite_list") {
+                if (data.room_id !== contextRoomId) return;
+                const inviteContainer = document.getElementById("inviteList");
+                inviteContainer.innerHTML = "";
+
+                data.invites.forEach((invite, index) => {
+                    const row = document.createElement("div");
+                    row.className = "group flex items-center justify-between rounded-lg px-4 py-2 transition";
+                    row.style.background = "var(--bg-secondary)";
+
+                    console.log(invite)
+
+                    row.innerHTML = `
+        <span class="mobile-hidden text-sm flex items-center space-x-2"
+              id="invite-link-${invite.invite_code}"><iframe
+                src="avatar.html?u=${invite.inviter}&v=${imageCacheBust}"
+                class="sidebar-private-avatar w-6 h-6 rounded-full border-0 mr-2"
+                sandbox="allow-scripts">
+            </iframe>https://GoofyMooCow.github.io/Quick-Chat/join?code=${invite.invite_code}</span>
+
+        <span class="mobile-shown text-sm flex items-center space-x-2">${invite.invite_code}</span>
+
+        <div class="invite-row-button-group flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="invite-row-button px-2 py-1 text-xs rounded"
+                    style="background: var(--accent); color: white;"
+                    onclick="openSendInviteToFriendPopup('${invite.invite_code}')">
+                Send to Friend
+            </button>
+
+            <button class="invite-row-button px-2 py-1 text-xs rounded"
+                    id="invite-button-${invite.invite_code}"
+                    style="background: var(--accent); color: white;"
+                    onclick="copyInvite('${invite.invite_code}')">
+                Copy
+            </button>
+        </div>
+
+    `;
+
+                    inviteContainer.appendChild(row);
+                });
+
+            } else if (data.type === "invite_created") {
+                if (data.room_id !== contextRoomId) return;
+
+                const inviteContainer = document.getElementById("inviteList");
+
+                    const row = document.createElement("div");
+                    row.className = "group flex items-center justify-between rounded-lg px-4 py-2 transition";
+                    row.style.background = "var(--bg-secondary)";
+
+
+                    row.innerHTML = `
+        <span class="mobile-hidden text-sm flex items-center space-x-2"
+              id="invite-link-${data.invite_code}"><iframe
+                src="avatar.html?u=${username}&v=${imageCacheBust}"
+                class="sidebar-private-avatar w-6 h-6 rounded-full border-0 mr-2"
+                sandbox="allow-scripts">
+            </iframe>https://GoofyMooCow.github.io/Quick-Chat/join?code=${data.invite_code}</span>
+
+        <span class="mobile-shown text-sm flex items-center space-x-2">${data.invite_code}</span>
+
+        <div class="invite-row-button-group flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="invite-row-button px-2 py-1 text-xs rounded"
+                    style="background: var(--accent); color: white;"
+                    onclick="openSendInviteToFriendPopup('${data.invite_code}')">
+                Send to Friend
+            </button>
+
+            <button class="invite-row-button px-2 py-1 text-xs rounded"
+                    id="invite-button-${data.invite_code}"
+                    style="background: var(--accent); color: white;"
+                    onclick="copyInvite('${data.invite_code}')">
+                Copy
+            </button>
+        </div>
+
+    `;
+
+                    inviteContainer.appendChild(row);
+            }
 
             console.log("Received:", data);
-  }
-
-  function getRoom(room_id) {
-    room = true
-
-    room_name = ""
-    roomNames.forEach(room => {
-      if (room[0] === room_id) {
-        room_name = room[1];
-      }
-    });
-
-    if (!loadedRooms.includes(room_id)) {
-      loadedRooms.push(room_id);
-      ws.send(JSON.stringify({
-        type: "get_room_messages",
-        room_id: room_id
-      }));
+        }
     }
 
-    connectedChat = room_id;
+    connectWS();
 
-    document.querySelectorAll('#chat-messages > div').forEach(div => {
-      div.classList.add('hidden');
-    });
+    function getRoom(room_id) {
+        room = true
 
-    // Show the selected chat message div
-    const chatDiv = document.getElementById('chat-messages-room-' + room_id);
-    if (chatDiv) {
-      chatDiv.classList.remove('hidden');
+        room_name = ""
+        roomNames.forEach(room => {
+            if (room[0] === room_id) {
+                room_name = room[1];
+            }
+        });
+
+        if (!loadedRooms.includes(room_id)) {
+            loadedRooms.push(room_id);
+            ws.send(JSON.stringify({
+                type: "get_room_messages",
+                room_id: room_id
+            }));
+        }
+
+        connectedChat = room_id;
+
+        document.querySelectorAll('#chat-messages > div').forEach(div => {
+            div.classList.add('hidden');
+        });
+
+        // Show the selected chat message div
+        const chatDiv = document.getElementById('chat-messages-room-' + room_id);
+        if (chatDiv) {
+            chatDiv.classList.remove('hidden');
+        }
+
+        const channelHeader = document.getElementById('channel-header');
+        channelHeader.textContent = room_name;
+
+        const messageInput = document.getElementById('messageInput');
+        messageInput.placeholder = `Send Message to ${room_name}`;
     }
 
-    const channelHeader = document.getElementById('channel-header');
-    channelHeader.textContent = room_name;
+    function addToPrivateChats(name) {
+        if (!privateChats.includes(name) && name !== username) {
+            privateChats.push(name);
 
-    const messageInput = document.getElementById('messageInput');
-    messageInput.placeholder = `Send Message to ${room_name}`;
-  }
+            const newDiv = document.createElement('div');
+            newDiv.id = 'chat-messages-private-' + name;
+            newDiv.classList.add('w-full', 'h-full', 'overflow-y-auto', 'space-y-4', 'hidden');
 
-  function addToPrivateChats(name) {
-    if (!privateChats.includes(name) && name !== username) {
-      privateChats.push(name);
-
-      const newDiv = document.createElement('div');
-      newDiv.id = 'chat-messages-private-' + name;
-      newDiv.classList.add('w-full', 'h-full', 'overflow-y-auto', 'space-y-4', 'hidden');
-
-      document.getElementById("chat-messages").appendChild(newDiv)
-      document.getElementById('friendsSidebar').innerHTML += `
-          <div class="px-4 py-2 text-gray-300 cursor-pointer rounded-md relative" onclick="openChat('${name}')">
-          <div class="w-14 h-14 rounded-full bg-gray-600" onmouseenter="showTooltip(event, '${name}')" onmouseleave="hideTooltip()">
+            document.getElementById("chat-messages").appendChild(newDiv)
+            document.getElementById('friendsSidebar').innerHTML += `
+          <div
+          class="sidebar-private-avatar-contianer px-4 py-2 text-gray-300 cursor-pointer rounded-md relative"
+          onclick="openChat('${name}')"
+          onmouseenter="showTooltip(event, '${name}')"
+          onmouseleave="hideTooltip()">
             <iframe
                 src="avatar.html?u=${name}&v=${imageCacheBust}"
-                class="w-14 h-14 rounded-full border-0"
+                class="sidebar-private-avatar w-14 h-14 rounded-full border-0"
                 sandbox="allow-scripts">
             </iframe>
           </div>
-          </div>
         `;
 
-      openChat(name)
+            openChat(name)
+        }
     }
-  }
 
-  function removeFromRoomChats(room_id) {
-    const index = rooms.indexOf(room_id);
-    console.log(rooms);
-    if (index > -1) {
-      rooms.splice(index, 1);
-      const chatDiv = document.getElementById('chat-messages-room-' + room_id);
-      if (chatDiv) {
-        chatDiv.remove();
-      }
-      const roomDiv = document.querySelector(`#rooms-sidebar div[onclick="getRoom(${room_id})"]`);
-      if (roomDiv) {
-        roomDiv.remove();
-      }
+    function removeFromRoomChats(room_id) {
+        const index = rooms.indexOf(room_id);
+        console.log(rooms);
+        if (index > -1) {
+            rooms.splice(index, 1);
+            const chatDiv = document.getElementById('chat-messages-room-' + room_id);
+            if (chatDiv) {
+                chatDiv.remove();
+            }
+            const roomDiv = document.querySelector(`#rooms-sidebar div[onclick="getRoom(${room_id})"]`);
+            if (roomDiv) {
+                roomDiv.remove();
+            }
+        }
     }
-  }
 
-  function addToRoomChats(room) {
-    let room_id = room[0];
-    let room_name = room[1];
-    if (!rooms.includes(room_id)) {
-      rooms.push(room_id);
-      roomNames.push([room_id, room_name]);
-      const newDiv = document.createElement('div');
-      newDiv.id = 'chat-messages-room-' + room_id;
-      newDiv.classList.add('w-full', 'h-full', 'overflow-y-auto', 'space-y-4', 'hidden');
+    function addToRoomChats(room) {
+        let room_id = room[0];
+        let room_name = room[1];
 
-      document.getElementById("chat-messages").appendChild(newDiv);
-      document.getElementById("rooms-sidebar").innerHTML += `
-          <div class="px-4 py-2 text-gray-300 cursor-pointer rounded-md relative" onclick="getRoom(${room_id})">
+        if (!rooms.includes(room_id)) {
+            rooms.push(room_id);
+            roomNames.push([room_id, room_name]);
+
+            const newDiv = document.createElement('div');
+            newDiv.id = 'chat-messages-room-' + room_id;
+            newDiv.classList.add('w-full', 'h-full', 'overflow-y-auto', 'space-y-4', 'hidden');
+            document.getElementById("chat-messages").appendChild(newDiv);
+
+            document.getElementById("rooms-sidebar").innerHTML += `
+        <div class="sidebar-room-avatar-container px-4 py-2 text-gray-300 cursor-pointer rounded-md relative"
+             onclick="getRoom(${room_id})"
+             oncontextmenu="showRoomContextMenu(event, ${room_id})"
+             id="room-${room_id}"
+             onmouseenter="showTooltip(event, '${room_name}')"
+             onmouseleave="hideTooltip()">
             <iframe
                 src="avatar.html?r=${room_id}&rn=${room_name}&v=${imageCacheBust}"
-                class="w-14 h-14 rounded-md border-0"
+                class="sidebar-room-avatar w-14 h-14 rounded-md border-0"
                 sandbox="allow-scripts">
             </iframe>
-          </div>
+        </div>
         `;
-    }
-  }
-
-  const tooltip = document.getElementById('tooltip');
-
-  // Keep one tooltip and a per-target cleanup handle
-  let currentCleanup = null;
-
-  function showTooltip(e, text) {
-    const target = e.target;
-
-    // Clear any previous tooltip bindings
-    if (currentCleanup) currentCleanup();
-
-    tooltip.textContent = text;
-    tooltip.style.opacity = '1';
-
-    const rect = target.getBoundingClientRect();
-    tooltip.style.left = `${rect.right + 8}px`;
-    tooltip.style.top = `${rect.top + rect.height / 2 - tooltip.offsetHeight / 2}px`;
-
-    // AbortController ties all listeners together for easy cleanup
-    const ac = new AbortController();
-    const { signal } = ac;
-
-    // Normal hide when leaving the element
-    target.addEventListener('mouseleave', hideTooltip, { signal });
-
-    // Bonus: if pointer is canceled (e.g., due to DOM changes), hide
-    target.addEventListener('pointercancel', hideTooltip, { signal });
-
-    // If page scrolls or resizes, optionally reposition or hide
-    window.addEventListener('scroll', hideTooltip, { signal, passive: true });
-    window.addEventListener('resize', hideTooltip, { signal, passive: true });
-
-    // Observe the entire document for removals; also check isConnected
-    const observer = new MutationObserver((mutations) => {
-      // Fast path: target disconnected
-      if (!target.isConnected) {
-        hideTooltip();
-        cleanup();
-        return;
-      }
-      // Removal path: target explicitly in removedNodes
-      for (const m of mutations) {
-        for (const removed of m.removedNodes) {
-          if (removed === target || (removed.nodeType === 1 && removed.contains(target))) {
-            hideTooltip();
-            cleanup();
-            return;
-          }
         }
-      }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // Optional: periodic guard for edge cases (e.g., shadow DOM moves)
-    let rafId = null;
-    const tick = () => {
-      if (!target.isConnected) {
-        hideTooltip();
-        cleanup();
-        return;
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
-
-    // One-shot cleanup to avoid leaks
-    function cleanup() {
-      ac.abort();
-      observer.disconnect();
-      if (rafId) cancelAnimationFrame(rafId);
-      currentCleanup = null;
     }
 
-    currentCleanup = cleanup;
-  }
+    const tooltip = document.getElementById('tooltip');
 
-  function hideTooltip() {
-    tooltip.style.opacity = '0';
-  }
+    // Keep one tooltip and a per-target cleanup handle
+    let currentCleanup = null;
 
+    function showTooltip(e, text) {
+        const target = e.target;
 
+        // Clear any previous tooltip bindings
+        if (currentCleanup) currentCleanup();
 
-  function sendMessage() {
-    const input = document.getElementById('messageInput');
+        tooltip.textContent = text;
+        tooltip.style.opacity = '1';
 
-    const text = input.value.trim();
-    if (!text && !uploadedImageDataURL) return;
+        const rect = target.getBoundingClientRect();
+        tooltip.style.left = `${rect.right + 8}px`;
+        tooltip.style.top = `${rect.top + rect.height / 2 - tooltip.offsetHeight / 2}px`;
 
-    if (uploadedImageDataURL) {
-      if (room) {
-        ws.send(JSON.stringify({
-          type: "send_room_message",
-          room_id: connectedChat,
-          image_url: uploadedImageDataURL,
-          message: text
-        }))
-      } else {
-        ws.send(JSON.stringify({
-          type: "send_private_message",
-          to: connectedChat,
-          image_url: uploadedImageDataURL,
-          message: text
-        }))
-      }
+        // AbortController ties all listeners together for easy cleanup
+        const ac = new AbortController();
+        const {signal} = ac;
 
-      removeImage()
-    } else {
-      if (room) {
-        ws.send(JSON.stringify({
-          type: "send_room_message",
-          room_id: connectedChat,
-          message: text
-        }))
-      } else {
-        ws.send(JSON.stringify({
-          type: "send_private_message",
-          to: connectedChat,
-          message: text
-        }))
-      }
+        // Normal hide when leaving the element
+        target.addEventListener('mouseleave', hideTooltip, {signal});
+
+        // Bonus: if pointer is canceled (e.g., due to DOM changes), hide
+        target.addEventListener('pointercancel', hideTooltip, {signal});
+
+        // If page scrolls or resizes, optionally reposition or hide
+        window.addEventListener('scroll', hideTooltip, {signal, passive: true});
+        window.addEventListener('resize', hideTooltip, {signal, passive: true});
+
+        // Observe the entire document for removals; also check isConnected
+        const observer = new MutationObserver((mutations) => {
+            // Fast path: target disconnected
+            if (!target.isConnected) {
+                hideTooltip();
+                cleanup();
+                return;
+            }
+            // Removal path: target explicitly in removedNodes
+            for (const m of mutations) {
+                for (const removed of m.removedNodes) {
+                    if (removed === target || (removed.nodeType === 1 && removed.contains(target))) {
+                        hideTooltip();
+                        cleanup();
+                        return;
+                    }
+                }
+            }
+        });
+
+        observer.observe(document.body, {childList: true, subtree: true});
+
+        // Optional: periodic guard for edge cases (e.g., shadow DOM moves)
+        let rafId = null;
+        const tick = () => {
+            if (!target.isConnected) {
+                hideTooltip();
+                cleanup();
+                return;
+            }
+            rafId = requestAnimationFrame(tick);
+        };
+        rafId = requestAnimationFrame(tick);
+
+        // One-shot cleanup to avoid leaks
+        function cleanup() {
+            ac.abort();
+            observer.disconnect();
+            if (rafId) cancelAnimationFrame(rafId);
+            currentCleanup = null;
+        }
+
+        currentCleanup = cleanup;
     }
 
-    /*const chat = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = 'message flex items-start space-x-3';
-    div.innerHTML = `
-        <div class="w-10 h-10 rounded-full bg-gray-600">
-            <iframe
-                src="avatar.html?u=${username}&v=${imageCacheBust}"
-                class="w-10 h-10 rounded-full border-0"
-                sandbox="allow-scripts">
-            </iframe>
-        </div>
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="font-semibold text-white">You</span>
-            <span class="text-xs text-gray-400">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-          </div>
-          <p class="text-gray-300">${text}</p>
-        </div>
-      `;
-    chat.appendChild(div);*/
-    input.value = '';
-    /*chat.scrollTop = chat.scrollHeight;*/
-  }
+    function hideTooltip() {
+        tooltip.style.opacity = '0';
+    }
 
-  function addMessage(sender, receiver, text, time, imageSRC=null) {
-    const privateChatId = sender === username ? receiver : sender;
-    const chat = document.getElementById(`chat-messages-private-${privateChatId}`);
 
-    // Are we currently at (or very near) the bottom?
-    const threshold = 5; // px tolerance
-    const isAtBottom =
-            chat.scrollTop + chat.clientHeight >= chat.scrollHeight - threshold;
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
 
-    const div = document.createElement('div');
-    time = formatDateTime(time);
+        const text = input.value.trim();
+        if (!text && !uploadedImageDataURL) return;
 
-    div.className = 'message flex items-start space-x-3';
-    if (imageSRC == null) {
-      div.innerHTML = `
-          <div class="w-10 h-10 rounded-full bg-gray-600">
-              <iframe
-                  src="avatar.html?u=${sender}&v=${imageCacheBust}"
-                  class="w-10 h-10 rounded-full border-0"
-                  sandbox="allow-scripts">
-              </iframe>
-          </div>
-          <div>
-              <div class="flex items-center space-x-2">
-                  <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
-                  <span class="text-xs" style="color: var(--text-muted)">${time}</span>
-              </div>
-              <p style="color: var(--text-main)">${text}</p>
-          </div>
-        `;
-    } else {
-        div.innerHTML = `
+        if (uploadedImageDataURL) {
+            if (room) {
+                ws.send(JSON.stringify({
+                    type: "send_room_message",
+                    room_id: connectedChat,
+                    image_url: uploadedImageDataURL,
+                    message: text
+                }))
+            } else {
+                ws.send(JSON.stringify({
+                    type: "send_private_message",
+                    to: connectedChat,
+                    image_url: uploadedImageDataURL,
+                    message: text
+                }))
+            }
+
+            removeImage()
+        } else {
+            if (room) {
+                ws.send(JSON.stringify({
+                    type: "send_room_message",
+                    room_id: connectedChat,
+                    message: text
+                }))
+            } else {
+                ws.send(JSON.stringify({
+                    type: "send_private_message",
+                    to: connectedChat,
+                    message: text
+                }))
+            }
+        }
+
+        input.value = '';
+    }
+
+    function createMessageHTML({ sender, time, text, imageSRC, showDelete, id }, grouped = false, roomId = null, roomName = null, inviteLink = null) {
+        const avatarHTML = grouped ? `
+            <div class="w-10"></div>
+        ` : `
             <div class="w-10 h-10 rounded-full bg-gray-600">
                 <iframe
                     src="avatar.html?u=${sender}&v=${imageCacheBust}"
@@ -1988,103 +2463,382 @@
                     sandbox="allow-scripts">
                 </iframe>
             </div>
-            <div>
-                <div class="flex items center space-x-2">
-                    <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
-                    <span class="text-xs" style="color: var(--text-muted)">${time}</span>
-                </div>
-                <p style="color: var(--text-main)">${text}</p>
-                <img src="${imageSRC}" class="mt-2 rounded-lg max-w-md"/>
+        `;
+
+        const headerHTML = grouped ? `` : `
+            <div class="flex items-center space-x-2">
+                <span class="font-semibold" style="color: var(--text-main)">${sender}</span>
+                <span class="text-xs" style="color: var(--text-muted)">${time}</span>
             </div>
-          `;
+        `;
+
+        const imageHTML = imageSRC
+            ? `<img src="${imageSRC}" class="message-img mt-2 rounded-lg max-w-md"/>`
+            : "";
+
+        const deleteHTML = showDelete
+            ? `<button class="delete-btn text-red-500 hover:text-red-700 text-sm ml-4"
+                   onclick="deleteMessage(${id})">🗑️</button>`
+            : "";
+
+        const inviteHTML = roomId
+            ? `
+            <div
+     style="
+        background-color: var(--bg-secondary);
+        border: 1px var(--border-main) solid;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 10px;
+        width: 300px;
+        max-width: 100%;
+        height: 200px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.2s ease;
+     "
+>
+    <iframe
+        src="avatar.html?r=${roomId}&rn=${roomName}&v=${imageCacheBust}"
+        class="w-14 h-14 rounded-md border-0"
+        sandbox="allow-scripts"
+        style="margin-bottom: 10px;"
+    ></iframe>
+
+    <div style="font-weight: 600; color: var(--text-main); margin-bottom: 4px;">
+        Invite to Join
+    </div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+        ${roomName}'s Room
+    </div>
+
+    <button
+        style="
+            background-color: var(--accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s ease;
+        "
+        onclick="window.open('${inviteLink}', '_blank')"
+    >
+        Join Room
+    </button>
+</div>
+            `
+            : ""
+
+        return `
+        <div class="flex items-start space-x-3 w-full relative">
+            ${avatarHTML}
+            <div class="min-w-0 flex-1">
+                ${headerHTML}
+
+                <p style="color: var(--text-main); word-break: break-word; overflow-wrap: anywhere; white-space: pre-line;">${text}</p>
+
+                ${imageHTML}
+
+                ${inviteHTML}
+            </div>
+
+            ${deleteHTML}
+        </div>
+        `;
     }
 
-    chat.appendChild(div);
-
-    // Only auto-scroll if the user was already at the bottom
-    if (isAtBottom) {
-      chat.scrollTop = chat.scrollHeight;
+    function isChatAtBottom(chat) {
+        const threshold = 5;
+        return chat.scrollTop + chat.clientHeight >= chat.scrollHeight - threshold;
     }
-  }
+
+    function addMessage(sender, receiver, text, time, id, imageSRC = null, scrollToBottom = false) {
+        const privateChatId = sender === username ? receiver : sender;
+        const chat = document.getElementById(`chat-messages-private-${privateChatId}`);
+        const atBottom = isChatAtBottom(chat);
+
+        const div = document.createElement('div');
+        div.className = 'message flex items-start space-x-3 min-w-0';
+        div.id = id;
+
+        const rawTime = time;
+        time = formatDateTime(time);
+
+        // Detect previous message
+        let grouped = false;
+        const prev = chat.lastElementChild;
+
+        if (prev) {
+            const prevSender = prev.dataset.sender;
+            const prevTime = new Date(prev.dataset.timestamp).getTime();
+            const currentTime = new Date(rawTime).getTime();
+
+            if (prevSender === sender && (currentTime - prevTime) <= 60000) {
+                grouped = true;
+            }
+        }
+
+        div.dataset.sender = sender;
+        div.dataset.timestamp = rawTime;
+
+        if (text.startsWith("/")) {
+            const parts = text.split(" ");
+            if (parts[0] === "/invite" && parts.length >= 4) {
+                const roomId = parts[2];
+                const roomName = parts[3];
+                const inviteId = parts[1];
+                div.innerHTML = createMessageHTML({
+                    sender,
+                    time,
+                    text: "",
+                    imageSRC,
+                    showDelete: sender === username,
+                    id
+                }, grouped, roomId, roomName, `join.html?code=${inviteId}`);
+                chat.appendChild(div);
+
+                if (atBottom || scrollToBottom) {
+                    chat.scrollTop = chat.scrollHeight;
+                }
+                return;
+            }
+        }
+        div.innerHTML = createMessageHTML({
+            sender,
+            time,
+            text,
+            imageSRC,
+            showDelete: sender === username,
+            id
+        }, grouped);
+
+        chat.appendChild(div);
+
+        if (atBottom || scrollToBottom) {
+            chat.scrollTop = chat.scrollHeight;
+        }
+    }
 
 
-  function formatDateTime(isoString) {
-    const inputDate = new Date(isoString);
-    const now = new Date();
+    function addRoomMessage(sender, room_id, text, time, id, imageSRC = null, scrollToBottom = false) {
+        const chat = document.getElementById(`chat-messages-room-${room_id}`);
+        const atBottom = isChatAtBottom(chat);
 
-    const isToday =
+        const div = document.createElement('div');
+        div.className = 'message flex items-start space-x-3 min-w-0';
+        div.id = id;
+
+        const rawTime = time;
+        time = formatDateTime(time);
+
+        // Detect previous message
+        let grouped = false;
+        const prev = chat.lastElementChild;
+
+        if (prev) {
+            const prevSender = prev.dataset.sender;
+            const prevTime = new Date(prev.dataset.timestamp).getTime();
+            const currentTime = new Date(rawTime).getTime();
+
+            if (prevSender === sender && (currentTime - prevTime) <= 60000) {
+                grouped = true;
+            }
+        }
+
+        div.dataset.sender = sender;
+        div.dataset.timestamp = rawTime;
+
+        div.innerHTML = createMessageHTML({
+            sender,
+            time,
+            text,
+            imageSRC,
+            showDelete: sender === username,
+            id
+        }, grouped);
+
+        chat.appendChild(div);
+
+        if (atBottom || scrollToBottom) {
+            chat.scrollTop = chat.scrollHeight;
+        }
+    }
+
+
+    function formatDateTime(isoString) {
+        const inputDate = new Date(isoString);
+        const now = new Date();
+
+        const isToday =
             inputDate.getFullYear() === now.getFullYear() &&
             inputDate.getMonth() === now.getMonth() &&
             inputDate.getDate() === now.getDate();
 
-    const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    const optionsDate = { year: 'numeric', month: 'short', day: 'numeric' };
+        const optionsTime = {hour: '2-digit', minute: '2-digit', second: '2-digit'};
+        const optionsDate = {year: 'numeric', month: 'short', day: 'numeric'};
 
-    return isToday
+        return isToday
             ? inputDate.toLocaleTimeString(undefined, optionsTime)
             : `${inputDate.toLocaleDateString(undefined, optionsDate)} ${inputDate.toLocaleTimeString(undefined, optionsTime)}`;
-  }
-
-  function openSettings() {
-    document.getElementById('SettingsPopup').classList.remove('hidden');
-  }
-
-  function openEmailPopup() {
-    document.getElementById('ChangeEmailPopup').classList.remove('hidden');
-  }
-
-  function closeEmailPopup() {
-    document.getElementById('ChangeEmailPopup').classList.add('hidden');
-  }
-
-  function openPasswordPopup() {
-    document.getElementById('ChangePasswordPopup').classList.remove('hidden');
-  }
-
-  function closePasswordPopup() {
-    document.getElementById('ChangePasswordPopup').classList.add('hidden');
-  }
-
-  function setTheme(theme) {
-    if (theme === 'dark') {
-      document.documentElement.removeAttribute('data-theme');
-    } else {
-      document.documentElement.setAttribute('data-theme', theme);
     }
 
-    ws.send(JSON.stringify({
-      type: "set_theme",
-      theme: theme
-    }));
-  }
-
-
-  function enableSettingsSave() {
-    const saveButton = document.getElementById('saveSettingsButton');
-    if (saveButton) {
-      saveButton.classList.remove('opacity-50', 'cursor-not-allowed');
-      saveButton.disabled = false;
-    }
-  }
-
-  function disableSettingsSave() {
-    const saveButton = document.getElementById('saveSettingsButton');
-    if (saveButton) {
-      saveButton.classList.add('opacity-50', 'cursor-not-allowed');
-      saveButton.disabled = true;
-    }
-  }
-
-  function saveSettings() {
-    const themeSelect = document.getElementById('themeSelect');
-    if (themeSelect) {
-        setTheme(themeSelect.value);
+    function openEmailPopup() {
+        document.getElementById('ChangeEmailPopup').classList.remove('hidden');
     }
 
-    disableSettingsSave();
-  }
+    function closeEmailPopup() {
+        document.getElementById('ChangeEmailPopup').classList.add('hidden');
+    }
 
-  window.addEventListener("resize", layoutMasonry);
+    function openPasswordPopup() {
+        document.getElementById('ChangePasswordPopup').classList.remove('hidden');
+    }
+
+    function closePasswordPopup() {
+        document.getElementById('ChangePasswordPopup').classList.add('hidden');
+    }
+
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+            document.getElementById('poweredByKlipy').src = 'assets/powered_by_klipy_dark.png';
+        } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('poweredByKlipy').src = `assets/powered_by_klipy_${theme}.png`;
+        }
+
+        ws.send(JSON.stringify({
+            type: "set_theme",
+            theme: theme
+        }));
+    }
+
+
+    function enableSettingsSave() {
+        const saveButton = document.getElementById('saveSettingsButton');
+        if (saveButton) {
+            saveButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            saveButton.disabled = false;
+        }
+    }
+
+    function disableSettingsSave() {
+        const saveButton = document.getElementById('saveSettingsButton');
+        if (saveButton) {
+            saveButton.classList.add('opacity-50', 'cursor-not-allowed');
+            saveButton.disabled = true;
+        }
+    }
+
+    function saveSettings() {
+        const themeSelect = document.getElementById('themeSelect');
+        if (themeSelect) {
+            setTheme(themeSelect.value);
+        }
+
+        disableSettingsSave();
+    }
+
+    window.addEventListener("resize", layoutMasonry);
+
+    // Fetch the emoji JSON from the CDN
+    let emojiData;
+
+    fetch("https://cdn.jsdelivr.net/npm/@emoji-mart/data")
+        .then(res => res.json())
+        .then(data => {
+            emojiData = data; // assign it to a variable
+            console.log("Emoji data loaded:", emojiData.categories.length);
+        })
+        .then(() => {
+            renderCategories();
+        })
+        .catch(err => console.error("Failed to load emoji data:", err));
+
+    function deleteMessage(id) {
+        ws.send(JSON.stringify({
+            type: "delete_message",
+            message_id: id
+        }));
+    }
+
+    function changeEmail() {
+        const newEmail = document.getElementById('changeEmailInput').value.trim();
+        if (!newEmail) return;
+
+        ws.send(JSON.stringify({
+            type: "change_email",
+            new_email: newEmail
+        }));
+
+        closeEmailPopup();
+    }
+
+    function changePassword() {
+        const currentPassword = document.getElementById('ChangePasswordCurrentPassword').value;
+        const newPassword = document.getElementById('ChangePasswordNewPassword').value;
+        const confirmPassword = document.getElementById('ChangePasswordConfirmNewPassword').value;
+
+        if (!currentPassword || !newPassword || !confirmPassword) return;
+
+        if (newPassword !== confirmPassword) {
+            alert("New password and confirmation do not match.");
+            return;
+        }
+
+        ws.send(JSON.stringify({
+            type: "change_password",
+            current_password: currentPassword,
+            new_password: newPassword
+        }));
+
+        closePasswordPopup();
+    }
+
+    document.addEventListener("mousedown", (e) => {
+        const target = e.target;
+
+        const profilePopup = document.getElementById("profilePopup");
+        const emojiPicker = document.getElementById("emojiPicker");
+        const gifPickerMain = document.getElementById("gifPickerMain");
+        const gifPicker = document.getElementById("gifPicker");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        if (profilePopup && !profilePopup.contains(target) && !target.closest("#profileButton")) {
+            profilePopup.classList.add("hidden");
+        }
+
+        if (emojiPicker && !emojiPicker.contains(target)) {
+            emojiPicker.style.display = "none";
+        }
+
+        if (gifPickerMain && gifPicker && !gifPickerMain.contains(target)) {
+            gifPicker.classList.add("hidden");
+        }
+
+        if (mobileMenu) {
+            if (!mobileMenu.contains(target)) {
+                mobileMenu.classList.add("hidden");
+            } else {
+                setTimeout(() => mobileMenu.classList.add("hidden"), 100);
+            }
+        }
+    });
+
+    function sendInviteToFriend(friendName, contextInviteId) {
+        // we have to send a message to the server as if we were sending a normal message to another user, but the message will contain a /invite command that the other client will interpret and make the invite card
+        ws.send(JSON.stringify({
+            type: "send_private_message",
+            to: friendName,
+            message: `/invite ${contextInviteId} ${contextRoomId} ${roomNames.find(r => r[0] === contextRoomId)[1]}`
+        }));
+    }
 </script>
 
 </body>

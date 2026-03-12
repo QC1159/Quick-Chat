@@ -1,0 +1,128 @@
+/* Mobile-specific overrides applied when JS detects a mobile device.
+         Kept small and non-invasive: only change sizes/positions for better touch UX. */
+.mobile /* applied by detectMobile() */ {
+    --qc-side-width: 50px;
+    --qc-header-height: 48px;
+    --qc-side-button-size: 40px;
+}
+
+.mobile #leftSidebars {
+    width: var(--qc-side-width) !important;
+    min-width: var(--qc-side-width) !important;
+}
+
+.mobile :is(
+        .sidebar-private-avatar,
+        .sidebar-private-avatar-container,
+        .sidebar-room-avatar,
+        .sidebar-room-avatar-container,
+        .sidebar-button,
+        .sidebar-button-img
+      ) {
+    width: var(--qc-side-button-size) !important;
+    height: var(--qc-side-button-size) !important;
+    padding: 0 !important;
+}
+
+.mobile :is(
+        .sidebar-private-avatar-container,
+        .sidebar-room-avatar-container
+      ) {
+    margin-top: 10px !important;
+}
+
+.mobile /* reduce header size */ #channel-header {
+    font-size: 1rem;
+}
+
+.mobile /* make message input touch friendly */ #messageInput {
+    font-size: 16px !important;
+    margin-left: 8px !important;
+}
+
+.mobile /* move emoji picker within screen */ #emojiPicker {
+    bottom: 90px !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: calc(100% - 16px) !important;
+    border-radius: 10px !important;
+}
+
+.mobile /* make gif picker full screen on small devices */ #gifPicker > div {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+}
+
+.mobile #gifResults {
+    padding: 12px !important;
+}
+
+.mobile .gif-item {
+    width: calc(50% - 8px) !important; /* fallback width for masonry */
+}
+
+/* hide desktop tooltip on mobile where hover is not useful */
+.mobile #tooltip {
+    display: none !important;
+}
+
+/* Ensure popups that use fixed centering remain tappable */
+.mobile .popup-container, .mobile .popup-container > div {
+    max-height: 92vh;
+    overflow: auto;
+}
+
+.mobile .message {
+    max-width: calc(100vw - var(--qc-side-width) - 48px) !important;
+}
+
+.mobile .sidebar-title {
+    font-size: 9px !important;
+}
+
+.mobile .mobile-hidden {
+    display: none !important;
+}
+
+.mobile .mobile-shown {
+    display: block !important;
+}
+
+.mobile .mobile-flex {
+    display: flex !important;
+}
+
+.mobile .header-center-group {
+    justify-content: left !important;
+    margin-left: 6px !important;
+}
+
+.mobile .message-img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.mobile #channel-header-container {
+    padding: 8px !important;
+}
+
+.mobile .invite-row-button-group {
+    opacity: 1.0 !important;
+}
+
+.mobile .invite-row-button {
+    opacity: 1.0 !important;
+}
+
+.mobile #inviteList {
+    padding: 4px !important;
+}
+
+.mobile #friendList {
+    padding: 4px !important;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+      // Redirect immediately if token is not present
+      (function () {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; token=`);
+          if (parts.length !== 2) {
+              window.location.replace('./login.html');
+          }
+      })();
+
+      function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+  </script>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Room Invite</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+      const ws = new WebSocket("wss://skirtless-ernesto-prescientific.ngrok-free.dev/ws");
+
+      let roomId = "";
+      let roomName = "";
+      let inviter = "";
+
+      ws.onopen = () => {
+          ws.send(JSON.stringify({
+              type: "auth",
+              token: getCookie('token')
+          }));
+
+          ws.send(JSON.stringify({
+              type: "get_room_data_from_invite",
+              invite_code: new URLSearchParams(location.search).get("code")
+          }));
+      };
+
+      ws.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+
+          if (data.type === "invite_room_data") {
+              roomId = data.room_id;
+              roomName = data.room_name;
+              inviter = data.inviter;
+
+              document.getElementById("roomName").textContent = roomName;
+              document.getElementById("inviterName").textContent = inviter;
+
+              document.getElementById("roomAvatar").src =
+                  `avatar.html?r=${encodeURIComponent(roomId)}&rn=${encodeURIComponent(roomName)}`;
+
+              document.getElementById("userAvatar").src =
+                  `avatar.html?u=${encodeURIComponent(inviter)}`;
+
+              document.getElementById("inviteCard").classList.remove("hidden");
+
+              document.getElementById("loading-overlay").classList.add("fade-out");
+          }
+      };
+
+      function joinRoom() {
+          ws.send(JSON.stringify({
+              type: "accept_invite",
+              invite_code: new URLSearchParams(location.search).get("code")
+          }));
+          window.location.href = "./index.html";
+      }
+
+      function declineInvite() {
+          window.location.href = "./index.html";
+      }
+  </script>
+
+  <style>
+      .fade-out {
+          opacity: 0;
+          pointer-events: none; /* prevents interaction after fading */
+          transition: opacity 350ms ease; /* controls the fade duration */
+      }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-black flex items-center justify-center text-white">
+
+<div id="inviteCard" class="hidden bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 w-full max-w-md border border-white/20">
+
+  <h1 class="text-2xl font-bold text-center mb-6">Room Invitation</h1>
+
+  <div class="flex items-center justify-center gap-6 mb-6">
+
+    <!-- Inviter Avatar -->
+    <div class="text-center">
+      <iframe id="userAvatar" class="w-20 h-20 rounded-full border border-white/20 bg-black" frameborder="0"></iframe>
+      <p class="mt-2 text-sm opacity-80">Inviter</p>
+    </div>
+
+    <span class="text-3xl">➜</span>
+
+    <!-- Room Avatar -->
+    <div class="text-center">
+      <iframe id="roomAvatar" class="w-20 h-20 rounded-xl border border-white/20 bg-black" frameborder="0"></iframe>
+      <p class="mt-2 text-sm opacity-80">Room</p>
+    </div>
+
+  </div>
+
+  <p class="text-center mb-2">
+    <span id="inviterName" class="font-semibold"></span> invited you to join:
+  </p>
+
+  <p id="roomName" class="text-center text-xl font-bold mb-6"></p>
+
+  <div class="flex gap-4">
+    <button onclick="joinRoom()"
+            class="flex-1 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition font-semibold">
+      Join Room
+    </button>
+
+    <button onclick="declineInvite()"
+            class="flex-1 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition font-semibold">
+      Decline
+    </button>
+  </div>
+
+</div>
+
+<div id="loading-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-br from-[#1e1f26] to-[#111217] flex flex-col items-center justify-center backdrop-blur-sm">
+
+  <!-- Logo and Program Name -->
+  <div class="absolute top-20 flex items-center space-x-6">
+    <img src="assets/logo.png" alt="Quick Chat Logo" class="h-36 w-36 drop-shadow-lg">
+    <h1 class="hidden sm:block text-white text-7xl font-extrabold tracking-tight">Quick Chat</h1>
+  </div>
+
+  <!-- Loader Box -->
+  <div class="mt-48 bg-[#2a2b31] px-10 py-14 rounded-2xl flex flex-col items-center space-y-6 border border-[#1e1f25] shadow-2xl">
+
+    <!-- Spinner -->
+    <div class="relative h-16 w-16">
+      <div class="absolute inset-0 rounded-full border-4 border-gray-700"></div>
+      <div class="absolute inset-0 rounded-full border-4 border-gray-300 border-b-transparent border-l-transparent border-r-transparent animate-spin"></div>
+    </div>
+
+    <!-- Loading Text -->
+    <p class="text-gray-100 text-xl font-semibold tracking-wide">Loading, please wait...</p>
+  </div>
+
+</div>
+
+</body>
+</html>
