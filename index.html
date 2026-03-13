@@ -1841,6 +1841,7 @@
         }
     }
 
+    let loadedPrivateChats = new Set();
     let username = null;
     let privateChats = [];
     let rooms = [];
@@ -1889,6 +1890,14 @@
 
         const messageInput = document.getElementById('messageInput');
         messageInput.placeholder = `Message ${targetUser}`;
+
+        if (!loadedPrivateChats.has(targetUser)) {
+            ws.send(JSON.stringify({
+                type: "get_private_messages",
+                username: targetUser
+            }));
+            loadedPrivateChats.add(targetUser);
+        }
     }
 
 
@@ -1955,8 +1964,11 @@
             if (data.type === "auth_success") {
                 console.log("Signed in successfully.");
                 username = data.username;
-                ws.send(JSON.stringify({
+                /*ws.send(JSON.stringify({
                     type: "get_private_messages"
+                }));*/
+                ws.send(JSON.stringify({
+                    type: "get_private_chats"
                 }));
                 ws.send(JSON.stringify({
                     type: "get_rooms"
@@ -1980,22 +1992,16 @@
                 deleteCookie('token');
                 window.location.replace('./login.html');
             } else if (data.type === "private_messages") {
-                data.messages.forEach((msg, i) => {
-                    const isLast = i === data.messages.length - 1;
-
-                    if (isLast) {
-                        setTimeout(() => {
-                            addToPrivateChats(msg[1]);
-                            addToPrivateChats(msg[0]);
-                            addMessage(msg[0], msg[1], msg[2], msg[3], msg[5], msg[4] ?? null, true);
-                        }, 200);
-                    } else {
-                        addToPrivateChats(msg[1]);
-                        addToPrivateChats(msg[0]);
-                        addMessage(msg[0], msg[1], msg[2], msg[3], msg[5], msg[4] ?? null, true);
-                    }
+                data.messages.forEach((msg) => {
+                    addToPrivateChats(msg[1]);
+                    addToPrivateChats(msg[0]);
+                    addMessage(msg[0], msg[1], msg[2], msg[3], msg[5], msg[4] ?? null, true);
                 });
 
+            } else if (data.type === "private_chats") {
+                data.chats.forEach(chat => {
+                    addToPrivateChats(chat.username);
+                });
             } else if (data.type === "private_message") {
                 addToPrivateChats(data.from);
                 addMessage(data.from, data.to, data.message, data.time, data.id, data.image_url ? data.image_url : null);
@@ -2277,7 +2283,7 @@
           </div>
         `;
 
-            openChat(name)
+            //openChat(name)
         }
     }
 
