@@ -369,7 +369,11 @@
     </div>
 
     <!-- Messages -->
-    <div id="chat-messages" class="flex-1 overflow-y-auto py-0 px-5"></div>
+    <div id="chat-messages" class="flex-1 overflow-y-auto py-0 px-5">
+      <div style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); color: var(--text-muted);">
+        Choose a chat on the left to start messaging!
+      </div>
+    </div>
 
 
     <!-- Image preview -->
@@ -477,7 +481,7 @@
       </div>
 
       <button
-          onclick="sendMessage()"
+          onclick="sendMessage(); autoResize(document.getElementById('messageInput'))"
           class="px-4 py-2 rounded-lg"
           style="background: var(--accent); color: white;">
         Send
@@ -1896,7 +1900,6 @@
                 type: "get_private_messages",
                 username: targetUser
             }));
-            loadedPrivateChats.add(targetUser);
         }
     }
 
@@ -1992,13 +1995,27 @@
                 deleteCookie('token');
                 window.location.replace('./login.html');
             } else if (data.type === "private_messages") {
-                data.messages.forEach((msg) => {
-                    addToPrivateChats(msg[1]);
-                    addToPrivateChats(msg[0]);
-                    addMessage(msg[0], msg[1], msg[2], msg[3], msg[5], msg[4] ?? null, true);
+                const chat = document.getElementById(`chat-messages-private-${data.username}`);
+                const oldHeight = chat.scrollHeight;
+
+                // Reverse so oldest → newest when prepending
+                const msgs = data.messages
+
+                msgs.forEach((msg, i) => {
+                    addMessage(
+                        msg[0], msg[1], msg[2], msg[3], msg[5],
+                        msg[4] ?? null,
+                        false,   // scrollToBottom
+                        true,    // prepend
+                        i        // index
+                    );
                 });
 
-            } else if (data.type === "private_chats") {
+                // Restore scroll position
+                loadedPrivateChats.add(data.username);
+                chat.scrollTop = chat.scrollHeight - oldHeight;
+            }
+            else if (data.type === "private_chats") {
                 data.chats.forEach(chat => {
                     addToPrivateChats(chat.username);
                 });
@@ -2260,6 +2277,14 @@
         messageInput.placeholder = `Send Message to ${room_name}`;
     }
 
+    function enableTopScrollListener(chatDiv, callback) {
+        chatDiv.addEventListener("scroll", () => {
+            if (chatDiv.scrollTop === 0) {
+                callback();
+            }
+        });
+    }
+
     function addToPrivateChats(name) {
         if (!privateChats.includes(name) && name !== username) {
             privateChats.push(name);
@@ -2269,6 +2294,16 @@
             newDiv.classList.add('w-full', 'h-full', 'overflow-y-auto', 'space-y-4', 'hidden');
 
             document.getElementById("chat-messages").appendChild(newDiv)
+
+            enableTopScrollListener(newDiv, () => {
+                console.log("Reached top of chat with", name);
+                ws.send(JSON.stringify({
+                    type: "get_private_messages",
+                    username: name,
+                    before_message_id: newDiv.firstChild ? newDiv.firstChild.id : null
+                }));
+            });
+
             document.getElementById('friendsSidebar').innerHTML += `
           <div
           class="sidebar-private-avatar-contianer px-4 py-2 text-gray-300 cursor-pointer rounded-md relative"
@@ -2419,7 +2454,7 @@
         const input = document.getElementById('messageInput');
 
         const text = input.value.trim();
-        if (!text && !uploadedImageDataURL) return;
+        if ((!text && !uploadedImageDataURL) || connectedChat === null) return;
 
         if (uploadedImageDataURL) {
             if (room) {
@@ -2564,7 +2599,7 @@
         return chat.scrollTop + chat.clientHeight >= chat.scrollHeight - threshold;
     }
 
-    function addMessage(sender, receiver, text, time, id, imageSRC = null, scrollToBottom = false) {
+    function addMessage(sender, receiver, text, time, id, imageSRC = null, scrollToBottom = false, prepend = false, index = null, forceTitle = false) {
         const privateChatId = sender === username ? receiver : sender;
         const chat = document.getElementById(`chat-messages-private-${privateChatId}`);
         const atBottom = isChatAtBottom(chat);
@@ -2578,7 +2613,15 @@
 
         // Detect previous message
         let grouped = false;
-        const prev = chat.lastElementChild;
+        let prev = chat.lastElementChild;
+
+        if (prepend) {
+            if (index === 0) {
+                prev = null;
+            } else if (index !== null) {
+                prev = chat.children[index - 1];
+            }
+        }
 
         if (prev) {
             const prevSender = prev.dataset.sender;
@@ -2607,7 +2650,12 @@
                     showDelete: sender === username,
                     id
                 }, grouped, roomId, roomName, `join.html?code=${inviteId}`);
-                chat.appendChild(div);
+
+                if (prepend) {
+                    chat.insertBefore(div, chat.children[index]);
+                } else {
+                    chat.appendChild(div);
+                }
 
                 if (atBottom || scrollToBottom) {
                     chat.scrollTop = chat.scrollHeight;
@@ -2624,12 +2672,23 @@
             id
         }, grouped);
 
-        chat.appendChild(div);
+        if (prepend) {
+            chat.insertBefore(div, chat.children[index]);
+        } else {
+            chat.appendChild(div);
+        }
 
-        if (atBottom || scrollToBottom) {
+        if ((!prepend && atBottom) || scrollToBottom) {
             chat.scrollTop = chat.scrollHeight;
+
+            if (imageSRC) {
+                div.querySelector(".message-img").addEventListener("load", () => {
+                    chat.scrollTop = chat.scrollHeight;
+                });
+            }
         }
     }
+
 
 
     function addRoomMessage(sender, room_id, text, time, id, imageSRC = null, scrollToBottom = false) {
