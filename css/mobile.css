@@ -24,6 +24,11 @@
     padding: 0 !important;
 }
 
+.mobile .sidebar-private-avatar-dd {
+    width: var(--qc-side-button-size) !important;
+    height: var(--qc-side-button-size) !important;
+}
+
 .mobile :is(
         .sidebar-private-avatar-container,
         .sidebar-room-avatar-container
@@ -125,4 +130,20 @@
 
 .mobile #friendList {
     padding: 4px !important;
+}
+
+.mobile .status-dot {
+    width: 10px !important;
+    height: 10px !important;
+    border: 1px solid var(--bg-secondary) !important; /* keeps it clean against the avatar edge */
+}
+
+.mobile .private-unread-badge {
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.mobile .room-unread-badge {
+    top: 0 !important;
+    right: 0 !important;
 }
