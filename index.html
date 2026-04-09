@@ -2213,7 +2213,8 @@
                         msg[4] ?? null,
                         false,   // scrollToBottom
                         true,    // prepend
-                        i        // index
+                        i,       // index
+                        msg[6]   // edited
                     );
                 });
 
@@ -3222,7 +3223,7 @@
         // Create modal box
         const box = document.createElement("div");
         box.style.background = "var(--bg-main, #fff)";
-        box.style.color = "var(--text-main, #000)";
+        box.style.color = "#000";
         box.style.padding = "16px";
         box.style.borderRadius = "8px";
         box.style.maxWidth = "640px";
